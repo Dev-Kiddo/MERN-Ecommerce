@@ -1,4 +1,5 @@
 import productModel from "../models/productModel.js";
+import HandleError from "../utils/handleError.js";
 
 //? Creating Products
 export const addProduct = async function (req, res) {
@@ -29,6 +30,7 @@ export const getAllProducts = async function (req, res) {
     return res.status(200).json({
       success: true,
       message: "Get All Products Successfull",
+      numofProducts: products.length,
       products,
     });
   } catch (err) {
@@ -41,20 +43,28 @@ export const getAllProducts = async function (req, res) {
 };
 
 //? Update Products
-export const updateProduct = async function (req, res) {
+export const updateProduct = async function (req, res, next) {
   const productId = req.params.id;
 
   try {
-    let product = await productModel.findById(productId);
+    // let product = await productModel.findById(productId);
+
+    // if (!product) {
+    //   return res.status(500).json({
+    //     success: false,
+    //     message: "Product Not Found",
+    //   });
+    // }
+
+    const product = await productModel.findByIdAndUpdate(productId, req.body, { new: true, runValidators: true }).lean();
 
     if (!product) {
-      return res.status(500).json({
-        success: false,
-        message: "Product Not Found",
-      });
+      // return res.status(500).json({
+      //   success: false,
+      //   message: "Product Not Found",
+      // });
+      next(new HandleError("Product Not Found", 404));
     }
-
-    product = await productModel.findByIdAndUpdate(productId, req.body, { new: true, runValidators: true }).lean();
 
     return res.status(200).json({
       success: true,
@@ -75,16 +85,17 @@ export const deleteProduct = async function (req, res) {
   const productId = req.params.id;
 
   try {
-    let product = await productModel.findById(productId);
+    // let product = await productModel.findById(productId);
+    const product = await productModel.findByIdAndDelete(productId);
 
     if (!product) {
-      return res.status(50).json({
-        success: false,
-        message: "Product Not Found",
-      });
-    }
+      // return res.status(50).json({
+      //   success: false,
+      //   message: "Product Not Found",
+      // });
 
-    product = await productModel.findByIdAndDelete(productId);
+      next(new HandleError("Product Not Found", 404));
+    }
 
     return res.status(200).json({
       success: true,
