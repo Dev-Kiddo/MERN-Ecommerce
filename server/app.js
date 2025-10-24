@@ -1,6 +1,6 @@
 import express from "express";
 import productRouter from "./routes/productRoutes.js";
-import errorHandleMiddleware from "./utils/handleError.js";
+import handleErrorMiddleware from "./middlewares/error.js";
 
 const app = express();
 
@@ -10,6 +10,7 @@ app.use(express.json());
 // Routes
 app.use("/api/v1", productRouter);
 
-app.use(errorHandleMiddleware);
+// Err Handeling Middleware
+app.use(handleErrorMiddleware);
 
 export default app;
