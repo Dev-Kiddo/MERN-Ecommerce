@@ -1,10 +1,13 @@
 import productModel from "../models/productModel.js";
 import HandleError from "../utils/handleError.js";
 import handleAsyncError from "../middlewares/handleAsyncError.js";
+import APIFunctionality from "../utils/apiFunctionality.js";
+
+// http://localhost:5000/api/v1/product/68f2640e0f43a979abb69db7?keyword=shirt - after the question mark is a query. before the question mark as URL.
 
 //? Creating Products
 export const addProduct = handleAsyncError(async function (req, res, next) {
-  console.log(req.body);
+  // console.log(req.body);
 
   const product = await productModel.create(req.body);
 
@@ -17,7 +20,22 @@ export const addProduct = handleAsyncError(async function (req, res, next) {
 
 //? Get Products
 export const getAllProducts = handleAsyncError(async function (req, res, next) {
-  const products = await productModel.find({});
+  // console.log("Req_Query:", req.query); // http://localhost:5000/api/v1/products?keyword=shirt - { keyword: 'shirt' }
+
+  // console.log("queryObj:", productModel.find({}));//so this will actualy simply returs a query object
+
+  // queryObj: Query {
+  // _mongooseOptions: {},
+  // _transforms: [],
+  // _hooks: Kareem { _pres: Map(0) {}, _posts: Map(0),
+  //   name: 'products',
+  // }
+
+  const apiFunctionalaity = new APIFunctionality(productModel.find(), req.query).search();
+
+  // console.log("apiFunctionalaity:", apiFunctionalaity);
+
+  const products = await apiFunctionalaity.query;
 
   return res.status(200).json({
     success: true,
@@ -42,7 +60,7 @@ export const updateProduct = handleAsyncError(async function (req, res, next) {
 
   const product = await productModel.findByIdAndUpdate(productId, req.body, { new: true, runValidators: true });
 
-  console.log("product:", product);
+  // console.log("product:", product);
 
   if (!product) {
     // return res.status(500).json({
