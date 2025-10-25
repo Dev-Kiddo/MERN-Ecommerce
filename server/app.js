@@ -2,11 +2,13 @@ import express from "express";
 import handleErrorMiddleware from "./middlewares/error.js";
 import productRouter from "./routes/productRoutes.js";
 import userRouter from "./routes/userRoutes.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
 // Middlewares
 app.use(express.json());
+app.use(cookieParser());
 
 // Routes
 app.use("/api/v1", productRouter);
