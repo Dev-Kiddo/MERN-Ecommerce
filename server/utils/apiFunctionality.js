@@ -33,6 +33,18 @@ class APIFunctionality {
 
     return this;
   }
+
+  pagination(resultPerPage) {
+    const currentPage = Number(this.queryStr.page) || 1;
+    const skip = resultPerPage * (currentPage - 1);
+    // here the logic is,
+    // eg: my current page is 3
+    // results per page is 10
+    // 10 * (3 - 1) => 10 * 2 => 20, so skip 20 products when i was in 3 page,from 21 we have to display there like that..
+    this.query = this.query.limit(resultPerPage).skip(skip);
+
+    return this;
+  }
 }
 
 export default APIFunctionality;
