@@ -31,7 +31,9 @@ export const getAllProducts = handleAsyncError(async function (req, res, next) {
   //   name: 'products',
   // }
 
-  const apiFunctionalaity = new APIFunctionality(productModel.find(), req.query).search();
+  // console.log("Req_Query:", req.query);
+
+  const apiFunctionalaity = new APIFunctionality(productModel.find(), req.query).search().filter();
 
   // console.log("apiFunctionalaity:", apiFunctionalaity);
 
