@@ -43,7 +43,7 @@ export const getAllProducts = handleAsyncError(async function (req, res, next) {
   // console.log(productCount);
 
   // Calculate totalpages based on filtered count
-  const totalPages = Math.ceil(productCount / resultsPerpage);
+  const totalPages = Math.ceil(productCount / resultsPerpage); //Rounds up next whole number.Example, ceil(4.3) is 5.
   const page = Number(req.query.page) || 1;
 
   if (page > totalPages && productCount > 0) {
