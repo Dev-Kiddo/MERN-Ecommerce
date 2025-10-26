@@ -150,4 +150,51 @@ export const getAdminProducts = handleAsyncError(async function (req, res, next)
   });
 });
 
+// 7. Creating and Updating reviews
+export const createProductReview = handleAsyncError(async function (req, res, next) {
+  const { rating, comment, productId } = req.body;
 
+  const review = {
+    user: req.user._id,
+    name: req.user.name,
+    rating: Number(rating),
+    comment,
+  };
+
+  const product = await productModel.findById(productId);
+
+  // console.log(product);
+
+  const reviewExists = product.reviews.find((review) => {
+    console.log("review", review.user.toString());
+
+    return review.user.toString() === req.user.id;
+  });
+
+  // console.log("reviewExists:", reviewExists);
+
+  if (reviewExists) {
+    product.reviews.forEach((review) => {
+      if (review.user.toString() === req.user.id) {
+        (review.rating = rating), (review.comment = comment);
+      }
+    });
+  } else {
+    product.reviews.push(review);
+  }
+
+  product.numOfReviews = product.reviews.length;
+
+  let sum = 0;
+
+  product.reviews.forEach((rev) => (sum += rev.rating));
+
+  product.ratings = product.reviews.length > 0 ? sum / product.reviews.length : 0;
+
+  await product.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+    product,
+  });
+});
