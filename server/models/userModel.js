@@ -3,6 +3,7 @@ import validator from "validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import { type } from "os";
 
 const userSchema = new mongoose.Schema(
   {
@@ -38,21 +39,25 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "user",
     },
-    resetPasswordToken: String,
-    resetPasswordExpire: Date,
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpire: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );
 
 // Hashing Password
 userSchema.pre("save", async function (next) {
-  this.password = await bcrypt.hash(this.password, 10);
-
   //1st scenerio - updating profile(name,email,image)
   //2nd scenerio - updating password
   if (!this.isModified("password")) {
     return next();
   }
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
 });
 
 // Creating JSON WEB TOKEN

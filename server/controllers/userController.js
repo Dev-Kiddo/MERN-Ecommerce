@@ -2,6 +2,8 @@ import handleAsyncError from "../middlewares/handleAsyncError.js";
 import userModel from "../models/userModel.js";
 import HandleError from "../utils/handleError.js";
 import { sendToken } from "../utils/jwtToken.js";
+import { sendEmail } from "../utils/sendEmail.js";
+import crypto from "crypto";
 
 // Register User
 export const registerUser = handleAsyncError(async function (req, res, next) {
@@ -64,4 +66,73 @@ export const logoutUser = handleAsyncError(async function (req, res, next) {
     success: true,
     message: "Successfully logged out",
   });
+});
+
+// Forgot Password
+
+export const requestPasswordReset = handleAsyncError(async function (req, res, next) {
+  const user = await userModel.findOne({ email: req.body.email });
+
+  if (!user) {
+    return next(new HandleError("user doesn't exist", 400));
+  }
+
+  let resetToken;
+
+  try {
+    resetToken = user.getResetToken();
+    await user.save({ validateBeforeSave: false });
+  } catch (err) {
+    console.log(err);
+
+    return next(new HandleError("Couldn't save reset token, try again later", 500));
+  }
+
+  const resetPasswordURL = `http://localhost/api/v1/reset/${resetToken}`;
+
+  const message = `Use the following link to reset your password: ${resetPasswordURL} \n\n This Link will expire in 30 minutes. \n\n If you didn't request a password reset, Please ignore this message`;
+
+  try {
+    // Send Email
+    await sendEmail({
+      email: user.email,
+      subject: "Password Reset Request",
+      message,
+    });
+    res.status(200).json({
+      success: true,
+      message: `Email is sent to ${user.email} successfully`,
+    });
+  } catch (error) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save({ validateBeforeSave: false });
+    return next(new HandleError("Email couldn't be sent, please try again later", 500));
+  }
+});
+
+// Reset password
+export const resetPassword = handleAsyncError(async function (req, res, next) {
+  const resetPasswordToken = crypto.createHash("sha256").update(req.params.token).digest("hex");
+
+  const user = await userModel.findOne({ resetPasswordToken, resetPasswordExpire: { $gt: Date.now() } });
+
+  if (!user) {
+    return next(new HandleError("Reset password Token is invalid or hass been expired", 400));
+  }
+
+  const { password, confirmPassword } = req.body;
+
+  if (password !== confirmPassword) {
+    return next(new HandleError("Password does not match", 400));
+  }
+
+  user.password = password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save();
+
+  sendToken(user, 200, res);
 });
