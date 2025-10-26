@@ -13,9 +13,19 @@ export const verifyUserAuth = handleAsyncError(async function (req, res, next) {
 
   const decodedData = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-//   console.log("decodedData:", decodedData);
+  //   console.log("decodedData:", decodedData);
 
   req.user = await userModel.findById(decodedData.id);
 
-    next();
+  next();
 });
+
+export const roleBasedAccess = (...roles) => {
+  return function (req, res, next) {
+    if (!roles.includes(req.user.role)) {
+      return next(new HandleError(`Role - ${req.user.role} is not allowed to acces this resource`, 403));
+    }
+
+    next();
+  };
+};
