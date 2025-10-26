@@ -9,8 +9,8 @@ import APIFunctionality from "../utils/apiFunctionality.js";
 export const addProduct = handleAsyncError(async function (req, res, next) {
   // console.log(req.body);
 
-  req.body.user = req.user.id
-  
+  req.body.user = req.user.id;
+
   const product = await productModel.create(req.body);
 
   return res.status(201).json({

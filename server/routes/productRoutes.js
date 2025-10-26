@@ -4,12 +4,12 @@ import { verifyUserAuth, roleBasedAccess } from "../middlewares/userAuth.js";
 
 const router = express.Router();
 
-router.route("/products").get(verifyUserAuth, getAllProducts).post(verifyUserAuth, roleBasedAccess("admin"), addProduct);
+router.route("/products").get(getAllProducts);
 
-router
-  .route("/product/:id")
-  .get(verifyUserAuth, getSingleProduct)
-  .put(verifyUserAuth, roleBasedAccess("admin"), updateProduct)
-  .delete(verifyUserAuth, roleBasedAccess("admin"), deleteProduct);
+router.route("/product/:id").get(getSingleProduct);
+
+router.route("/admin/product/create").post(verifyUserAuth, roleBasedAccess("admin"), addProduct);
+
+router.route("/admin/product/:id").put(verifyUserAuth, roleBasedAccess("admin"), updateProduct).delete(verifyUserAuth, roleBasedAccess("admin"), deleteProduct);
 
 export default router;
