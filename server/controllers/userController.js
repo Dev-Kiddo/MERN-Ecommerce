@@ -192,3 +192,52 @@ export const updateProfile = handleAsyncError(async function (req, res, next) {
     user,
   });
 });
+
+//7. Admin - Get All users information
+export const getUsersList = handleAsyncError(async function (req, res, next) {
+  const users = await userModel.find({});
+
+  res.status(200).json({
+    success: true,
+    numOfUsers: users.length,
+    users,
+  });
+});
+
+//8. Admin - Get Single user information
+export const getSingleUser = handleAsyncError(async function (req, res, next) {
+  const id = req.params.id;
+
+  const user = await userModel.findById(id);
+
+  if (!user) {
+    return next(new HandleError(`User doesn't exist with this id: ${id}`, 400));
+  }
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+// 9. Admin - Assign Roles
+export const updateUserRole = handleAsyncError(async function (req, res, next) {
+  const { role } = req.body;
+
+  const newUserData = {
+    role,
+  };
+
+  const user = await userModel.findByIdAndUpdate(req.params.id, newUserData, { new: true, runValidators: true });
+
+  if (!user) {
+    return next(new HandleError(`User doesn't exist with this id: ${id}`, 400));
+  }
+
+  user.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});

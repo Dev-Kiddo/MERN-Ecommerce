@@ -2,6 +2,7 @@ import productModel from "../models/productModel.js";
 import HandleError from "../utils/handleError.js";
 import handleAsyncError from "../middlewares/handleAsyncError.js";
 import APIFunctionality from "../utils/apiFunctionality.js";
+import userModel from "../models/userModel.js";
 
 // http://localhost:5000/api/v1/product/68f2640e0f43a979abb69db7?keyword=shirt - after the question mark is a query. before the question mark as URL.
 
@@ -137,3 +138,16 @@ export const getSingleProduct = handleAsyncError(async function (req, res, next)
     product,
   });
 });
+
+// 6. Admin - Getting all products
+export const getAdminProducts = handleAsyncError(async function (req, res, next) {
+  const products = await productModel.find({});
+
+  res.status(200).json({
+    success: true,
+    numOfProducts: products.length,
+    products,
+  });
+});
+
+
