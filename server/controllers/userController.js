@@ -136,3 +136,40 @@ export const resetPassword = handleAsyncError(async function (req, res, next) {
 
   sendToken(user, 200, res);
 });
+
+// Get User Details
+export const getUserDetails = handleAsyncError(async function (req, res, next) {
+  const user = await userModel.findById(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+// Update Passsword
+export const updateUserPassword = handleAsyncError(async function (req, res, next) {
+  const { oldPassword, newPassword, confirmPassword } = req.body;
+
+  const user = await userModel.findById(req.user.id).select("+password");
+
+  if (!oldPassword || !newPassword || !confirmPassword) {
+    return next(new HandleError("Please fill all the fields"), 401);
+  }
+
+  const checkPasswordMatch = await user.verifyPassword(oldPassword);
+
+  if (!checkPasswordMatch) {
+    return next(new HandleError("Old password is incorrect", 400));
+  }
+
+  if (newPassword !== confirmPassword) {
+    return next(new HandleError("Password doesn't match", 400));
+  }
+
+  user.password = newPassword;
+
+  await user.save();
+
+  sendToken(user, 200, res);
+});
