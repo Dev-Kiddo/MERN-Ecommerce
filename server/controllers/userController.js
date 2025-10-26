@@ -154,7 +154,7 @@ export const updateUserPassword = handleAsyncError(async function (req, res, nex
   const user = await userModel.findById(req.user.id).select("+password");
 
   if (!oldPassword || !newPassword || !confirmPassword) {
-    return next(new HandleError("Please fill all the fields"), 401);
+    return next(new HandleError("Please fill all the fields", 401));
   }
 
   const checkPasswordMatch = await user.verifyPassword(oldPassword);
@@ -172,4 +172,23 @@ export const updateUserPassword = handleAsyncError(async function (req, res, nex
   await user.save();
 
   sendToken(user, 200, res);
+});
+
+// Updating user Profile
+
+export const updateProfile = handleAsyncError(async function (req, res, next) {
+  const { name, email } = req.body;
+
+  const updateUserDetails = {
+    name,
+    email,
+  };
+
+  const user = await userModel.findByIdAndUpdate(req.user.id, updateUserDetails, { new: true, runValidators: true });
+
+  res.status(200).json({
+    success: true,
+    message: "Profile updated successfully",
+    user,
+  });
 });
