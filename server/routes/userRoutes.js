@@ -10,6 +10,7 @@ import {
   updateProfile,
   getSingleUser,
   updateUserRole,
+  DeleteUser,
 } from "../controllers/userController.js";
 import { verifyUserAuth, roleBasedAccess } from "../middlewares/userAuth.js";
 import { getUsersList } from "../controllers/userController.js";
@@ -29,6 +30,10 @@ router.route("/profile/update").post(verifyUserAuth, updateProfile);
 router.route("/admin/users").get(verifyUserAuth, roleBasedAccess("admin"), getUsersList);
 
 // Admin - Get user
-router.route("/admin/user/:id").get(verifyUserAuth, roleBasedAccess("admin"), getSingleUser).put(verifyUserAuth, roleBasedAccess("admin"), updateUserRole);
+router
+  .route("/admin/user/:id")
+  .get(verifyUserAuth, roleBasedAccess("admin"), getSingleUser)
+  .put(verifyUserAuth, roleBasedAccess("admin"), updateUserRole)
+  .delete(verifyUserAuth, roleBasedAccess("admin"), DeleteUser);
 
 export default router;

@@ -241,3 +241,20 @@ export const updateUserRole = handleAsyncError(async function (req, res, next) {
     user,
   });
 });
+
+// 10.Admin - Deleting User Account
+
+export const DeleteUser = handleAsyncError(async function (req, res, next) {
+  const { id } = req.params;
+
+  const user = await userModel.findByIdAndDelete(id);
+
+  if (!user) {
+    return next(new HandleError(`User doesn't exist with this id: ${id}`, 400));
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "User Deleted Successfully",
+  });
+});
