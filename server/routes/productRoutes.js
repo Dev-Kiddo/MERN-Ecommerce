@@ -1,5 +1,15 @@
 import express from "express";
-import { addProduct, createProductReview, deleteProduct, getAdminProducts, getAllProducts, getSingleProduct, updateProduct } from "../controllers/productController.js";
+import {
+  addProduct,
+  createProductReview,
+  deleteProduct,
+  deleteProductReview,
+  getAdminProducts,
+  getAllProducts,
+  getProductReviews,
+  getSingleProduct,
+  updateProduct,
+} from "../controllers/productController.js";
 import { verifyUserAuth, roleBasedAccess } from "../middlewares/userAuth.js";
 
 const router = express.Router();
@@ -10,8 +20,9 @@ router.route("/products").get(getAllProducts);
 // Get Single Product
 router.route("/product/:id").get(getSingleProduct);
 
-// Product Review
+// Product Reviews
 router.route("/review").put(verifyUserAuth, createProductReview);
+router.route("/reviews").get(getProductReviews).delete(verifyUserAuth, deleteProductReview);
 
 // Admin - Getting all products
 router.route("/admin/products").get(verifyUserAuth, roleBasedAccess("admin"), getAdminProducts);

@@ -163,6 +163,10 @@ export const createProductReview = handleAsyncError(async function (req, res, ne
 
   const product = await productModel.findById(productId);
 
+  if (!product) {
+    return next(new HandleError("Product not found", 400));
+  }
+
   // console.log(product);
 
   const reviewExists = product.reviews.find((review) => {
@@ -196,5 +200,70 @@ export const createProductReview = handleAsyncError(async function (req, res, ne
   res.status(200).json({
     success: true,
     product,
+  });
+});
+
+// 8. Getting reviews
+export const getProductReviews = handleAsyncError(async function (req, res, next) {
+  const { id } = req.query;
+
+  const product = await productModel.findById(id);
+
+  if (!product) {
+    return next(new HandleError("Product not found", 400));
+  }
+
+  res.status(200).json({
+    success: true,
+    numOfReviews: product.numOfReviews,
+    AverageRating: product.ratings,
+    reviews: product.reviews,
+  });
+});
+
+// 8. Deleting Product reviews
+export const deleteProductReview = handleAsyncError(async function (req, res, next) {
+  const { productId, id } = req.query;
+
+  const product = await productModel.findById(productId);
+
+  // console.log("product:", product);
+
+  if (!product) {
+    return next(new HandleError("Product not found", 400));
+  }
+
+  const reviews = product.reviews.filter((rev) => rev._id.toString() !== id);
+
+  let sum = 0;
+
+  reviews.forEach((rev) => {
+    sum += rev.rating;
+  });
+
+  const ratings = reviews.length > 0 ? sum / reviews.length : 0;
+
+  const numOfReviews = reviews.length;
+
+  // product.reviews = review;
+  // product.ratings = ratings;
+  // product.numOfReviews = review.length;
+
+  // await product.save({ validateBeforeSave: false });
+
+  const updatedProduct = await productModel.findByIdAndUpdate(
+    productId,
+    {
+      reviews,
+      ratings,
+      numOfReviews,
+    },
+    { new: true, runValidators: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    message: "Review deleted successfully",
+    updatedProduct,
   });
 });
