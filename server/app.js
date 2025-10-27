@@ -3,6 +3,7 @@ import handleErrorMiddleware from "./middlewares/error.js";
 import productRouter from "./routes/productRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
+import orderRouter from "./routes/orderRoutes.js";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(cookieParser());
 // Routes
 app.use("/api/v1", productRouter);
 app.use("/api/v1", userRouter);
+app.use("/api/v1", orderRouter);
 
 // Err Handeling Middleware
 app.use(handleErrorMiddleware);
