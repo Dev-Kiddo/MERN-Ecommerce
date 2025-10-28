@@ -56,6 +56,7 @@ export const getAllProducts = handleAsyncError(async function (req, res, next) {
   // Applying  pagination
   apiFeatures.pagination(resultsPerpage);
 
+  // Execute Query
   const products = await apiFeatures.query;
 
   if (!products || products.length === 0) {
