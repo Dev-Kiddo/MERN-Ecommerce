@@ -4,8 +4,6 @@ import Product from "../components/Product";
 import "../styles/PageStyles/Home.css";
 import productData from "../data/products.json";
 
-console.log(productData);
-
 const Home = () => {
   return (
     <section>
