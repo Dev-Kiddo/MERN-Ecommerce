@@ -15,22 +15,22 @@ const ImageSlider = () => {
         pagination={{ clickable: true }}
         autoplay={{ delay: 3000 }}
         loop={true}
-        className="rounded-2xl shadow-md"
+        className="rounded-lg shadow-md"
       >
         <SwiperSlide>
-          <img src="./images/hbanner.png" alt="slide 1" className="w-full h-auto" />
+          <img src="./images/bannerph.png" alt="slide 1" className="w-full h-auto" />
         </SwiperSlide>
 
         <SwiperSlide>
-          <img src="./images/hbanner.png" alt="slide 2" className="w-full h-auto" />
+          <img src="./images/bannerph.png" alt="slide 2" className="w-full h-auto" />
         </SwiperSlide>
 
         <SwiperSlide>
-          <img src="./images/hbanner.png" alt="slide 3" className="w-full h-auto" />
+          <img src="./images/bannerph.png" alt="slide 3" className="w-full h-auto" />
         </SwiperSlide>
 
         <SwiperSlide>
-          <img src="./images/hbanner.png" alt="slide 3" className="w-full h-auto" />
+          <img src="./images/bannerph.png" alt="slide 3" className="w-full h-auto" />
         </SwiperSlide>
       </Swiper>
     </>

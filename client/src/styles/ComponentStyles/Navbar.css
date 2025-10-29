@@ -138,6 +138,7 @@
     padding: 1rem;
     border-top: 1px solid var(--border-color);
     box-shadow: var(--shadow-md);
+    z-index: 10;
   }
 
   .navbar-links.active {
