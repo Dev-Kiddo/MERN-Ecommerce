@@ -7,8 +7,9 @@ const Ratings = ({ numOfStars = 5, onRating }) => {
 
   const onClickRating = function (rating) {
     setRating((prev) => (prev === rating ? 0 : rating));
-    onRating(rating);
-
+    if (onRating) {
+      onRating(rating);
+    }
   };
 
   const onHover = function (rate) {
