@@ -4,12 +4,14 @@ import productRouter from "./routes/productRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
 import orderRouter from "./routes/orderRoutes.js";
+// import cors from "cors";
 
 const app = express();
 
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
+// app.use(cors());
 
 // Routes
 app.use("/api/v1", productRouter);

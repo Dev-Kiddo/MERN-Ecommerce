@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const Product = ({ product }) => {
   const [rating, setRating] = useState(0);
-  console.log("rating:", rating);
+  // console.log("rating:", rating);
 
   return (
     <>
