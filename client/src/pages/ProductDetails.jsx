@@ -18,6 +18,7 @@ const ProductDetails = () => {
   const { isLoading, error, product } = useSelector((state) => state.product);
 
   const [userReview, setUserReview] = useState({});
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(
     function () {
@@ -41,6 +42,20 @@ const ProductDetails = () => {
     },
     [dispatch, error]
   );
+
+  const handleQuantity = function (e) {
+    // console.log(e.target);
+
+    if (e.target.id === "decrement-button") {
+      // console.log("decrement");
+      setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
+    }
+    if (e.target.id === "increment-button") {
+      // console.log("increment");
+
+      setQuantity((prev) => prev + 1);
+    }
+  };
 
   return (
     <>
@@ -75,7 +90,7 @@ const ProductDetails = () => {
                   </div>
 
                   <div className="mt-4 flex items-center gap-2 ">
-                    <p className="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">{product?.stock > 0 ? `In Stock ✅ (${product.stock})` : "Out Of Stock ❌"}</p>
+                    <p className="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">{product?.stock > 0 ? `In Stock ✅ (${product.stock})` : "Out Of Stock 🔴"}</p>
                   </div>
 
                   <div className="mt-4 flex items-center gap-2 ">
@@ -83,9 +98,12 @@ const ProductDetails = () => {
                       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select quantity:</label>
                       <div className="relative flex items-center max-w-[8rem]">
                         <button
+                          onClick={(e) => handleQuantity(e)}
                           type="button"
                           id="decrement-button"
-                          className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
+                          className={`bg-gray-100 ${
+                            product?.stock > 1 ? "dark:bg-gray-700 dark:hover:bg-gray-600 hover:bg-gray-200 border" : "dark:bg-gray-400 cursor-not-allowed"
+                          }  dark:border-gray-600 border-gray-300 rounded-s-lg p-3 h-11`}
                         >
                           <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
@@ -94,14 +112,20 @@ const ProductDetails = () => {
                         <input
                           type="text"
                           id="quantity-input"
-                          className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:text-white"
-                          defaultValue={1}
+                          value={quantity}
+                          readOnly
+                          className={`bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm block w-full py-2.5 ${
+                            product?.stock ? "dark:bg-gray-700" : "dark:bg-gray-400"
+                          } dark:text-white`}
                         />
                         <button
+                          onClick={(e) => handleQuantity(e)}
                           type="button"
                           id="increment-button"
-                          data-input-counter-increment="quantity-input"
-                          className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11"
+                          disabled={product?.stock > 1 ? false : true}
+                          className={`bg-gray-100 ${
+                            product?.stock > 1 ? "dark:bg-gray-700 dark:hover:bg-gray-600 hover:bg-gray-200 border" : "dark:bg-gray-400 cursor-not-allowed"
+                          }  dark:border-gray-600  border-gray-300 rounded-e-lg p-3 h-11`}
                         >
                           <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
@@ -112,9 +136,15 @@ const ProductDetails = () => {
                   </div>
 
                   <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                    <Link to="#" className="text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                      Add to cart
-                    </Link>
+                    {product?.stock > 0 ? (
+                      <Link to="#">
+                        <button className="bg-blue-700 hover:bg-blue-800 font-sm text-white px-5 py-2 rounded-lg">Add to cart</button>
+                      </Link>
+                    ) : (
+                      <button disabled className="bg-gray-400 font-sm cursor-not-allowed text-white px-5 py-2 rounded-lg">
+                        Add to cart
+                      </button>
+                    )}
                   </div>
 
                   <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
@@ -129,9 +159,19 @@ const ProductDetails = () => {
               </div>
 
               <div className="w-full mt-6">
-                {product?.reviews?.map((review) => (
-                  <ReviewViewer review={review} key={review._id} />
-                ))}
+                <h3 className="text-lg mb-2 font-semibold text-gray-900 dark:text-white">Customer Reviews</h3>
+                {product?.reviews.length > 0 ? (
+                  product.reviews.map((review) => (
+                    <>
+                      <ReviewViewer review={review} key={review._id} />
+                    </>
+                  ))
+                ) : (
+                  <>
+                    <h3 className="text-lg mb-2 font-semibold text-gray-900 dark:text-white">Customer Reviews</h3>
+                    <p className="text-xs mb-2 font-sm text-gray-900 dark:text-white">No reviews yet. Be the firet to review this product</p>
+                  </>
+                )}
               </div>
             </div>
           </section>

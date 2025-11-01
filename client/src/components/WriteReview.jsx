@@ -17,8 +17,7 @@ const WriteReview = ({ onReview }) => {
 
   return (
     <>
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Write a product review</h3>
-
+      <h3 className="text-lg mb-2 font-semibold text-gray-900 dark:text-white">Write a Review 📝</h3>
       <div className="my-5 flex gap-3">
         <Ratings onRating={setRating} />
         <p className="mb-2 text-sm font-medium text-gray-300">out of 5</p>
