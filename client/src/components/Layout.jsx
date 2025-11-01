@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import PageTitle from "./PageTitle";
 import { Outlet } from "react-router-dom";
 
-const Layout = ({ title, children }) => {
+const Layout = ({ title }) => {
   return (
     <div className="min-h-screen flex flex-col justify-between">
       <PageTitle title={title} />

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -8,13 +9,48 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 
+import { useNavigate } from "react-router-dom";
+
+import { useSelector, useDispatch } from "react-redux";
+import { getProducts } from "../features/product/productSlice";
+
 const Navbar = () => {
+  const { products, isLoading, error } = useSelector((state) => state.product);
+  console.log(products);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isAuthenticated = true;
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   const toggleMenu = function () {
     setIsMenuOpen((menu) => !menu);
   };
+
+  const handleSubmit = function (e) {
+    e.preventDefault();
+
+    if (searchQuery && searchQuery.length > 3) {
+      console.log("inside if");
+      dispatch(getProducts(searchQuery));
+      navigate("/products");
+      setSearchQuery("");
+
+      toast(error);
+    }
+  };
+
+  // useEffect(
+  //   function () {
+  //     if (searchQuery & (searchQuery.length > 3)) {
+  //       dispatch(getProducts(searchQuery));
+  //     }
+  //   },
+  //   [dispatch, searchQuery]
+  // );
 
   return (
     <nav className="w-full max-w-7xl mx-auto p-4">
@@ -28,7 +64,7 @@ const Navbar = () => {
           {/* Search input */}
 
           <div className="w-1/2">
-            <form className="max-w-md mx-auto">
+            <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
               <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
               <div className="relative">
                 <div className="hidden absolute inset-y-0 start-0 items-center pointer-events-none sm:inline-flex ps-4">
@@ -38,7 +74,8 @@ const Navbar = () => {
                 </div>
                 <input
                   type="search"
-                  id="default-search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="block w-full px-2 py-4 text-xs text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white sm:ps-10 md:text-sm"
                   placeholder="Search Products..."
                   required
