@@ -1,18 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
+
 import ProductDetails from "./pages/ProductDetails";
+import Products from "./pages/Products";
+import Layout from "./components/Layout";
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
       <Routes>
         <Route index element={<Home />} />
+        <Route path="/layout" element={<Layout />} />
         <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/products" element={<Products />} />
       </Routes>
-      <Footer />
     </BrowserRouter>
   );
 }

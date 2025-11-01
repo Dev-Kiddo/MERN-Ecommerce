@@ -15,7 +15,7 @@ const ImageSlider = () => {
         pagination={{ clickable: true }}
         autoplay={{ delay: 3000 }}
         loop={true}
-        className="rounded-lg shadow-md"
+        className="rounded-lg shadow-md mb-6"
       >
         <SwiperSlide>
           <img src="./images/bannerph.png" alt="slide 1" className="w-full h-auto" />

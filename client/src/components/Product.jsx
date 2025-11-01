@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/ComponentStyles/Product.css";
+
 import Ratings from "./Ratings";
 import { useState } from "react";
 
@@ -10,13 +10,13 @@ const Product = ({ product }) => {
 
   return (
     <>
-      <div className="w-full max-w-sm border rounded-lg shadow-sm bg-gray-800 border-gray-700">
+      <div className="w-full max-w-xs border rounded-lg shadow-sm bg-gray-800 border-gray-700">
         <Link to={`/product/${product._id}`}>
           {/* product.image[0].url  */}
-          <img className="p-5 rounded-t-lg" src={`./images/productph.png`} alt={product.name} />
+          <img className="p-3 rounded-t-lg" src={`./images/productph.png`} alt={product.name} />
         </Link>
 
-        <div className="px-5 pb-5">
+        <div className="px-3 pb-3">
           <h5 className="text-xl font-semibold tracking-tight text-white mb-2">{product.name}</h5>
 
           <p className="text-xs font-medium tracking-tight text-gray-400">{product.description}</p>
@@ -43,9 +43,12 @@ const Product = ({ product }) => {
             <span className="text-xs font-semibold rounded-sm text-gray-400">{`( ${product.reviews.length} reviews )`}</span>
           </div>
 
-          <div className="flex items-center justify-between">
-            <span className="text-3xl font-bold text-white">₹{product.price}</span>
-            <Link to={`/product/${product._id}`} className="text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+          <div className="sm:flex justify-between items-center">
+            <span className="text-lg font-bold text-white mb-2 block sm:text-sm sm:mb-0 lg:text-lg">₹{product.price}</span>
+            <Link
+              to={`/product/${product._id}`}
+              className="text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-xs px-2 py-2 text-center sm:text-xs sm:px-2 sm:py-2"
+            >
               View Details
             </Link>
           </div>

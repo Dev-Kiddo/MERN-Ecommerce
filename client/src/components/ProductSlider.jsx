@@ -31,7 +31,7 @@ const ProductSlider = () => {
         </SwiperSlide>
       </Swiper>
 
-      <Swiper onSwiper={setThumbsSwiper} slidesPerView={4} watchSlidesProgress={true} modules={[FreeMode, Thumbs]} className="mySwiper2">
+      <Swiper onSwiper={setThumbsSwiper} slidesPerView={4} watchSlidesProgress={true} modules={[FreeMode, Thumbs]} className="sliderThumbs">
         <SwiperSlide>
           <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
         </SwiperSlide>

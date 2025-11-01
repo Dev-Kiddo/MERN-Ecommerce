@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/ComponentStyles/Footer.css";
 
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="w-full max-w-7xl mx-auto md:py-8">
+      <div className="w-full max-w-7xl p-4 mx-auto md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import ImageSlider from "../components/ImageSlider";
 import Product from "../components/Product";
-import "../styles/PageStyles/Home.css";
 import PageTitle from "../components/PageTitle";
 
 import Loader from "../components/Loader";
@@ -10,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProducts, removeError } from "../features/product/productSlice";
 
 import { toast } from "react-toastify";
+import Layout from "../components/Layout";
 
 const Home = () => {
   const { error, isLoading, products } = useSelector((state) => state.product);
@@ -35,21 +35,20 @@ const Home = () => {
 
   return (
     <>
-      <PageTitle title="Home" />
-
-      <section>
-        <div className="w-full max-w-7xl mx-auto p-4 md:py-8">
+      <Layout title="Home">
+        <div className="mb-10">
           <ImageSlider />
-          <h2 className="text-5xl text-gray-900 text-center my-6">Trending Now</h2>
-
-          {isLoading && <Loader />}
-          <div className="home-product-container">
-            {products?.map((product) => (
-              <Product product={product} key={product._id} />
-            ))}
-          </div>
         </div>
-      </section>
+        
+        <h2 className="text-5xl text-white text-center my-6">Trending Now</h2>
+
+        {isLoading && <Loader />}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+          {products?.map((product) => (
+            <Product product={product} key={product._id} />
+          ))}
+        </div>
+      </Layout>
     </>
   );
 };
