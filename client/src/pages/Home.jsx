@@ -12,7 +12,7 @@ import { getProducts, removeError } from "../features/product/productSlice";
 import { toast } from "react-toastify";
 
 const Home = () => {
-  const { error, isLoading, numOfProduct, product } = useSelector((state) => state.product);
+  const { error, isLoading, products } = useSelector((state) => state.product);
 
   const dispatch = useDispatch();
 
@@ -44,7 +44,7 @@ const Home = () => {
 
           {isLoading && <Loader />}
           <div className="home-product-container">
-            {product?.map((product) => (
+            {products?.map((product) => (
               <Product product={product} key={product._id} />
             ))}
           </div>

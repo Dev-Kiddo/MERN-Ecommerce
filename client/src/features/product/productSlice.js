@@ -1,18 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
+//! Get Product details
 export const getProducts = createAsyncThunk("products/getProducts", async (_, { rejectWithValue }) => {
   try {
-    const response = await fetch("/api/v1/products", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const { data } = await axios.get("/api/v1/products");
 
-    const data = await response.json();
-
-    // console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -20,21 +14,38 @@ export const getProducts = createAsyncThunk("products/getProducts", async (_, { 
   }
 });
 
+//! Get Single Product details
+export const getProductDetails = createAsyncThunk("product/getProductDetails", async (id, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get(`/api/v1/product/${id}`);
+
+    return data;
+  } catch (error) {
+    console.log("error", error);
+
+    return rejectWithValue(error.response?.data.message) || "An error occured";
+  }
+});
+
+//! Create Slice
 const productSlice = createSlice({
   name: "product",
   initialState: {
-    product: [],
+    products: [],
     numOfProduct: 0,
     isLoading: false,
     error: null,
+    product: null,
   },
+  //! reducers
   reducers: {
     removeError: (state) => {
       state.error = null;
     },
   },
+  //! Extra reducers
   extraReducers: (builders) => {
-    builders.addCase(getProducts.pending, (state, action) => {
+    builders.addCase(getProducts.pending, (state) => {
       state.isLoading = true;
       state.error = null;
     });
@@ -42,7 +53,8 @@ const productSlice = createSlice({
     builders.addCase(getProducts.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = null;
-      state.product = action.payload.products;
+
+      state.products = action.payload.products;
       state.numOfProduct = action.payload.numofProducts;
     });
 
@@ -50,6 +62,24 @@ const productSlice = createSlice({
       state.isLoading = false;
       console.log(action.payload);
 
+      state.error = action.payload || "Something went wrong";
+    });
+
+    //! Get Product Details
+    builders.addCase(getProductDetails.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+
+    builders.addCase(getProductDetails.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+      state.product = action.payload.product;
+    });
+
+    builders.addCase(getProductDetails.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log(action.payload);
       state.error = action.payload || "Something went wrong";
     });
   },

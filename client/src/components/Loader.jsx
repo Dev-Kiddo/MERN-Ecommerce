@@ -1,6 +1,6 @@
 import React from "react";
 
-const Loading = () => {
+const Loader = () => {
   return (
     <div className="text-center">
       <div role="status">
@@ -20,4 +20,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default Loader;
