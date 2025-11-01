@@ -19,57 +19,55 @@ const Products = () => {
   );
 
   return (
-    <Layout title="All Products">
-      <div className="flex">
-        <div className="w-60 p-4 flex-col justify-start items-start gap-6 inline-flex">
-          <div className="w-full rounded-lg bg-gray-700 p-4">
-            <div className="mb-5">
-              <h6 className="text-white text-sm font-semibold leading-4 underline">CATEGORIES</h6>
-            </div>
-
-            <ul className="flex-col gap-3 flex">
-              <li>
-                <Link to="#">
-                  <div className="flex-col flex rounded-lg ">
-                    <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline ">All Products</h2>
-                  </div>
-                </Link>
-              </li>
-
-              <li>
-                <Link to="#">
-                  <div className="flex-col flex rounded-lg">
-                    <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline">Men's Fashion</h2>
-                  </div>
-                </Link>
-              </li>
-
-              <li>
-                <Link to="#">
-                  <div className="flex-col flex rounded-lg ">
-                    <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline">Women's fashion</h2>
-                  </div>
-                </Link>
-              </li>
-            </ul>
+    <div className="flex">
+      <div className="w-60 p-4 flex-col justify-start items-start gap-6 inline-flex">
+        <div className="w-full rounded-lg bg-gray-700 p-4">
+          <div className="mb-5">
+            <h6 className="text-white text-sm font-semibold leading-4 underline">CATEGORIES</h6>
           </div>
-        </div>
 
-        <div className="p-4 w-full h-auto">
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <div className="p-3 border-2 border-dashed rounded-lg dark:border-gray-500">
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-2  md:grid-cols-3  lg:grid-cols-4">
-                {products?.map((product) => (
-                  <Product product={product} key={product._id} />
-                ))}
-              </div>
-            </div>
-          )}
+          <ul className="flex-col gap-3 flex">
+            <li>
+              <Link to="#">
+                <div className="flex-col flex rounded-lg ">
+                  <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline ">All Products</h2>
+                </div>
+              </Link>
+            </li>
+
+            <li>
+              <Link to="#">
+                <div className="flex-col flex rounded-lg">
+                  <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline">Men's Fashion</h2>
+                </div>
+              </Link>
+            </li>
+
+            <li>
+              <Link to="#">
+                <div className="flex-col flex rounded-lg ">
+                  <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline">Women's fashion</h2>
+                </div>
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
-    </Layout>
+
+      <div className="p-4 w-full h-auto">
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className="p-3 border-2 border-dashed rounded-lg dark:border-gray-500">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-2  md:grid-cols-3  lg:grid-cols-4">
+              {products?.map((product) => (
+                <Product product={product} key={product._id} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

@@ -35,20 +35,20 @@ const Home = () => {
 
   return (
     <>
-      <Layout title="Home">
-        <div className="mb-10">
-          <ImageSlider />
-        </div>
-        
-        <h2 className="text-5xl text-white text-center my-6">Trending Now</h2>
+      {/* <Layout title="Home"> */}
+      <div className="mb-10">
+        <ImageSlider />
+      </div>
 
-        {isLoading && <Loader />}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
-          {products?.map((product) => (
-            <Product product={product} key={product._id} />
-          ))}
-        </div>
-      </Layout>
+      <h2 className="text-5xl text-white text-center my-6">Trending Now</h2>
+
+      {isLoading && <Loader />}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+        {products?.map((product) => (
+          <Product product={product} key={product._id} />
+        ))}
+      </div>
+      {/* </Layout> */}
     </>
   );
 };
