@@ -5,17 +5,20 @@ import { Link } from "react-router-dom";
 import Product from "../components/Product";
 import Loader from "../components/Loader";
 import Layout from "../components/Layout";
+import { useParams } from "react-router-dom";
 
 const Products = () => {
   const dispatch = useDispatch();
   const { products, isLoading } = useSelector((state) => state.product);
-  console.log("products:", products);
+  // console.log("products:", products);
+
+  const { keyword } = useParams();
 
   useEffect(
     function () {
-      dispatch(getProducts());
+      dispatch(getProducts({ keyword: keyword || null }));
     },
-    [dispatch]
+    [dispatch,keyword]
   );
 
   return (

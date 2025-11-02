@@ -12,11 +12,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts } from "../features/product/productSlice";
+import { getProducts, removeError } from "../features/product/productSlice";
 
 const Navbar = () => {
   const { products, isLoading, error } = useSelector((state) => state.product);
-  console.log(products);
+  // console.log(products);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,25 +32,26 @@ const Navbar = () => {
 
   const handleSubmit = function (e) {
     e.preventDefault();
+    // console.log(searchQuery);
 
-    if (searchQuery && searchQuery.length > 3) {
-      console.log("inside if");
-      dispatch(getProducts(searchQuery));
-      navigate("/products");
+    const trimQuery = searchQuery.trim();
+
+    if (trimQuery && trimQuery.length > 2) {
+      navigate(`/products/${trimQuery}`);
       setSearchQuery("");
-
-      toast(error);
+    } else {
+      dispatch(getProducts({ customError: "Please enter valid query" }));
+      navigate(`/products`);
     }
   };
 
-  // useEffect(
-  //   function () {
-  //     if (searchQuery & (searchQuery.length > 3)) {
-  //       dispatch(getProducts(searchQuery));
-  //     }
-  //   },
-  //   [dispatch, searchQuery]
-  // );
+  useEffect(
+    function () {
+      toast(error);
+      dispatch(removeError());
+    },
+    [error, dispatch]
+  );
 
   return (
     <nav className="w-full max-w-7xl mx-auto p-4">

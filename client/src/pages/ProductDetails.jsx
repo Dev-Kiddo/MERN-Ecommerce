@@ -165,7 +165,7 @@ const ProductDetails = () => {
             ) : (
               <>
                 <h3 className="text-lg mb-2 font-semibold text-gray-900 dark:text-white">Customer Reviews</h3>
-                <p className="text-xs mb-2 font-sm text-gray-900 dark:text-white">No reviews yet. Be the firet to review this product</p>
+                <p className="text-xs mb-2 font-sm text-gray-900 dark:text-white">No reviews yet. Be the first to review this product</p>
               </>
             )}
           </div>

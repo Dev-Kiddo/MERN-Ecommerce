@@ -18,7 +18,7 @@ const Home = () => {
 
   useEffect(
     function () {
-      dispatch(getProducts());
+      dispatch(getProducts({ keyword: null }));
     },
     [dispatch]
   );

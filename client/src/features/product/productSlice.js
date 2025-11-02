@@ -5,14 +5,20 @@ import axios from "axios";
 //! Get Product details
 export const getProducts = createAsyncThunk("products/getProducts", async (payload, { rejectWithValue }) => {
   try {
-    console.log("payload:", payload);
+    // console.log(payload);
+    
+    if (payload.customError) {
+      return rejectWithValue(payload.customError);
+    }
 
-    const { data } = await axios.get(`${payload ? `/api/v1/products?keyword=${payload}` : `/api/v1/products`}`);
+    const keyword = payload.keyword;
+
+    const { data } = await axios.get(`${keyword ? `/api/v1/products?keyword=${keyword}` : `/api/v1/products`}`);
 
     return data;
   } catch (error) {
     console.log(error);
-    return rejectWithValue(error.response?.data || "An error occured");
+    return rejectWithValue(error.response?.data.message || "An error occured");
   }
 });
 
