@@ -5,7 +5,7 @@ import axios from "axios";
 //! Get Product details
 export const getProducts = createAsyncThunk("products/getProducts", async (payload, { rejectWithValue }) => {
   try {
-    // console.log(payload);
+    // console.log("payload:", payload);
 
     if (payload.customError) {
       return rejectWithValue(payload.customError);
@@ -13,8 +13,21 @@ export const getProducts = createAsyncThunk("products/getProducts", async (paylo
 
     const keyword = payload.keyword;
     const page = payload.page || 1;
+    const category = payload.category;
 
-    const { data } = await axios.get(`${keyword ? `/api/v1/products?keyword=${keyword}&page=${page}` : `/api/v1/products?page=${page}`}`);
+    let link = `/api/v1/products?page=` + page;
+
+    // const { data } = await axios.get(`${keyword ? `/api/v1/products?keyword=${keyword}&page=${page}` : `/api/v1/products?page=${page}`}`);
+
+    if (keyword) {
+      link += `&keyword=${keyword}`;
+    }
+
+    if (category) {
+      link += `&category=${category}`;
+    }
+
+    const { data } = await axios.get(link);
 
     return data;
   } catch (error) {

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProducts } from "../features/product/productSlice";
-import { Link } from "react-router-dom";
+
 import Product from "../components/Product";
 import Loader from "../components/Loader";
-import Layout from "../components/Layout";
-// import { useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+
 import NotFound from "../components/NotFound";
 import PageTitle from "../components/PageTitle";
 import Pagination from "../components/Pagination";
+import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Products = () => {
@@ -20,10 +19,14 @@ const Products = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
+
   const keyword = searchParams.get("keyword");
   const pageFromURL = parseInt(searchParams.get("page"), 10) || 1;
+  const category = searchParams.get("category");
 
   const [currentPage, setCurrentPage] = useState(pageFromURL);
+
+  const categories = ["mens fashion", "womens fashion", "tv,appliances", "mobiles,computers", "movies,games", "sports", "books"];
 
   const handlePageChange = function (page) {
     if (page !== currentPage) {
@@ -37,14 +40,30 @@ const Products = () => {
         newSearchParams.set("page", page);
       }
       navigate(`?${newSearchParams.toString()}`);
+
+      // navigate({
+      //   pathname: "/products",
+      //   search: `?${newSearchParams.toString()}`,
+      // });
     }
+  };
+
+  const handleCategories = function (category) {
+    const newSearchParams = new URLSearchParams(location.search);
+
+    console.log("category:", category);
+
+    newSearchParams.set("category", category);
+    newSearchParams.delete("page");
+
+    navigate(`?${newSearchParams.toString()}`);
   };
 
   useEffect(
     function () {
-      dispatch(getProducts({ keyword: keyword || null, page: currentPage }));
+      dispatch(getProducts({ keyword: keyword || null, page: currentPage, category }));
     },
-    [dispatch, keyword, currentPage]
+    [dispatch, keyword, currentPage, category]
   );
 
   return (
@@ -61,29 +80,13 @@ const Products = () => {
               </div>
 
               <ul className="flex-col gap-3 flex">
-                <li>
-                  <Link to="#">
+                {categories.map((category) => (
+                  <li className="cursor-pointer" key={category} onClick={() => handleCategories(category)}>
                     <div className="flex-col flex rounded-lg ">
-                      <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline ">All Products</h2>
+                      <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline capitalize">{category}</h2>
                     </div>
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="#">
-                    <div className="flex-col flex rounded-lg">
-                      <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline">Men's Fashion</h2>
-                    </div>
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="#">
-                    <div className="flex-col flex rounded-lg ">
-                      <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline">Women's fashion</h2>
-                    </div>
-                  </Link>
-                </li>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

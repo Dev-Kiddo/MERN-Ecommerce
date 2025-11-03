@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const Pagination = ({ currentPage, onPageChange, nextPageText = "Next", prevPageText = "Prev", firstPageText = "1st", lastPageText = "Last" }) => {
   const { totalPages, products } = useSelector((state) => state.product);
-  
 
   if (products.length === 0 || totalPages <= 1) return null;
 
@@ -19,6 +18,10 @@ const Pagination = ({ currentPage, onPageChange, nextPageText = "Next", prevPage
 
     return PageNumbers;
   };
+
+  // 1. page na - next last
+  // 2. page na 1st, prev
+  //
 
   return (
     <>
@@ -50,8 +53,8 @@ const Pagination = ({ currentPage, onPageChange, nextPageText = "Next", prevPage
           )}
 
           {/* Display Number */}
-          {getPageNumbers().map((number, index) => (
-            <li key={index}>
+          {getPageNumbers().map((number) => (
+            <li key={number}>
               <Link
                 onClick={() => onPageChange(number)}
                 to="#"
