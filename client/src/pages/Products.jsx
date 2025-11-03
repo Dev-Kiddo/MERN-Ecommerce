@@ -6,10 +6,11 @@ import Product from "../components/Product";
 import Loader from "../components/Loader";
 import Layout from "../components/Layout";
 import { useParams } from "react-router-dom";
+import NotFound from "../components/NotFound";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const { products, isLoading } = useSelector((state) => state.product);
+  const { products, isLoading, error } = useSelector((state) => state.product);
   // console.log("products:", products);
 
   const { keyword } = useParams();
@@ -18,59 +19,65 @@ const Products = () => {
     function () {
       dispatch(getProducts({ keyword: keyword || null }));
     },
-    [dispatch,keyword]
+    [dispatch, keyword]
   );
 
   return (
-    <div className="flex">
-      <div className="w-60 p-4 flex-col justify-start items-start gap-6 inline-flex">
-        <div className="w-full rounded-lg bg-gray-700 p-4">
-          <div className="mb-5">
-            <h6 className="text-white text-sm font-semibold leading-4 underline">CATEGORIES</h6>
-          </div>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="flex">
+          <div className="w-60 p-4 flex-col justify-start items-start gap-6 inline-flex">
+            <div className="w-full rounded-lg bg-gray-700 p-4">
+              <div className="mb-5">
+                <h6 className="text-white text-sm font-semibold leading-4 underline">CATEGORIES</h6>
+              </div>
 
-          <ul className="flex-col gap-3 flex">
-            <li>
-              <Link to="#">
-                <div className="flex-col flex rounded-lg ">
-                  <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline ">All Products</h2>
-                </div>
-              </Link>
-            </li>
+              <ul className="flex-col gap-3 flex">
+                <li>
+                  <Link to="#">
+                    <div className="flex-col flex rounded-lg ">
+                      <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline ">All Products</h2>
+                    </div>
+                  </Link>
+                </li>
 
-            <li>
-              <Link to="#">
-                <div className="flex-col flex rounded-lg">
-                  <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline">Men's Fashion</h2>
-                </div>
-              </Link>
-            </li>
+                <li>
+                  <Link to="#">
+                    <div className="flex-col flex rounded-lg">
+                      <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline">Men's Fashion</h2>
+                    </div>
+                  </Link>
+                </li>
 
-            <li>
-              <Link to="#">
-                <div className="flex-col flex rounded-lg ">
-                  <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline">Women's fashion</h2>
-                </div>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="p-4 w-full h-auto">
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <div className="p-3 border-2 border-dashed rounded-lg dark:border-gray-500">
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-2  md:grid-cols-3  lg:grid-cols-4">
-              {products?.map((product) => (
-                <Product product={product} key={product._id} />
-              ))}
+                <li>
+                  <Link to="#">
+                    <div className="flex-col flex rounded-lg ">
+                      <h2 className="text-gray-200 text-sm font-medium leading-snug hover:underline">Women's fashion</h2>
+                    </div>
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
-        )}
-      </div>
-    </div>
+
+          <div className="p-4 w-full h-auto">
+            <div className="p-3 border-2 border-dashed rounded-lg dark:border-gray-500">
+              {products.length > 0 ? (
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-2  md:grid-cols-3  lg:grid-cols-4">
+                  {products?.map((product) => (
+                    <Product product={product} key={product._id} />
+                  ))}
+                </div>
+              ) : (
+                <NotFound queryStr={keyword} />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

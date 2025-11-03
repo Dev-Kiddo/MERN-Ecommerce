@@ -48,7 +48,8 @@ const Navbar = () => {
   useEffect(
     function () {
       toast(error);
-      dispatch(removeError());
+
+      // dispatch(removeError());
     },
     [error, dispatch]
   );

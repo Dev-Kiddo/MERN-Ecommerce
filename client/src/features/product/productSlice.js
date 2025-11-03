@@ -6,7 +6,7 @@ import axios from "axios";
 export const getProducts = createAsyncThunk("products/getProducts", async (payload, { rejectWithValue }) => {
   try {
     // console.log(payload);
-    
+
     if (payload.customError) {
       return rejectWithValue(payload.customError);
     }
@@ -71,6 +71,7 @@ const productSlice = createSlice({
       console.log(action.payload);
 
       state.error = action.payload || "Something went wrong";
+      state.products = [];
     });
 
     //! Get Product Details
