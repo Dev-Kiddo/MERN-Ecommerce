@@ -12,8 +12,9 @@ export const getProducts = createAsyncThunk("products/getProducts", async (paylo
     }
 
     const keyword = payload.keyword;
+    const page = payload.page || 1;
 
-    const { data } = await axios.get(`${keyword ? `/api/v1/products?keyword=${keyword}` : `/api/v1/products`}`);
+    const { data } = await axios.get(`${keyword ? `/api/v1/products?keyword=${keyword}&page=${page}` : `/api/v1/products?page=${page}`}`);
 
     return data;
   } catch (error) {
@@ -44,6 +45,8 @@ const productSlice = createSlice({
     isLoading: false,
     error: null,
     product: null,
+    resultsPerpage: 0,
+    totalPages: 0,
   },
   //! reducers
   reducers: {
@@ -64,6 +67,10 @@ const productSlice = createSlice({
 
       state.products = action.payload.products;
       state.numOfProduct = action.payload.numofProducts;
+
+      state.resultsPerpage = action.payload?.resultsPerPage;
+      state.totalPages = action.payload?.totalPages;
+      state.resultsPerpage = action.payload?.resultsPerpage;
     });
 
     builders.addCase(getProducts.rejected, (state, action) => {

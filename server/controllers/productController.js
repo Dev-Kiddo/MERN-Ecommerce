@@ -36,7 +36,7 @@ export const getAllProducts = handleAsyncError(async function (req, res, next) {
 
   // console.log("Req_Query:", req.query);
 
-  const resultsPerpage = 6;
+  const resultsPerpage = 4;
 
   const apiFeatures = new APIFunctionality(productModel.find(), req.query).search().filter();
 

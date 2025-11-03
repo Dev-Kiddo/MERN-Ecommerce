@@ -60,6 +60,7 @@ const ProductDetails = () => {
 
   return (
     <>
+      <PageTitle title={product?.name} />
       {isLoading ? (
         <div className="py-5">
           <Loader />

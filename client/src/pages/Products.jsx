@@ -1,29 +1,55 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProducts } from "../features/product/productSlice";
 import { Link } from "react-router-dom";
 import Product from "../components/Product";
 import Loader from "../components/Loader";
 import Layout from "../components/Layout";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import NotFound from "../components/NotFound";
+import PageTitle from "../components/PageTitle";
+import Pagination from "../components/Pagination";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const { products, isLoading, error } = useSelector((state) => state.product);
+  const { products, isLoading, error, resultsPerPage, totalPage } = useSelector((state) => state.product);
   // console.log("products:", products);
 
-  const { keyword } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchParams = new URLSearchParams(location.search);
+  const keyword = searchParams.get("keyword");
+  const pageFromURL = parseInt(searchParams.get("page"), 10) || 1;
+
+  const [currentPage, setCurrentPage] = useState(pageFromURL);
+
+  const handlePageChange = function (page) {
+    if (page !== currentPage) {
+      setCurrentPage(page);
+
+      const newSearchParams = new URLSearchParams(location.search);
+
+      if (page === 1) {
+        newSearchParams.delete("page");
+      } else {
+        newSearchParams.set("page", page);
+      }
+      navigate(`?${newSearchParams.toString()}`);
+    }
+  };
 
   useEffect(
     function () {
-      dispatch(getProducts({ keyword: keyword || null }));
+      dispatch(getProducts({ keyword: keyword || null, page: currentPage }));
     },
-    [dispatch, keyword]
+    [dispatch, keyword, currentPage]
   );
 
   return (
     <>
+      <PageTitle title="Products" />
       {isLoading ? (
         <Loader />
       ) : (
@@ -73,6 +99,10 @@ const Products = () => {
               ) : (
                 <NotFound queryStr={keyword} />
               )}
+            </div>
+
+            <div className="my-3">
+              <Pagination currentPage={currentPage} onPageChange={handlePageChange} />
             </div>
           </div>
         </div>

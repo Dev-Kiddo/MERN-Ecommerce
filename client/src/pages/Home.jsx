@@ -35,7 +35,7 @@ const Home = () => {
 
   return (
     <>
-      {/* <Layout title="Home"> */}
+      <PageTitle title="Home" />
       <div className="mb-10">
         <ImageSlider />
       </div>
@@ -48,7 +48,6 @@ const Home = () => {
           <Product product={product} key={product._id} />
         ))}
       </div>
-      {/* </Layout> */}
     </>
   );
 };

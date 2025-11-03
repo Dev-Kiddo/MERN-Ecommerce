@@ -37,7 +37,7 @@ const Navbar = () => {
     const trimQuery = searchQuery.trim();
 
     if (trimQuery && trimQuery.length > 2) {
-      navigate(`/products/${trimQuery}`);
+      navigate(`/products?keyword=${trimQuery}`);
       setSearchQuery("");
     } else {
       dispatch(getProducts({ customError: "Please enter valid query" }));
