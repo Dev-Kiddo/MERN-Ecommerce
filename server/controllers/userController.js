@@ -14,7 +14,7 @@ export const registerUser = handleAsyncError(async function (req, res, next) {
 
   const myCloud = await cloudinary.uploader.upload(avatar, {
     folder: "ShopIQ",
-    width: 128,
+    width: 256,
     crop: "scale",
   });
 

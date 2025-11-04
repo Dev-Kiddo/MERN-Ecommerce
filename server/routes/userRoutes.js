@@ -22,7 +22,7 @@ router.route("/login").post(loginUser);
 router.route("/logout").post(logoutUser);
 router.route("/password/forgot").post(requestPasswordReset);
 router.route("/reset/:token").post(resetPassword);
-router.route("/profile").post(verifyUserAuth, getUserDetails);
+router.route("/profile").get(verifyUserAuth, getUserDetails);
 router.route("/password/update").post(verifyUserAuth, updateUserPassword);
 router.route("/profile/update").post(verifyUserAuth, updateProfile);
 

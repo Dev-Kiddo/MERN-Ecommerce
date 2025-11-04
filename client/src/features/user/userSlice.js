@@ -36,6 +36,17 @@ export const loginUser = createAsyncThunk("user/loginUser", async (payload, { re
   }
 });
 
+export const loaduser = createAsyncThunk("user/loadUser", async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await axios(`/api/v1/profile`);
+
+    return data;
+  } catch (error) {
+    console.log("Login Err:", error);
+    return rejectWithValue(error.response?.data.message || "Load User Failed");
+  }
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -89,6 +100,26 @@ const userSlice = createSlice({
     builders.addCase(loginUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload || "Login failed";
+      state.user = null;
+      state.isAuthenticated = false;
+    });
+
+    //? Load User
+    builders.addCase(loaduser.pending, (state) => {
+      state.loading = false;
+      state.error = null;
+    });
+
+    builders.addCase(loaduser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.user = action.payload?.user || null;
+      state.isAuthenticated = Boolean(action.payload?.user);
+    });
+
+    builders.addCase(loaduser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload || "Load user failed";
       state.user = null;
       state.isAuthenticated = false;
     });

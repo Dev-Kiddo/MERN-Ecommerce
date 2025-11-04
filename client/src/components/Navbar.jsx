@@ -58,9 +58,9 @@ const Navbar = () => {
   return (
     <nav className="w-full max-w-7xl mx-auto p-4">
       <div className="flex justify-between items-center">
-        <Link to="/" className="flex flex-grow-1 items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse" onClick={() => setIsMenuOpen(false)}>
+        <Link to="/" className="flex flex-grow-1 items-center sm:mb-0 space-x-3 rtl:space-x-reverse" onClick={() => setIsMenuOpen(false)}>
           <img src="/e-com-logo.svg" className="h-12" alt="Logo" />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ShopIQ</span>
+          <span className="hidden self-center text-2xl font-semibold whitespace-nowrap dark:text-white sm:inline-flex">ShopIQ</span>
         </Link>
 
         <div className="flex gap-4 flex-grow-2 justify-evenly items-center sm:justify-between">
@@ -135,7 +135,7 @@ const Navbar = () => {
 
             {isAuthenticated && (
               <Link to="/profile" className="">
-                <img className="w-18 h-12 object-cover rounded-full" src={user ? user?.avatar?.url : "/images/user-profile-icon.svg"} alt={user && user.name} />
+                <img className="w-22 rounded-full object-cover sm:w-25" src={user ? user?.avatar?.url : "/images/user-profile-icon.svg"} alt={user && user.name} />
               </Link>
             )}
 
