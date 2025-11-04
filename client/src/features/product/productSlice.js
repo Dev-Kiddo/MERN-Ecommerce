@@ -31,7 +31,7 @@ export const getProducts = createAsyncThunk("products/getProducts", async (paylo
 
     return data;
   } catch (error) {
-    console.log(error);
+    console.log("GetProductsErr:", error);
     return rejectWithValue(error.response?.data.message || "An error occured");
   }
 });

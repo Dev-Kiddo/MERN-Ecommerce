@@ -18,11 +18,12 @@ const Navbar = () => {
   const { products, isLoading, error } = useSelector((state) => state.product);
   // console.log(products);
 
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isAuthenticated = true;
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -123,6 +124,12 @@ const Navbar = () => {
             {!isAuthenticated && (
               <Link to="/register" className="">
                 <PersonAddIcon className="" />
+              </Link>
+            )}
+
+            {isAuthenticated && (
+              <Link to="/profile" className="">
+                <img className="w-15 h-15" src="/images/user-profile-icon.svg" alt="" />
               </Link>
             )}
 

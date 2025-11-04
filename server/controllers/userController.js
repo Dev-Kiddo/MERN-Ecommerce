@@ -7,6 +7,8 @@ import crypto from "crypto";
 
 // Register User
 export const registerUser = handleAsyncError(async function (req, res, next) {
+  console.log(req.body);
+
   const { name, email, password } = req.body;
 
   const user = await userModel.create({
