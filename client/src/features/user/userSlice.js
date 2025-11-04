@@ -12,7 +12,7 @@ export const registerUser = createAsyncThunk("user/registerUser", async (payload
 
     const { data } = await axios.post(`/api/v1/register`, payload.formData);
 
-    console.log("data:", data);
+    // console.log("data:", data);
 
     return data;
   } catch (error) {
@@ -46,10 +46,8 @@ const userSlice = createSlice({
     isAuthenticated: false,
   },
   reducers: {
-    removeError: (state) => {
-      state.error = null;
-    },
-    removeSuccess: (state) => (state.success = false),
+    removeError: (state) => void (state.error = null),
+    removeSuccess: (state) => void (state.success = false),
   },
   extraReducers: (builders) => {
     builders.addCase(registerUser.pending, (state) => {

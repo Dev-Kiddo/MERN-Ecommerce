@@ -101,13 +101,19 @@ const Navbar = () => {
                 } md:relative md:bg-transparent md:right-0 md:top-0 md:inline-flex md:space-x-8 md:mt-0`}
               >
                 <li onClick={() => setIsMenuOpen(false)} className="hover:underline">
-                  <Link to="/products">Products</Link>
+                  <Link className="text-sm" to="/products">
+                    Products
+                  </Link>
                 </li>
                 <li onClick={() => setIsMenuOpen(false)} className="hover:underline">
-                  <Link to="/about">About</Link>
+                  <Link className="text-sm" to="/about">
+                    About
+                  </Link>
                 </li>
                 <li onClick={() => setIsMenuOpen(false)} className="hover:underline">
-                  <Link to="/contact">Contact</Link>
+                  <Link className="text-sm" to="/contact">
+                    Contact
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -129,7 +135,7 @@ const Navbar = () => {
 
             {isAuthenticated && (
               <Link to="/profile" className="">
-                <img className="w-15 h-15" src="/images/user-profile-icon.svg" alt="" />
+                <img className="w-18 h-12 object-cover rounded-full" src={user ? user?.avatar?.url : "/images/user-profile-icon.svg"} alt={user && user.name} />
               </Link>
             )}
 

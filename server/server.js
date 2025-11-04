@@ -2,6 +2,13 @@ import app from "./app.js";
 import dotenv from "dotenv";
 dotenv.config({ path: "./config/config.env" });
 import { connectDb } from "./config/db.js";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
 
 // Handle Execption Error
 process.on("uncaughtException", (err) => {

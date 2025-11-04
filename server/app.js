@@ -5,6 +5,7 @@ import userRouter from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
 import orderRouter from "./routes/orderRoutes.js";
 // import cors from "cors";
+import fileUpload from "express-fileupload";
 
 const app = express();
 
@@ -12,6 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 // app.use(cors());
+app.use(fileUpload());
 
 // Routes
 app.use("/api/v1", productRouter);

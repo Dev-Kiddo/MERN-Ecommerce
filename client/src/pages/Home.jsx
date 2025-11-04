@@ -40,7 +40,7 @@ const Home = () => {
         <ImageSlider />
       </div>
 
-      <h2 className="text-5xl text-white text-center my-6">Trending Now</h2>
+      <h2 className="text-4xl text-white text-center my-6">Trending Now</h2>
 
       {isLoading && <Loader />}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
