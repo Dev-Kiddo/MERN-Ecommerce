@@ -1,11 +1,32 @@
-import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+
+import { Link, useNavigate } from "react-router-dom";
+
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../features/user/userSlice";
+import { toast } from "react-toastify";
 
 const UserDashboard = ({ user }) => {
+  const { loading, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleLogout = function () {
     console.log("Logout successfully");
+    dispatch(logoutUser());
+    toast.success("Logout successfully")
+    navigate("/");
   };
+
+  useEffect(
+    function () {
+      if (error) {
+        toast(error);
+      }
+    },
+    [error]
+  );
+
   return (
     <section className="relative pt-36 pb-24">
       <img src="/images/profile-banner.jpg" alt="cover-image" className="w-full absolute top-0 left-0 z-0 h-60 object-cover rounded-xl" />
@@ -48,7 +69,7 @@ const UserDashboard = ({ user }) => {
             className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none rounded-full border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-1 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-700"
             onClick={handleLogout}
           >
-            Logout
+            {loading ? "logging out..." : "Logout"}
           </button>
         </div>
       </div>

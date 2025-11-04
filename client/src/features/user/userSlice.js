@@ -47,6 +47,18 @@ export const loaduser = createAsyncThunk("user/loadUser", async (_, { rejectWith
   }
 });
 
+export const logoutUser = createAsyncThunk("user/logout", async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post(`/api/v1/logout`);
+    console.log("Logout data", data);
+
+    return data;
+  } catch (error) {
+    console.log("Logout Err:", error);
+    return rejectWithValue(error.response?.data.message || "Load User Failed");
+  }
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -85,7 +97,7 @@ const userSlice = createSlice({
 
     //? Login user
     builders.addCase(loginUser.pending, (state) => {
-      state.loading = false;
+      state.loading = true;
       state.error = null;
     });
 
@@ -106,7 +118,7 @@ const userSlice = createSlice({
 
     //? Load User
     builders.addCase(loaduser.pending, (state) => {
-      state.loading = false;
+      state.loading = true;
       state.error = null;
     });
 
@@ -120,6 +132,27 @@ const userSlice = createSlice({
     builders.addCase(loaduser.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload || "Load user failed";
+      state.user = null;
+      state.isAuthenticated = false;
+    });
+
+    //? Logout User
+    builders.addCase(logoutUser.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builders.addCase(logoutUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.user = null;
+      state.success = false;
+      state.isAuthenticated = false;
+    });
+
+    builders.addCase(logoutUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload || "Logout user failed";
       state.user = null;
       state.isAuthenticated = false;
     });
