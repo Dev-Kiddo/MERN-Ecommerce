@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../features/user/userSlice";
 import { toast } from "react-toastify";
+import Profile from "./Profile";
 
 const UserDashboard = ({ user }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const { loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -14,7 +16,7 @@ const UserDashboard = ({ user }) => {
   const handleLogout = function () {
     console.log("Logout successfully");
     dispatch(logoutUser());
-    toast.success("Logout successfully")
+    toast.success("Logout successfully");
     navigate("/");
   };
 
@@ -44,34 +46,44 @@ const UserDashboard = ({ user }) => {
         <div className="flex justify-between items-center mt-10 text-gray-300">
           {user.role === "admin" && (
             <Link
-              className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none rounded-full border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-1 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-700"
-              to="/admin/dashboard"
+              className={`${
+                isOpen ? "text-white border-gray-400" : "text-gray-400 border-gray-500"
+              } py-2.5 px-5 me-2 mb-2 text-sm font-medium rounded-full border hover:bg-gray-100 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:hover:text-white dark:hover:bg-gray-700`}
+              to="#"
             >
               Admin Dashboard
             </Link>
           )}
 
           <Link
-            className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none rounded-full border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-1 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-700"
-            to="/orders/user"
+            className={`${
+              isOpen ? "text-white border-gray-400" : "text-gray-400 border-gray-500"
+            } py-2.5 px-5 me-2 mb-2 text-sm font-medium rounded-full border hover:bg-gray-100 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:hover:text-white dark:hover:bg-gray-700`}
+            to="#"
           >
             Orders
           </Link>
 
           <Link
-            className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none rounded-full border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-1 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-700"
-            to="/profile"
+            className={`${
+              isOpen ? "text-white border-gray-400" : "text-gray-400 border-gray-500"
+            } py-2.5 px-5 me-2 mb-2 text-sm font-medium rounded-full border hover:bg-gray-100 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:hover:text-white dark:hover:bg-gray-700`}
+            onClick={() => setIsOpen((prev) => !prev)}
           >
             Account
           </Link>
 
           <button
-            className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none rounded-full border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-1 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-700"
+            className={`${
+              isOpen ? "text-white border-gray-400" : "text-gray-400 border-gray-500"
+            } py-2.5 px-5 me-2 mb-2 text-sm font-medium rounded-full border hover:bg-gray-100 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:hover:text-white dark:hover:bg-gray-700`}
             onClick={handleLogout}
           >
             {loading ? "logging out..." : "Logout"}
           </button>
         </div>
+
+        <div>{isOpen && <Profile user={user} />}</div>
       </div>
     </section>
   );

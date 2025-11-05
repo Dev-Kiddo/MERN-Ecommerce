@@ -188,11 +188,21 @@ export const updateUserPassword = handleAsyncError(async function (req, res, nex
 // Updating user Profile
 
 export const updateProfile = handleAsyncError(async function (req, res, next) {
-  const { name, email } = req.body;
+  const { name, email, avatar } = req.body;
+
+  const myCloud = await cloudinary.uploader.upload(avatar, {
+    folder: "ShopIQ",
+    width: 256,
+    crop: "scale",
+  });
 
   const updateUserDetails = {
     name,
     email,
+    avatar: {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    },
   };
 
   const user = await userModel.findByIdAndUpdate(req.user.id, updateUserDetails, { new: true, runValidators: true });

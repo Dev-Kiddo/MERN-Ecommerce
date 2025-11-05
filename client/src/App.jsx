@@ -12,10 +12,15 @@ import { useEffect } from "react";
 import { loaduser } from "./features/user/userSlice";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./pages/Profile";
+import UpdateProfile from "./components/UpdateProfile";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  // console.log(user);
+  
 
   useEffect(
     function () {
@@ -37,7 +42,16 @@ function App() {
           <Route path="/login" element={<Login />} />
 
           <Route
-            path="/profile"
+            path="/updateuser"
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <UpdateProfile user={user} />
+              </ProtectedRoute>
+            }
+          ></Route>
+
+          <Route
+            path="/dashboard"
             element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
                 <UserDashboard user={user} />

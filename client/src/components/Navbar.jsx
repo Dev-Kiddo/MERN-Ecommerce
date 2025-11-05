@@ -97,7 +97,7 @@ const Navbar = () => {
             <div className="block w-full md:inline-flex">
               <ul
                 className={`${
-                  isMenuOpen ? "absolute top-1/5 right-1/13 bg-gray-900 p-5 rounded-lg font-medium z-10" : "hidden"
+                  isMenuOpen ? " fixed top-1/9 right-1/30 bg-gray-900 p-5 rounded-lg font-medium z-10 drop-shadow-neutral-300 " : "hidden"
                 } md:relative md:bg-transparent md:right-0 md:top-0 md:inline-flex md:space-x-8 md:mt-0`}
               >
                 <li onClick={() => setIsMenuOpen(false)} className="hover:underline">
@@ -134,7 +134,7 @@ const Navbar = () => {
             )}
 
             {isAuthenticated && (
-              <Link to="/profile" className="">
+              <Link to="/dashboard" className="">
                 <img className="w-22 rounded-full object-cover sm:w-25" src={user ? user?.avatar?.url : "/images/user-profile-icon.svg"} alt={user && user.name} />
               </Link>
             )}

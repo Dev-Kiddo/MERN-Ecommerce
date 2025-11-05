@@ -47,7 +47,7 @@ export const loaduser = createAsyncThunk("user/loadUser", async (_, { rejectWith
   }
 });
 
-export const logoutUser = createAsyncThunk("user/logout", async (_, { rejectWithValue }) => {
+export const logoutUser = createAsyncThunk("user/logoutUser", async (_, { rejectWithValue }) => {
   try {
     const { data } = await axios.post(`/api/v1/logout`);
     console.log("Logout data", data);
@@ -56,6 +56,18 @@ export const logoutUser = createAsyncThunk("user/logout", async (_, { rejectWith
   } catch (error) {
     console.log("Logout Err:", error);
     return rejectWithValue(error.response?.data.message || "Load User Failed");
+  }
+});
+
+export const updateUser = createAsyncThunk("user/updateUser", async (payload, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post(`/api/v1/profile/update`, payload.formData);
+    console.log("Updated User Data", data);
+
+    return data;
+  } catch (error) {
+    console.log("Updated User Err:", error);
+    return rejectWithValue(error.response?.data.message || "Updated User Failed");
   }
 });
 
@@ -141,7 +153,7 @@ const userSlice = createSlice({
       state.loading = true;
       state.error = null;
     });
-
+    
     builders.addCase(logoutUser.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
@@ -149,10 +161,33 @@ const userSlice = createSlice({
       state.success = false;
       state.isAuthenticated = false;
     });
-
+    
     builders.addCase(logoutUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload || "Logout user failed";
+      state.user = null;
+      state.isAuthenticated = false;
+    });
+    
+    //? Update User
+    builders.addCase(updateUser.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    
+    builders.addCase(updateUser.fulfilled, (state, action) => {
+      console.log("updateActionPayload:",action.payload);
+      
+      state.loading = false;
+      state.error = null;
+      state.user = action.payload.user;
+      state.success = action.payload.success;
+      state.isAuthenticated = Boolean(action.payload?.user);
+    });
+    
+    builders.addCase(updateUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload || "Update User failed";
       state.user = null;
       state.isAuthenticated = false;
     });
