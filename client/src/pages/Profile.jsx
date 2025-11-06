@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { removeSuccess, updatePassword } from "../features/user/userSlice";
+import { removeError, removeSuccess, updatePassword } from "../features/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 const Profile = ({ user }) => {
   const dispatch = useDispatch();
-  const { success, error } = useSelector((state) => state.user);
+  const { success, loading, error } = useSelector((state) => state.user);
   const focusForm = useRef(null);
   const date = new Date(user.createdAt);
   const normalDate = date.toLocaleString().split(",")[0];
@@ -141,7 +141,7 @@ const Profile = ({ user }) => {
             className="inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:ring-2 sm:w-auto"
             onClick={handleUpdatePassword}
           >
-            Update Password
+            {loading ? "Updating Password..." : "Update Password"}
           </button>
         ) : (
           <button

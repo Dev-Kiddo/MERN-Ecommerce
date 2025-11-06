@@ -87,6 +87,32 @@ export const updatePassword = createAsyncThunk("user/updatePassword", async (pay
   }
 });
 
+// Forgot User Password
+export const forgotPassword = createAsyncThunk("user/forgotPassword", async (payload, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post(`/api/v1/password/forgot`, payload.payload);
+    console.log("Forgot User password", data);
+
+    return data;
+  } catch (error) {
+    console.log("Forgot Password Err:", error);
+    return rejectWithValue(error.response?.data.message || "Send Forgot Password Failed");
+  }
+});
+
+// Reset User Password
+export const resetPassword = createAsyncThunk("user/resetPassword", async (payload, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post(`/api/v1/reset/${payload.token}`, payload.data);
+    console.log("Forgot User password", data);
+
+    return data;
+  } catch (error) {
+    console.log("Forgot Password Err:", error);
+    return rejectWithValue(error.response?.data.message || "Send Forgot Password Failed");
+  }
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -95,6 +121,7 @@ const userSlice = createSlice({
     error: null,
     success: false,
     isAuthenticated: false,
+    message: null,
   },
   reducers: {
     removeError: (state) => void (state.error = null),
@@ -170,7 +197,7 @@ const userSlice = createSlice({
       state.error = null;
     });
 
-    builders.addCase(logoutUser.fulfilled, (state, action) => {
+    builders.addCase(logoutUser.fulfilled, (state) => {
       state.loading = false;
       state.error = null;
       state.user = null;
@@ -229,6 +256,53 @@ const userSlice = createSlice({
 
       state.loading = false;
       state.error = action.payload || "Update Password Failed";
+    });
+
+    //? Forgot User Password
+    builders.addCase(forgotPassword.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builders.addCase(forgotPassword.fulfilled, (state, action) => {
+      console.log("ForgotActionPayload:", action.payload);
+
+      state.loading = false;
+      state.error = null;
+      state.success = action.payload.success;
+      state.message = action.payload.message;
+      state.isAuthenticated = Boolean(action.payload?.user);
+    });
+
+    builders.addCase(forgotPassword.rejected, (state, action) => {
+      console.log("updatePasswordPayload:", action.payload);
+
+      state.loading = false;
+      state.error = action.payload || "Update Password Failed";
+    });
+
+    //? Reset User Password
+    builders.addCase(resetPassword.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builders.addCase(resetPassword.fulfilled, (state, action) => {
+      console.log("ResetActionPayload:", action.payload);
+
+      state.loading = false;
+      state.error = null;
+      state.success = action.payload.success;
+      state.message = action.payload.message;
+      state.user = null;
+      state.isAuthenticated = Boolean(action.payload?.user);
+    });
+
+    builders.addCase(resetPassword.rejected, (state, action) => {
+      console.log("ResetActionPayload:", action.payload);
+
+      state.loading = false;
+      state.error = action.payload || "Reset Password Failed";
     });
   },
 });

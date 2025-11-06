@@ -12,15 +12,15 @@ import { useEffect } from "react";
 import { loaduser } from "./features/user/userSlice";
 
 import ProtectedRoute from "./components/ProtectedRoute";
-import Profile from "./pages/Profile";
 import UpdateProfile from "./components/UpdateProfile";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   // console.log(user);
-  
 
   useEffect(
     function () {
@@ -40,6 +40,8 @@ function App() {
           <Route path="/products/:keyword" element={<Products />} />
           <Route path="/register" element={<RegisterUser />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/password/forgot" element={<ForgotPassword />} />
+          <Route path="/reset/:token" element={<ResetPassword />} />
 
           <Route
             path="/updateuser"

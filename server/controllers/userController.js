@@ -80,7 +80,6 @@ export const logoutUser = handleAsyncError(async function (req, res, next) {
 });
 
 // Forgot Password
-
 export const requestPasswordReset = handleAsyncError(async function (req, res, next) {
   const user = await userModel.findOne({ email: req.body.email });
 
@@ -99,7 +98,7 @@ export const requestPasswordReset = handleAsyncError(async function (req, res, n
     return next(new HandleError("Couldn't save reset token, try again later", 500));
   }
 
-  const resetPasswordURL = `http://localhost/api/v1/reset/${resetToken}`;
+  const resetPasswordURL = `${req.protocol}://${req.get("host")}/reset/${resetToken}`;
 
   const message = `Use the following link to reset your password: ${resetPasswordURL} \n\n This Link will expire in 30 minutes. \n\n If you didn't request a password reset, Please ignore this message`;
 
@@ -130,7 +129,7 @@ export const resetPassword = handleAsyncError(async function (req, res, next) {
   const user = await userModel.findOne({ resetPasswordToken, resetPasswordExpire: { $gt: Date.now() } });
 
   if (!user) {
-    return next(new HandleError("Reset password Token is invalid or hass been expired", 400));
+    return next(new HandleError("Reset password Token is invalid or has been expired", 400));
   }
 
   const { password, confirmPassword } = req.body;
