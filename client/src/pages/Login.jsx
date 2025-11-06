@@ -40,7 +40,7 @@ const Login = () => {
         // console.log(error);
 
         toast(error);
-        dispatch(removeError());
+        // dispatch(removeError());
       }
     },
     [dispatch, error]
@@ -69,6 +69,8 @@ const Login = () => {
     <>
       <PageTitle title="User Login" />
       <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
+        <h3 className="text-center text-3xl text-white font-bold mb-8 uppercase">Login</h3>
+
         <div className="mb-5">
           <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Your email

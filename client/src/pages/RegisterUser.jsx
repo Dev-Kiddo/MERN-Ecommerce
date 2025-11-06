@@ -49,6 +49,7 @@ const RegisterUser = () => {
       };
 
       reader.onerror = (err) => {
+        toast.error("Unable to Upload, Error reading file");
         console.error("Error reading file:", err.target.error);
       };
     } else {
@@ -97,6 +98,7 @@ const RegisterUser = () => {
   return (
     <>
       <PageTitle title="User Registration" />
+      <h3 className="text-center text-3xl text-white font-bold mb-8 uppercase">Register</h3>
       <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
         <div className="flex items-center justify-center mb-5">
           <img className="w-15 h-15 rounded-full object-cover" src={avatar ? avatar : "/images/user-profile-icon.svg"} alt="preview" />

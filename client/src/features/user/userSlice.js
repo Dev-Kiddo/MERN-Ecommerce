@@ -3,7 +3,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Register User
-
 export const registerUser = createAsyncThunk("user/registerUser", async (payload, { rejectWithValue }) => {
   try {
     if (payload.customError) {
@@ -21,6 +20,7 @@ export const registerUser = createAsyncThunk("user/registerUser", async (payload
   }
 });
 
+// Login User
 export const loginUser = createAsyncThunk("user/loginUser", async (payload, { rejectWithValue }) => {
   try {
     if (payload.customError) {
@@ -36,6 +36,7 @@ export const loginUser = createAsyncThunk("user/loginUser", async (payload, { re
   }
 });
 
+// Load User
 export const loaduser = createAsyncThunk("user/loadUser", async (_, { rejectWithValue }) => {
   try {
     const { data } = await axios(`/api/v1/profile`);
@@ -47,6 +48,7 @@ export const loaduser = createAsyncThunk("user/loadUser", async (_, { rejectWith
   }
 });
 
+// Logout User
 export const logoutUser = createAsyncThunk("user/logoutUser", async (_, { rejectWithValue }) => {
   try {
     const { data } = await axios.post(`/api/v1/logout`);
@@ -59,6 +61,7 @@ export const logoutUser = createAsyncThunk("user/logoutUser", async (_, { reject
   }
 });
 
+// Update User
 export const updateUser = createAsyncThunk("user/updateUser", async (payload, { rejectWithValue }) => {
   try {
     const { data } = await axios.post(`/api/v1/profile/update`, payload.formData);
@@ -68,6 +71,19 @@ export const updateUser = createAsyncThunk("user/updateUser", async (payload, { 
   } catch (error) {
     console.log("Updated User Err:", error);
     return rejectWithValue(error.response?.data.message || "Updated User Failed");
+  }
+});
+
+// Update User Password
+export const updatePassword = createAsyncThunk("user/updatePassword", async (payload, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post(`/api/v1/password/update`, payload.formData);
+    console.log("Updated User password", data);
+
+    return data;
+  } catch (error) {
+    console.log("Update Password Err:", error);
+    return rejectWithValue(error.response?.data.message || "Update Password Failed");
   }
 });
 
@@ -153,7 +169,7 @@ const userSlice = createSlice({
       state.loading = true;
       state.error = null;
     });
-    
+
     builders.addCase(logoutUser.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
@@ -161,35 +177,58 @@ const userSlice = createSlice({
       state.success = false;
       state.isAuthenticated = false;
     });
-    
+
     builders.addCase(logoutUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload || "Logout user failed";
       state.user = null;
       state.isAuthenticated = false;
     });
-    
+
     //? Update User
     builders.addCase(updateUser.pending, (state) => {
       state.loading = true;
       state.error = null;
     });
-    
+
     builders.addCase(updateUser.fulfilled, (state, action) => {
-      console.log("updateActionPayload:",action.payload);
-      
+      console.log("updateActionPayload:", action.payload);
+
       state.loading = false;
       state.error = null;
       state.user = action.payload.user;
       state.success = action.payload.success;
       state.isAuthenticated = Boolean(action.payload?.user);
     });
-    
+
     builders.addCase(updateUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload || "Update User failed";
       state.user = null;
       state.isAuthenticated = false;
+    });
+
+    //? Update User Password
+    builders.addCase(updatePassword.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builders.addCase(updatePassword.fulfilled, (state, action) => {
+      console.log("updateActionPayload:", action.payload);
+
+      state.loading = false;
+      state.error = null;
+      state.user = action.payload.user;
+      state.success = action.payload.success;
+      state.isAuthenticated = Boolean(action.payload?.user);
+    });
+
+    builders.addCase(updatePassword.rejected, (state, action) => {
+      console.log("updatePasswordPayload:", action.payload);
+
+      state.loading = false;
+      state.error = action.payload || "Update Password Failed";
     });
   },
 });

@@ -5,14 +5,15 @@ import Loader from "../components/Loader";
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../features/user/userSlice";
+import { removeSuccess, updateUser } from "../features/user/userSlice";
+import { toast } from "react-toastify";
 
 const UpdateProfile = ({ user }) => {
-  console.log(user);
+  // console.log(user);
   const dispatch = useDispatch();
 
-  const { user: userData, loading, error } = useSelector((state) => state.user);
-  console.log(userData, loading, error);
+  const { user: userData, success, loading, error } = useSelector((state) => state.user);
+  // console.log(userData, loading, error);
 
   const formFocus = useRef(null);
 
@@ -40,6 +41,7 @@ const UpdateProfile = ({ user }) => {
       };
 
       reader.onerror = (err) => {
+        toast.error("Unable to Upload, Error reading file");
         console.error("Error reading file:", err.target.error);
       };
     } else {
@@ -50,22 +52,41 @@ const UpdateProfile = ({ user }) => {
   const handleSubmit = function (e) {
     e.preventDefault();
 
-    console.log(avatar);
-    
+    // console.log(avatar);
+
     const payload = new FormData();
 
     payload.append("name", formData.name);
-    payload.append("email", formData.email)
-    payload.append("avatar", avatar)
+    payload.append("email", formData.email);
+    payload.append("avatar", avatar);
 
-    console.log("formData");
+    // console.log("formData");
 
-    dispatch(updateUser({formData: payload}));
+    dispatch(updateUser({ formData: payload }));
   };
 
   useEffect(function () {
     formFocus.current.focus();
   }, []);
+
+  useEffect(
+    function () {
+      if (success) {
+        toast.success("Profile Updated Successfully");
+        dispatch(removeSuccess());
+      }
+    },
+    [success, dispatch]
+  );
+
+  useEffect(
+    function () {
+      if (error) {
+        toast(error);
+      }
+    },
+    [error]
+  );
 
   return (
     <>

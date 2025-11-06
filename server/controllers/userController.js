@@ -190,6 +190,14 @@ export const updateUserPassword = handleAsyncError(async function (req, res, nex
 export const updateProfile = handleAsyncError(async function (req, res, next) {
   const { name, email, avatar } = req.body;
 
+  if (avatar) {
+    const user = await userModel.findById(req.user.id);
+
+    const imageId = user.avatar.public_id;
+
+    await cloudinary.uploader.destroy(imageId);
+  }
+
   const myCloud = await cloudinary.uploader.upload(avatar, {
     folder: "ShopIQ",
     width: 256,
