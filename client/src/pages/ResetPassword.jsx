@@ -1,16 +1,18 @@
 import React from "react";
 import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PageTitle from "../components/PageTitle";
 import { useSelector, useDispatch } from "react-redux";
 import { removeSuccess, resetPassword } from "../features/user/userSlice";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 const ResetPassword = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  console.log("params:", params);
 
   const { success, error, message } = useSelector((state) => state.user);
 
@@ -40,11 +42,12 @@ const ResetPassword = () => {
   useEffect(
     function () {
       if (success) {
-        toast.success(message);
+        toast(message);
         dispatch(removeSuccess());
+        console.log("success removed");
       }
     },
-    [success, message, dispatch]
+    [dispatch, message, success]
   );
 
   useEffect(

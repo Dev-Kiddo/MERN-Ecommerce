@@ -131,6 +131,7 @@ const userSlice = createSlice({
     builders.addCase(registerUser.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.message = null;
     });
 
     builders.addCase(registerUser.fulfilled, (state, action) => {
@@ -154,6 +155,7 @@ const userSlice = createSlice({
     builders.addCase(loginUser.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.message = null;
     });
 
     builders.addCase(loginUser.fulfilled, (state, action) => {
@@ -162,6 +164,7 @@ const userSlice = createSlice({
       state.success = action.payload.success;
       state.user = action.payload?.user || null;
       state.isAuthenticated = Boolean(action.payload?.user);
+      state.message = action.payload.user && "Login Successfull";
     });
 
     builders.addCase(loginUser.rejected, (state, action) => {
@@ -216,6 +219,7 @@ const userSlice = createSlice({
     builders.addCase(updateUser.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.message = null;
     });
 
     builders.addCase(updateUser.fulfilled, (state, action) => {
@@ -239,6 +243,7 @@ const userSlice = createSlice({
     builders.addCase(updatePassword.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.message = null;
     });
 
     builders.addCase(updatePassword.fulfilled, (state, action) => {
@@ -262,6 +267,7 @@ const userSlice = createSlice({
     builders.addCase(forgotPassword.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.message = null;
     });
 
     builders.addCase(forgotPassword.fulfilled, (state, action) => {
@@ -285,6 +291,7 @@ const userSlice = createSlice({
     builders.addCase(resetPassword.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.message = null;
     });
 
     builders.addCase(resetPassword.fulfilled, (state, action) => {
@@ -292,10 +299,10 @@ const userSlice = createSlice({
 
       state.loading = false;
       state.error = null;
-      state.success = action.payload.success;
-      state.message = action.payload.message;
       state.user = null;
-      state.isAuthenticated = Boolean(action.payload?.user);
+      state.success = action.payload.success;
+      state.message = action.payload.success && "Password reset Successfully, Please login with new password";
+      state.isAuthenticated = false;
     });
 
     builders.addCase(resetPassword.rejected, (state, action) => {

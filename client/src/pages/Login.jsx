@@ -8,7 +8,7 @@ import Loader from "../components/Loader";
 import { removeError } from "../features/user/userSlice";
 
 const Login = () => {
-  const { user, loading, error, success, isAuthenticated } = useSelector((state) => state.user);
+  const { loading, error, message, success, isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -58,11 +58,11 @@ const Login = () => {
   useEffect(
     function () {
       if (success) {
-        toast.success("Login Successful");
+        toast.success(message);
         dispatch(removeSuccess());
       }
     },
-    [dispatch, success]
+    [dispatch, success, message]
   );
 
   return (

@@ -5,6 +5,7 @@ import { forgotPassword, removeSuccess } from "../features/user/userSlice";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import PageTitle from "../components/PageTitle";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,6 @@ const ForgotPassword = () => {
     };
     e.preventDefault();
     dispatch(forgotPassword({ payload }));
-    navigate("/reset/223");
   };
 
   useEffect(
@@ -43,6 +43,7 @@ const ForgotPassword = () => {
 
   return (
     <>
+      <PageTitle title="Forgot Password" />
       <h3 className="text-center text-3xl text-white font-bold mb-8 uppercase">Forgot Password</h3>
       <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
         <div className="mb-5">
