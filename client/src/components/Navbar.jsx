@@ -18,6 +18,8 @@ const Navbar = () => {
   const { products, isLoading, error } = useSelector((state) => state.product);
   // console.log(products);
 
+  const { cartItems } = useSelector((state) => state.cart);
+
   const { user, isAuthenticated } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
@@ -122,7 +124,7 @@ const Navbar = () => {
               <Link to="/cart">
                 <ShoppingCartIcon />
                 <span className="absolute top-1 -right-3 transform -translate-x-1/2 -translate-y-1/2 text-xs bg-blue-700 text-white rounded-full w-4 h-4 flex items-center justify-center">
-                  6
+                  {cartItems.length}
                 </span>
               </Link>
             </div>

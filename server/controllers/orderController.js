@@ -28,7 +28,7 @@ export const createNewOrder = handleAsyncError(async function (req, res, next) {
 });
 
 // Getting Single Order
-export const getSignleOrder = handleAsyncError(async function (req, res, next) {
+export const getSingleOrder = handleAsyncError(async function (req, res, next) {
   const order = await orderModel.findById(req.params.id).populate("user", "name email");
 
   // console.log("order", order);

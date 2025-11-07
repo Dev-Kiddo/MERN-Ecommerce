@@ -1,11 +1,11 @@
 import express from "express";
-import { createNewOrder, allMyOrders, getSignleOrder, getAllOrders, updateOrderStatus, deleteOrder } from "../controllers/orderController.js";
+import { createNewOrder, allMyOrders, getSingleOrder, getAllOrders, updateOrderStatus, deleteOrder } from "../controllers/orderController.js";
 import { verifyUserAuth, roleBasedAccess } from "../middlewares/userAuth.js";
 const router = express.Router();
 
 router.route("/new/order").post(verifyUserAuth, createNewOrder);
 
-router.route("/admin/order/:id").post(verifyUserAuth, roleBasedAccess("admin"), getSignleOrder).delete(verifyUserAuth, roleBasedAccess("admin"), deleteOrder);
+router.route("/admin/order/:id").post(verifyUserAuth, roleBasedAccess("admin"), getSingleOrder).delete(verifyUserAuth, roleBasedAccess("admin"), deleteOrder);
 
 //Get All My Orders
 router.route("/admin/orders").get(verifyUserAuth, roleBasedAccess("admin"), getAllOrders);

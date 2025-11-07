@@ -51,7 +51,7 @@ const Products = () => {
   const handleCategories = function (category) {
     const newSearchParams = new URLSearchParams(location.search);
 
-    console.log("category:", category);
+    // console.log("category:", category);
 
     newSearchParams.set("category", category);
     newSearchParams.delete("page");
