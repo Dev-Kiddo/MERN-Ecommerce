@@ -5,11 +5,14 @@ import { addItemsToCart, removeCartError, removeCartSuccess, removeItemFromCart 
 import { toast } from "react-toastify";
 
 const CartItem = ({ cartItem }) => {
-  console.log(cartItem);
+  // console.log(cartItem);
   const dispatch = useDispatch();
-  const { loading, error, success, message, cartItems } = useSelector((state) => state.cart);
+  const { loading, error, success, message } = useSelector((state) => state.cart);
 
   const [quantity, setQuantity] = useState(cartItem.quantity);
+
+
+
 
   const handleQuantity = function (e) {
     if (e.target.id === "decrement-button") {
@@ -22,12 +25,12 @@ const CartItem = ({ cartItem }) => {
 
   const handleUpdateQuantity = function (e) {
     e.preventDefault();
-    console.log("clicked");
+    // console.log("clicked");
     console.log(cartItem.quantity, quantity);
 
     if (cartItem.quantity !== quantity) {
-      console.log("updating...");
-      console.log({ id: cartItem.productId, quantity });
+      // console.log("updating...");
+      // console.log({ id: cartItem.productId, quantity });
 
       dispatch(addItemsToCart({ productId: cartItem.productId, quantity }));
     }
