@@ -141,6 +141,9 @@ const userSlice = createSlice({
       state.success = action.payload.success;
       state.user = action.payload?.user || null;
       state.isAuthenticated = Boolean(action.payload?.user);
+
+      localStorage.setItem("userInfo", JSON.stringify(state.user));
+      state.isAuthenticated = Boolean(action.payload?.user);
     });
 
     builders.addCase(registerUser.rejected, (state, action) => {
@@ -209,6 +212,9 @@ const userSlice = createSlice({
       state.user = null;
       state.success = false;
       state.isAuthenticated = false;
+
+      localStorage.clear();
+      sessionStorage.clear();
     });
 
     builders.addCase(logoutUser.rejected, (state, action) => {

@@ -1,7 +1,7 @@
 import React from "react";
 
 const CheckOutPath = ({ currentStep }) => {
-  const steps = ["Shipping Details", "Order Confirmation", "Payment Details"];
+  const steps = ["Shipping Details", "Order Confirmation", "Make Payment"];
 
   return (
     <div className="w-full px-12 py-8 bg-gray-800 border border-gray-600 rounded-xl mb-8 mx-auto">
