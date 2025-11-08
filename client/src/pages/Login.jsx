@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PageTitle from "../components/PageTitle";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser, removeSuccess } from "../features/user/userSlice";
 import { toast } from "react-toastify";
@@ -11,6 +11,10 @@ const Login = () => {
   const { loading, error, message, success, isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const redirect = new URLSearchParams(location.search).get("redirect") || "/";
 
   const [userData, setUserData] = useState({
     email: "",
@@ -40,7 +44,7 @@ const Login = () => {
         // console.log(error);
 
         toast(error);
-        // dispatch(removeError());
+        dispatch(removeError());
       }
     },
     [dispatch, error]
@@ -49,10 +53,10 @@ const Login = () => {
   useEffect(
     function () {
       if (isAuthenticated) {
-        navigate("/");
+        navigate(redirect);
       }
     },
-    [isAuthenticated, navigate]
+    [isAuthenticated, navigate, redirect]
   );
 
   useEffect(

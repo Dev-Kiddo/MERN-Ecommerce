@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CartItem from "../components/CartItem";
 import PageTitle from "../components/PageTitle";
 import EmptyCart from "../components/EmptyCart";
@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
+  const navigate = useNavigate();
 
   const subTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -14,7 +15,11 @@ const Cart = () => {
 
   const deliveryCharges = subTotal > 1000 ? 0 : 50;
 
-  const total = subTotal + tax + 50;
+  const total = subTotal + tax + deliveryCharges;
+
+  const handleProceedCheckout = function () {
+    navigate(`/login?redirect=/shipping`);
+  };
 
   return (
     <>
@@ -65,12 +70,12 @@ const Cart = () => {
                     </dl>
                   </div>
 
-                  <Link
-                    to="#"
-                    className="flex w-full items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white  focus:outline-none focus:ring-4 dark:hover:bg-blue-800"
+                  <button
+                    className="flex w-full items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white  focus:outline-none focus:ring-2 dark:hover:bg-blue-800"
+                    onClick={handleProceedCheckout}
                   >
                     Proceed to Checkout
-                  </Link>
+                  </button>
 
                   <div className="flex items-center justify-center gap-2">
                     <span className="text-sm font-normal text-gray-500 dark:text-gray-400"> or </span>

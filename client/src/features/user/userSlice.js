@@ -116,11 +116,12 @@ export const resetPassword = createAsyncThunk("user/resetPassword", async (paylo
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    user: null,
+    user: JSON.parse(localStorage.getItem("userInfo")) || null,
     loading: false,
     error: null,
     success: false,
-    isAuthenticated: false,
+    isAuthenticated: localStorage.length > 0 ? true : false,
+    // isAuthenticated: false,
     message: null,
   },
   reducers: {
@@ -163,8 +164,10 @@ const userSlice = createSlice({
       state.error = null;
       state.success = action.payload.success;
       state.user = action.payload?.user || null;
-      state.isAuthenticated = Boolean(action.payload?.user);
       state.message = action.payload.user && "Login Successfull";
+
+      localStorage.setItem("userInfo", JSON.stringify(state.user));
+      state.isAuthenticated = Boolean(action.payload?.user);
     });
 
     builders.addCase(loginUser.rejected, (state, action) => {

@@ -137,7 +137,7 @@ const Navbar = () => {
 
             {isAuthenticated && (
               <Link to="/dashboard" className="">
-                <img className="w-20 rounded-full object-cover sm:w-22" src={user ? user?.avatar?.url : "/images/user-profile-icon.svg"} alt={user && user.name} />
+                <img className="w-25 rounded-full object-cover sm:w-24 md:w-20" src={user ? user?.avatar?.url : "/images/user-profile-icon.svg"} alt={user && user.name} />
               </Link>
             )}
 
