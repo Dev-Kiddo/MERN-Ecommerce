@@ -4,6 +4,8 @@ dotenv.config({ path: "./config/config.env" });
 import { connectDb } from "./config/db.js";
 import { v2 as cloudinary } from "cloudinary";
 
+import Razorpay from "razorpay";
+
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
@@ -33,4 +35,9 @@ process.on("unhandledRejection", (err) => {
   console.log(`Error: ${err.message}`);
   console.log("Server is shuting down, due to unhandeled promise rejection");
   server.close(() => process.exit(1)); // here we close the server and then exit
+});
+
+export const instance = new Razorpay({
+  key_id: process.env.RAZORPAY_API_KEY,
+  key_secret: process.env.RAZORPAY_API_SECRET,
 });
