@@ -11,7 +11,7 @@ const CheckOutPath = ({ currentStep }) => {
         <div
           className="absolute top-1/2 left-0 h-1 bg-blue-600 -translate-y-1/2 rounded transition-all duration-500"
           style={{
-            width: `${(currentStep / (steps.length - 1)) * 100}%`,
+            width: `${(currentStep / (steps.length - 1)) * 100 >= 100 ? 100 : (currentStep / (steps.length - 1)) * 100}%`,
           }}
         ></div>
 

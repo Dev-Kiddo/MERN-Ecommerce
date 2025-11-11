@@ -49,7 +49,7 @@ const ProcessPayment = () => {
           });
 
           if (data.success) {
-            navigate(`/paymentsuccess?reference=${data.reference}`);
+            navigate(`/paymentsuccess?reference=${data.reference}`, { state: razorpay_order_id });
           } else {
             alert("Payment Verification Failed");
           }

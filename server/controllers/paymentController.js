@@ -54,6 +54,7 @@ export const paymentVerification = handleAsyncError(async (req, res, next) => {
       success: true,
       message: "Payment Verified Successfully",
       reference: razorpay_payment_id,
+      order: razorpay_order_id,
     });
   } else {
     return res.status(401).json({
