@@ -18,6 +18,19 @@ export const createOrder = createAsyncThunk("order/createOrder", async (payload,
   }
 });
 
+export const getAllUserOrders = createAsyncThunk("order/getAllUserOrders", async (payload, { rejectWithValue }) => {
+  try {
+    const { data } = await axios("api/v1/orders/user");
+    // console.log("data:", data);
+
+    return data;
+  } catch (error) {
+    console.log("error:", error);
+
+    return rejectWithValue(error.response?.data.message || "An error occured");
+  }
+});
+
 const orderSlice = createSlice({
   name: "order",
   initialState: {
@@ -50,6 +63,24 @@ const orderSlice = createSlice({
     builders.addCase(createOrder.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload?.message || "Create Order Failed";
+    });
+
+    // Get All Orders
+    builders.addCase(getAllUserOrders.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builders.addCase(getAllUserOrders.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+      state.orders = action.payload.orders;
+    });
+
+    builders.addCase(getAllUserOrders.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message || "Get all orders failed";
     });
   },
 });
