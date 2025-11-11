@@ -90,7 +90,7 @@ const productSlice = createSlice({
       state.isLoading = false;
       console.log(action.payload);
 
-      state.error = action.payload || "Something went wrong";
+      state.error = action.payload.message || "Something went wrong";
       state.products = [];
     });
 
@@ -109,7 +109,7 @@ const productSlice = createSlice({
     builders.addCase(getProductDetails.rejected, (state, action) => {
       state.isLoading = false;
       console.log(action.payload);
-      state.error = action.payload || "Something went wrong";
+      state.error = action.payload.message || "Something went wrong";
     });
   },
 });

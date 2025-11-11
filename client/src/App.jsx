@@ -48,7 +48,7 @@ function App() {
           <Route path="/password/forgot" element={<ForgotPassword />} />
           <Route path="/reset/:token" element={<ResetPassword />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/paymentsuccess" element={<PaymentSuccess />} />
+          {/* <Route path="/paymentsuccess" element={<PaymentSuccess />} /> */}
 
           <Route
             path="/shipping"
@@ -91,6 +91,15 @@ function App() {
             element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
                 <UserDashboard user={user} />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/paymentsuccess"
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <PaymentSuccess />
               </ProtectedRoute>
             }
           />

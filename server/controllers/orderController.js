@@ -9,6 +9,13 @@ import HandleError from "../utils/handleError.js";
 export const createNewOrder = handleAsyncError(async function (req, res, next) {
   const { shippingInfo, orderItems, paymentInfo, itemPrice, taxPrice, shippingPrice, totalPrice } = req.body;
 
+  // const existingOrder = await orderModel.findOne({ "paymentInfo.id": req.body.orderData.paymentInfo.id });
+  // console.log("existingOrder:", existingOrder);
+
+  // if (existingOrder) {
+  //   return;
+  // }
+
   const order = await orderModel.create({
     shippingInfo,
     orderItems,

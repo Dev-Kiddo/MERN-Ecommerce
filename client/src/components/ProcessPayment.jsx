@@ -49,7 +49,11 @@ const ProcessPayment = () => {
           });
 
           if (data.success) {
+            toast.success("Order placed successfully");
             navigate(`/paymentsuccess?reference=${data.reference}`, { state: razorpay_order_id });
+
+            // localStorage.removeItem("cartitems");
+            // localStorage.removeItem("shippinginfo");
           } else {
             alert("Payment Verification Failed");
           }
