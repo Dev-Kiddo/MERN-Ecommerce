@@ -19,6 +19,7 @@ import Cart from "./pages/Cart";
 import ShippingDetails from "./pages/ShippingDetails";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import ProcessPayment from "./components/ProcessPayment";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -47,6 +48,7 @@ function App() {
           <Route path="/password/forgot" element={<ForgotPassword />} />
           <Route path="/reset/:token" element={<ResetPassword />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/paymentsuccess" element={<PaymentSuccess />} />
 
           <Route
             path="/shipping"

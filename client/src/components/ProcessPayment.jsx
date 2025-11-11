@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import CheckOutPath from "./CheckOutPath";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import PageTitle from "./PageTitle";
+import { toast } from "react-toastify";
 
 const ProcessPayment = () => {
   const navigate = useNavigate();
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
+  // console.log(orderInfo);
 
   const { user } = useSelector((state) => state.user);
   const { shippinginfo } = useSelector((state) => state.cart);
@@ -17,53 +20,61 @@ const ProcessPayment = () => {
   };
 
   const handlePayment = async function (amount) {
-    console.log(amount);
+    try {
+      // console.log(amount);
 
-    const { data } = await axios("/api/v1/getkey");
-    const { key } = data;
-    console.log(key);
+      const { data } = await axios("/api/v1/getkey");
+      const { key } = data;
+      // console.log(key);
 
-    const { data: orderData } = await axios.post("/api/v1/payment/process", { amount });
+      const { data: orderData } = await axios.post("/api/v1/paymentprocess", { amount: amount });
 
-    // console.log(orderData);
+      // Open Razorpay Checkout
+      const options = {
+        key,
+        amount: amount * 100,
+        currency: "INR",
+        name: "ShopIQ",
+        description: "ShopIQ Test Transaction",
+        order_id: orderData.order.id,
+        // callback_url: " /api/v1/payment/verification",
+        handler: async function (response) {
+          const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
 
-    // Open Razorpay Checkout
-    const options = {
-      key,
-      amount: amount * 100,
-      currency: "INR",
-      name: "ShopIQ",
-      description: "ShopIQ Test Transaction",
-      order_id: orderData.id, // This is the order_id created in the backend
-      handler: async function (response) {
-        const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
+          // Send to backend for verification
+          const { data } = await axios.post("/api/v1/payment/verification", {
+            razorpay_payment_id,
+            razorpay_order_id,
+            razorpay_signature,
+          });
 
-        // send to backend for verification
-        await axios.post("/api/v1/payment/verification", {
-          razorpay_payment_id,
-          razorpay_order_id,
-          razorpay_signature,
-        });
-      },
-      prefill: {
-        name: user.name,
-        email: user.email,
-        contact: shippinginfo.phoneNumber,
-      },
-      theme: {
-        color: "#1447e6",
-      },
-    };
+          if (data.success) {
+            navigate(`/paymentsuccess?reference=${data.reference}`);
+          } else {
+            alert("Payment Verification Failed");
+          }
+        },
+        prefill: {
+          name: user.name,
+          email: user.email,
+          contact: shippinginfo.phoneNumber,
+        },
+        theme: {
+          color: "#1447e6",
+        },
+      };
 
-    const rzp = new Razorpay(options);
-
-    console.log("rzp", rzp);
-
-    rzp.open();
+      const rzp = new Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.log("handlePaymentErr:", error);
+      toast.error(error.message);
+    }
   };
 
   return (
     <>
+      <PageTitle title="Payment Process" />
       <div className="mb-12">
         <CheckOutPath currentStep={2} />
       </div>

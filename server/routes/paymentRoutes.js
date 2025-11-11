@@ -4,7 +4,7 @@ import { verifyUserAuth } from "../middlewares/userAuth.js";
 
 const router = express.Router();
 
-router.route("/payment/process/").post(verifyUserAuth, processPayment);
+router.route("/paymentprocess/").post(verifyUserAuth, processPayment);
 router.route("/getkey").get(verifyUserAuth, sendAPIkey);
 router.route("/payment/verification").post(paymentVerification);
 
