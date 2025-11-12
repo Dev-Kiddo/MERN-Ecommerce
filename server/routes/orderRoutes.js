@@ -5,6 +5,8 @@ const router = express.Router();
 
 router.route("/new/order").post(verifyUserAuth, createNewOrder);
 
+router.route("/order/:id").post(verifyUserAuth, getSingleOrder);
+
 router.route("/admin/order/:id").post(verifyUserAuth, roleBasedAccess("admin"), getSingleOrder).delete(verifyUserAuth, roleBasedAccess("admin"), deleteOrder);
 
 //Get All My Orders

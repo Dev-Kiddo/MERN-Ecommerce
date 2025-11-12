@@ -36,9 +36,11 @@ export const createNewOrder = handleAsyncError(async function (req, res, next) {
 
 // Getting Single Order
 export const getSingleOrder = handleAsyncError(async function (req, res, next) {
+  console.log("hello");
+
   const order = await orderModel.findById(req.params.id).populate("user", "name email");
 
-  // console.log("order", order);
+  console.log("order", order);
 
   if (!order) {
     return next(new HandleError("No orders found!", 404));

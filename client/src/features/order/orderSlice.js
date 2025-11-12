@@ -27,7 +27,23 @@ export const getAllUserOrders = createAsyncThunk("order/getAllUserOrders", async
   } catch (error) {
     console.log("error:", error);
 
-    return rejectWithValue(error.response?.data.message || "An error occured");
+    return rejectWithValue(error.response?.data.message || "Get all orders failed");
+  }
+});
+
+// get Order Details
+export const getOrderDetails = createAsyncThunk("order/getOrderDetails", async (payload, { rejectWithValue }) => {
+  try {
+    // console.log(payload);
+
+    const { data } = await axios.post(`/api/v1/order/${payload.orderId}`);
+    // console.log("getOrderDetails:", data);
+
+    return data;
+  } catch (error) {
+    console.log("error:", error);
+
+    return rejectWithValue(error.response?.data.message || "Get order details failed");
   }
 });
 
@@ -81,6 +97,24 @@ const orderSlice = createSlice({
     builders.addCase(getAllUserOrders.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload?.message || "Get all orders failed";
+    });
+
+    // Get Order Detail
+    builders.addCase(getOrderDetails.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builders.addCase(getOrderDetails.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+      state.order = action.payload.order;
+    });
+
+    builders.addCase(getOrderDetails.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message || "Get order details failed";
     });
   },
 });
