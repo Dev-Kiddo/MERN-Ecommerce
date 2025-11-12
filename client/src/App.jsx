@@ -22,9 +22,14 @@ import ProcessPayment from "./components/ProcessPayment";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import MyOrders from "./pages/MyOrders";
 import OrderPreview from "./pages/OrderPreview";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import DashboardCard from "./components/DashboardCard";
+import AdminProducts from "./components/AdminProducts";
+import CreateNewProduct from "./components/CreateNewProduct";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+
   const dispatch = useDispatch();
 
   // console.log(user);
@@ -52,6 +57,19 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/myorders" element={<MyOrders />} />
           <Route path="/order/:id" element={<OrderPreview />} />
+
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute user={user} isAuthenticated={isAuthenticated} isAdmin={true}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<DashboardCard />} />
+            <Route path="allproducts" element={<AdminProducts />} />
+            <Route path="createproduct" element={<CreateNewProduct />} />
+          </Route>
 
           <Route
             path="/shipping"

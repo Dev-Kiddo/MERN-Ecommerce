@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import WriteReview from "../components/WriteReview";
 import ReviewViewer from "../components/ReviewViewer";
 import { useParams } from "react-router-dom";
-import { getProductDetails, removeError } from "../features/product/productSlice";
+import { createReview, getProductDetails, removeError, removeReviewSuccess } from "../features/product/productSlice";
 import { toast } from "react-toastify";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -17,7 +17,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { isLoading, error, product } = useSelector((state) => state.product);
+  const { isLoading, error, product, reviewSuccess, reviewLoading } = useSelector((state) => state.product);
 
   const { message, success: cartSuccess, error: cartError, loading: cartLoading } = useSelector((state) => state.cart);
 
@@ -46,6 +46,17 @@ const ProductDetails = () => {
     }
   };
 
+  const handleSubmit = function (event, clearUserReview) {
+    event.preventDefault();
+
+    if (userReview.rating === 0 || userReview.userReview.length === 0) {
+      return toast.error("Please select the ratings");
+    }
+
+    dispatch(createReview({ rating: userReview.rating, comment: userReview.userReview, productId: id }));
+    clearUserReview("");
+  };
+
   useEffect(
     function () {
       if (id) {
@@ -57,6 +68,16 @@ const ProductDetails = () => {
       };
     },
     [id, dispatch]
+  );
+
+  useEffect(
+    function () {
+      if (reviewSuccess) {
+        toast.success("Review submitted successfully");
+        dispatch(removeReviewSuccess());
+      }
+    },
+    [dispatch, reviewSuccess]
   );
 
   useEffect(
@@ -187,7 +208,7 @@ const ProductDetails = () => {
 
               <hr className="my-4  dark:border-gray-600" />
 
-              <WriteReview onReview={setUserReview} />
+              <WriteReview onReview={setUserReview} handleSubmit={handleSubmit} reviewLoading={reviewLoading} />
             </div>
           </div>
 

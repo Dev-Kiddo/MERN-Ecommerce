@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Ratings from "./Ratings";
+import { toast } from "react-toastify";
 
-const WriteReview = ({ onReview }) => {
+const WriteReview = ({ onReview, handleSubmit, reviewLoading }) => {
   const [rating, setRating] = useState(0);
   const [userReview, setUserReview] = useState("");
 
@@ -12,8 +13,18 @@ const WriteReview = ({ onReview }) => {
         userReview,
       });
     },
-    [rating, userReview]
+    [rating, userReview, onReview]
   );
+
+  // const handleSubmit = function (e) {
+  //   e.preventDefault();
+
+  //   if (rating === 0) {
+  //     return toast.error("Please select the ratings");
+  //   }
+
+  //   console.log("clicked");
+  // };
 
   return (
     <>
@@ -23,7 +34,7 @@ const WriteReview = ({ onReview }) => {
         <p className=" text-sm font-medium text-gray-300">out of 5</p>
       </div>
 
-      <form>
+      <form onClick={(event) =>handleSubmit(event,setUserReview)}>
         <label className="block mb-2 text-sm font-medium text-gray-300">Your review</label>
         <textarea
           rows="4"
@@ -31,9 +42,12 @@ const WriteReview = ({ onReview }) => {
           onChange={(e) => setUserReview(e.target.value)}
           className="block p-2.5 mb-3 w-full text-sm text-white bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 "
           placeholder="Write your review here..."
+          required
         ></textarea>
 
-        <button className="text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5 text-center">Submit Review</button>
+        <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+          {reviewLoading ? "Submitting..." : "Submit Review"}
+        </button>
       </form>
     </>
   );
