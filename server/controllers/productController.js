@@ -3,13 +3,47 @@ import HandleError from "../utils/handleError.js";
 import handleAsyncError from "../middlewares/handleAsyncError.js";
 import APIFunctionality from "../utils/apiFunctionality.js";
 import userModel from "../models/userModel.js";
-
-// http://localhost:5000/api/v1/product/68f2640e0f43a979abb69db7?keyword=shirt - after the question mark is a query. before the question mark as URL.
+import { v2 as cloudinary } from "cloudinary";
 
 //? Creating Products
 export const addProduct = handleAsyncError(async function (req, res, next) {
-  // console.log(req.body);
+  let images = [];
 
+  // console.log(req.files);
+
+  // handle both single and multiple files
+  if (!req.files || !req.files.image) {
+    return res.status(400).json({ success: false, message: "No images uploaded" });
+  }
+
+  const uploadedImages = req.files.image;
+
+  // If single file uploaded → make it array
+  if (!Array.isArray(uploadedImages)) {
+    images.push(uploadedImages);
+  } else {
+    images = uploadedImages;
+  }
+
+  // console.log("req.files.image:", req.files.image);
+
+  const imageLinks = [];
+
+  for (let i = 0; i < images.length; i++) {
+    // ✅ Important: use tempFilePath here
+    const result = await cloudinary.uploader.upload(images[i].tempFilePath, {
+      folder: "ShopIQ/products",
+    });
+
+    imageLinks.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  }
+
+  // console.log("imageLinks:", imageLinks);
+
+  req.body.image = imageLinks;
   req.body.user = req.user.id;
 
   const product = await productModel.create(req.body);
@@ -23,19 +57,6 @@ export const addProduct = handleAsyncError(async function (req, res, next) {
 
 //? Get Products
 export const getAllProducts = handleAsyncError(async function (req, res, next) {
-  // console.log("Req_Query:", req.query); // http://localhost:5000/api/v1/products?keyword=shirt - { keyword: 'shirt' }
-
-  // console.log("queryObj:", productModel.find({}));//so this will actualy simply returs a query object
-
-  // queryObj: Query {
-  // _mongooseOptions: {},
-  // _transforms: [],
-  // _hooks: Kareem { _pres: Map(0) {}, _posts: Map(0),
-  //   name: 'products',
-  // }
-
-  // console.log("Req_Query:", req.query);
-
   const resultsPerpage = 4;
 
   const apiFeatures = new APIFunctionality(productModel.find(), req.query).search().filter();

@@ -26,7 +26,7 @@ const Products = () => {
 
   const [currentPage, setCurrentPage] = useState(pageFromURL);
 
-  const categories = ["mens fashion", "womens fashion", "tv,appliances", "mobiles,computers", "movies,games", "sports", "books"];
+  const categories = ["mens", "womens", "kids", "electronis", "appliances", "books", "sports", "movies"];
 
   const handlePageChange = function (page) {
     if (page !== currentPage) {

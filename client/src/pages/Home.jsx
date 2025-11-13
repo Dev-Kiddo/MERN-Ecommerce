@@ -10,6 +10,7 @@ import { getProducts, removeError } from "../features/product/productSlice";
 
 import { toast } from "react-toastify";
 import Layout from "../components/Layout";
+import NotFound from "../components/NotFound";
 
 const Home = () => {
   const { error, isLoading, products } = useSelector((state) => state.product);
@@ -43,11 +44,15 @@ const Home = () => {
       <h2 className="text-4xl text-white text-center my-6">Trending Now</h2>
 
       {isLoading && <Loader />}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
-        {products?.map((product) => (
-          <Product product={product} key={product._id} />
-        ))}
-      </div>
+      {products.length > 0 ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+          {products?.map((product) => (
+            <Product product={product} key={product._id} />
+          ))}
+        </div>
+      ) : (
+        <NotFound />
+      )}
     </>
   );
 };

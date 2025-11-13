@@ -121,7 +121,7 @@ const ProductDetails = () => {
         <>
           <div className="grid grid-cols-1 gap-10 items-stretch md:grid-cols-2">
             <div className="w-full">
-              <ProductSlider />
+              <ProductSlider product={product} />
             </div>
 
             <div className="w-full flex flex-col justify-between">

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { adminCreateProduct, removeSuccess } from "../features/admin/adminSlice";
 
 const CreateNewProduct = () => {
+  const { products, loading, error, success } = useSelector((state) => state.admin);
   const categories = ["mens", "womens", "kids", "electronis", "appliances", "books", "sports", "movies"];
   const [formData, setFormData] = useState({
     name: "",
@@ -14,33 +17,7 @@ const CreateNewProduct = () => {
     previewImages: [],
   });
 
-  // const handleOnChange = function (e) {
-  //   const { id, files, value } = e.target;
-
-  //   if (id === "image") {
-  //     const file = files[0];
-  //     console.log(file);
-
-  //     if (!file) return;
-
-  //     const reader = new FileReader();
-
-  //     reader.readAsDataURL(file);
-
-  //     reader.onload = () => {
-  //       if (reader.readyState === 2) {
-  //         setFormData((prev) => ({ ...prev, image: reader.result }));
-  //       }
-  //     };
-
-  //     reader.onerror = (err) => {
-  //       toast.error("Unable to Upload, Error reading file");
-  //       console.error("Error reading file:", err.target.error);
-  //     };
-  //   } else {
-  //     setFormData((prev) => ({ ...prev, [id]: value }));
-  //   }
-  // };
+  const dispatch = useDispatch();
 
   const handleOnChange = (e) => {
     const { id, files, value } = e.target;
@@ -52,8 +29,9 @@ const CreateNewProduct = () => {
       const fileArray = Array.from(files);
       // console.log("Selected files:", fileArray);
 
-      // Preview (optional)
+      // Preview
       const previews = fileArray.map((file) => URL.createObjectURL(file));
+      // console.log("previews:", previews);
 
       // Update your state
       setFormData((prev) => ({
@@ -81,7 +59,19 @@ const CreateNewProduct = () => {
     for (const [key, value] of payload.entries()) {
       console.log(key, value);
     }
+
+    dispatch(adminCreateProduct(payload));
   };
+
+  useEffect(
+    function () {
+      if (success) {
+        toast.success("Product Added Successfully", { toastId: "createProductSuccess" });
+        dispatch(removeSuccess());
+      }
+    },
+    [success, dispatch]
+  );
 
   return (
     <div className="p-4">

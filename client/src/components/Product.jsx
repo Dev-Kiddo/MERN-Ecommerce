@@ -8,12 +8,14 @@ const Product = ({ product }) => {
   const [rating, setRating] = useState(0);
   // console.log("rating:", rating);
 
+  console.log(product);
+
   return (
     <>
       <div className="w-full max-w-xs border rounded-lg shadow-sm bg-gray-800 border-gray-700">
         <Link to={`/product/${product._id}`}>
           {/* product.image[0].url  */}
-          <img className="p-3 rounded-t-lg" src={`/images/productph.png`} alt={product.name} />
+          <img className="p-3 rounded-t-lg" src={product?.image[0]?.url} alt={product.name} />
         </Link>
 
         <div className="px-3 pb-3">
