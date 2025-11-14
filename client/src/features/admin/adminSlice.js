@@ -52,15 +52,16 @@ const adminSlice = createSlice({
     builders.addCase(getAdminProducts.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      state.success = true;
+      state.success = action.payload.success;
       state.products = action.payload.products;
       state.numOfProducts = action.payload.numOfProducts;
     });
     builders.addCase(getAdminProducts.rejected, (state, action) => {
-      state.loading = true;
+      state.loading = false;
       state.error = action.payload.message || "Admin Get All Products Failed";
     });
 
+    // Admin create product
     builders.addCase(adminCreateProduct.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -68,12 +69,12 @@ const adminSlice = createSlice({
     builders.addCase(adminCreateProduct.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      state.success = true;
+      state.success = action.payload.success;
       state.products.push(action.payload.product);
       console.log("New Updated Product List", state.products);
     });
     builders.addCase(adminCreateProduct.rejected, (state, action) => {
-      state.loading = true;
+      state.loading = false;
       state.error = action.payload.message || "Admin Product Creation Failed";
     });
   },

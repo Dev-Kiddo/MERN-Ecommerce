@@ -1,11 +1,22 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import NotFound from "./NotFound";
-import { useParams } from "react-router-dom";
+
+import { removeSuccess } from "../features/admin/adminSlice";
 
 const AdminProducts = () => {
-  const { products } = useSelector((state) => state.admin);
+  const { products, success } = useSelector((state) => state.admin);
+  const dispatch = useDispatch();
   // console.log(products);
+
+  useEffect(
+    function () {
+      if (success) {
+        dispatch(removeSuccess());
+      }
+    },
+    [success, dispatch]
+  );
 
   return products.length > 0 ? (
     <div className="relative overflow-scroll h-100">
