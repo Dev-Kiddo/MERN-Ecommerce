@@ -27,6 +27,7 @@ import DashboardCard from "./components/DashboardCard";
 import AdminProducts from "./components/AdminProducts";
 import CreateNewProduct from "./components/CreateNewProduct";
 import UpdateProduct from "./components/UpdateProduct";
+import About from "./pages/About";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -48,6 +49,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:keyword" element={<Products />} />
