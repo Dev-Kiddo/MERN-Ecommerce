@@ -27,6 +27,18 @@ export const adminCreateProduct = createAsyncThunk("admin/adminCreateProduct", a
   }
 });
 
+export const adminUpdateProduct = createAsyncThunk("admin/adminUpdateProduct", async (payload, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.put(`/api/v1/admin/product/${payload.id}`, payload.formData);
+    console.log("adminUpdateProduct:", data);
+    return data;
+  } catch (error) {
+    return rejectWithValue(error.response?.data) || "Error Update product";
+  }
+});
+
+
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -35,6 +47,7 @@ const adminSlice = createSlice({
     loading: false,
     error: null,
     success: false,
+    product: {},
   },
   reducers: {
     removeError(state) {
@@ -58,7 +71,7 @@ const adminSlice = createSlice({
     });
     builders.addCase(getAdminProducts.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.message || "Admin Get All Products Failed";
+      state.error = action.payload.message || "Get All Products Failed";
     });
 
     // Admin create product
@@ -75,7 +88,24 @@ const adminSlice = createSlice({
     });
     builders.addCase(adminCreateProduct.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.message || "Admin Product Creation Failed";
+      state.error = action.payload.message || "Product Creation Failed";
+    });
+
+    // Admin Update Product
+    builders.addCase(adminUpdateProduct.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builders.addCase(adminUpdateProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.success = action.payload.success;
+      state.product = action.payload.product;
+      console.log("New Updated Product List", state.product);
+    });
+    builders.addCase(adminUpdateProduct.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message || "Update Product Failed";
     });
   },
 });

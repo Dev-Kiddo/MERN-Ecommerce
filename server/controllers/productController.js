@@ -97,26 +97,56 @@ export const getAllProducts = handleAsyncError(async function (req, res, next) {
 
 //? Update Products
 export const updateProduct = handleAsyncError(async function (req, res, next) {
+  console.log("req.body", req.body);
+
+  let product = await productModel.findById(req.params.id);
+
+  if (!product) {
+    return next(new HandleError("Product Not Found", 404));
+  }
+
+  let images = [];
+
+  if (!req.files || !req.files.image) {
+    return res.status(400).json({ success: false, message: "No images uploaded" });
+  }
+
+  const uploadedImages = req.files.image;
+
+  let updatedLinks = [];
+
+  // If single file uploaded → make it array
+  if (!Array.isArray(uploadedImages)) {
+    images.push(uploadedImages);
+  } else {
+    images = uploadedImages;
+  }
+
+  if (images.length > 0) {
+    // Deleting the previous uploaded images
+    for (let i = 0; i < product.image.length; i++) {
+      await cloudinary.uploader.destroy(product.image[i].public_id);
+    }
+
+    // Upload new Uploaded images
+    for (let i = 0; i < images.length; i++) {
+      const result = await cloudinary.uploader.upload(images[i].tempFilePath, {
+        folder: "ShopIQ/products",
+      });
+
+      updatedLinks.push({ public_id: result.public_id, url: result.secure_url });
+    }
+  }
+
+  req.body.image = updatedLinks;
+
   const productId = req.params.id;
 
-  // let product = await productModel.findById(productId);
-
-  // if (!product) {
-  //   return res.status(500).json({
-  //     success: false,
-  //     message: "Product Not Found",
-  //   });
-  // }
-
-  const product = await productModel.findByIdAndUpdate(productId, req.body, { new: true, runValidators: true });
+  product = await productModel.findByIdAndUpdate(productId, req.body, { new: true, runValidators: true });
 
   // console.log("product:", product);
 
   if (!product) {
-    // return res.status(500).json({
-    //   success: false,
-    //   message: "Product Not Found",
-    // });
     return next(new HandleError("Product Not Found", 404));
   }
 

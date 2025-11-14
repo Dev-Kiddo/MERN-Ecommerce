@@ -26,6 +26,7 @@ import AdminDashboard from "./pages/Admin/AdminDashboard";
 import DashboardCard from "./components/DashboardCard";
 import AdminProducts from "./components/AdminProducts";
 import CreateNewProduct from "./components/CreateNewProduct";
+import UpdateProduct from "./components/UpdateProduct";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -57,6 +58,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/myorders" element={<MyOrders />} />
           <Route path="/order/:id" element={<OrderPreview />} />
+          <Route path="/updateproduct/:id" element={<UpdateProduct />} />
 
           <Route
             path="/admin/dashboard"

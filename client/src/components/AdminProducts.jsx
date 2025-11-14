@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NotFound from "./NotFound";
+import { Link } from "react-router-dom";
 
 import { removeSuccess } from "../features/admin/adminSlice";
 
@@ -70,8 +71,14 @@ const AdminProducts = () => {
               <td className="px-6 py-4">{product.stock}</td>
               <td className="px-6 py-4">{new Date(product.createdAt).toLocaleString().split(",")[0]}</td>
               <td className="px-6 py-4 flex gap-4">
-                <button className="bg-blue-700 p-3 rounded-lg cursor-pointer text-md text-white">&#9998;</button>
-                <button className="bg-gray-600 p-3 rounded-lg cursor-pointer text-2xl text-white">&times;</button>
+                <Link
+                  className="flex items-center justify-center bg-blue-700 p-3 w-14 h-14 rounded-full cursor-pointer text-lg 
+                text-white"
+                  to={`/updateproduct/${product._id}`}
+                >
+                  &#9998;
+                </Link>
+                <button className="flex items-center justify-center bg-gray-600 p-3  w-14 h-14 rounded-full cursor-pointer text-3xl text-white">&times;</button>
               </td>
             </tr>
           ))}
