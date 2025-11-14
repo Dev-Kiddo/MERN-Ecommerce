@@ -19,7 +19,7 @@ const Product = ({ product }) => {
         </Link>
 
         <div className="px-3 pb-3">
-          <h5 className="text-xl font-semibold tracking-tight text-white mb-2">{product.name}</h5>
+          <h5 className="text-xl font-semibold tracking-tight text-white mb-2 capitalize">{product.name}</h5>
 
           <p className="text-xs font-medium tracking-tight text-gray-400">{product.description}</p>
 

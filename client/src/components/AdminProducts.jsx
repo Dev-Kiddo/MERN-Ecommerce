@@ -3,12 +3,23 @@ import { useSelector, useDispatch } from "react-redux";
 import NotFound from "./NotFound";
 import { Link } from "react-router-dom";
 
-import { removeSuccess } from "../features/admin/adminSlice";
+import { adminDeleteProduct, removeSuccess } from "../features/admin/adminSlice";
+import { toast } from "react-toastify";
 
 const AdminProducts = () => {
   const { products, success } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
   // console.log(products);
+
+  const handleDeleteProduct = function (id) {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      dispatch(adminDeleteProduct({ id }))
+        .unwrap()
+        .then((payload) => toast.success("Product Deleted Successfully"))
+        .catch((err) => toast.err(err || "Delete Failed"));
+      // console.log("Product deleted successfully");
+    }
+  };
 
   useEffect(
     function () {
@@ -78,7 +89,12 @@ const AdminProducts = () => {
                 >
                   &#9998;
                 </Link>
-                <button className="flex items-center justify-center bg-gray-600 p-3  w-14 h-14 rounded-full cursor-pointer text-3xl text-white">&times;</button>
+                <button
+                  onClick={() => handleDeleteProduct(product._id)}
+                  className="flex items-center justify-center bg-red-700 p-3  w-14 h-14 rounded-full cursor-pointer text-3xl text-white"
+                >
+                  &times;
+                </button>
               </td>
             </tr>
           ))}

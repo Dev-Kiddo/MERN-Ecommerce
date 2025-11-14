@@ -125,7 +125,7 @@ const ProductDetails = () => {
             </div>
 
             <div className="w-full flex flex-col justify-between">
-              <h1 className="text-xl font-semibold lg:text-md dark:text-white">{product?.name}</h1>
+              <h1 className="text-xl font-semibold lg:text-md dark:text-white capitalize">{product?.name}</h1>
               <div className="mt-2">
                 <p className="text-2xl font-extrabold text-gray-900 lg:text-md dark:text-white">₹{product?.price}</p>
               </div>
@@ -203,8 +203,8 @@ const ProductDetails = () => {
 
               <hr className="my-4  dark:border-gray-600" />
 
-              <p className="mb-2 text-gray-300">Description:</p>
-              <p className="mb-4 text-gray-500 dark:text-gray-400">{product?.description}</p>
+              <p className=" text-gray-300">Description:</p>
+              <p className=" text-gray-500 dark:text-gray-400">{product?.description}</p>
 
               <hr className="my-4  dark:border-gray-600" />
 

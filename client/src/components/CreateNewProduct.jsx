@@ -60,7 +60,10 @@ const CreateNewProduct = () => {
     //   console.log(key, value);
     // }
 
-    dispatch(adminCreateProduct(payload));
+    dispatch(adminCreateProduct(payload))
+      .unwrap()
+      .then(() => toast.success("Product Added Successfully"))
+      .catch((err) => toast.error(err || "Create Product Failed"));
   };
 
   useEffect(() => {
@@ -72,7 +75,6 @@ const CreateNewProduct = () => {
       console.log("success:", success);
 
       if (success) {
-        toast.success("Product Added Successfully", { toastId: "createProductSuccess" });
         setFormData((prev) => ({ ...prev, name: "", description: "", price: "", stock: "", category: "", image: [], previewImages: [] }));
 
         dispatch(removeSuccess());

@@ -171,6 +171,7 @@ export const deleteProduct = handleAsyncError(async function (req, res, next) {
   return res.status(200).json({
     success: true,
     message: "Product Deleted Successfully",
+    productId,
   });
 });
 
