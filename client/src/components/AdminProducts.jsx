@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import Loader from "./Loader";
 
 const AdminProducts = () => {
-  const { products, success, loading } = useSelector((state) => state.admin);
+  const { products, success, loading, deletingProductId } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
   // console.log(products);
 
@@ -91,7 +91,8 @@ const AdminProducts = () => {
                   &#9998;
                 </Link>
 
-                {loading ? (
+                {/* This conditions is not working need to check*/}
+                {deletingProductId === product._id && loading ? (
                   <Loader fillColor="fill-red-700" />
                 ) : (
                   <button

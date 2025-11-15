@@ -41,7 +41,7 @@ export const adminDeleteProduct = createAsyncThunk("admin/adminDeleteProduct", a
   try {
     const { data } = await axios.delete(`/api/v1/admin/product/${payload.id}`);
     console.log("adminDeleteProduct:", data);
-    return data;
+    return { payload, data };
   } catch (error) {
     return rejectWithValue(error.response?.data) || "Error delete product";
   }
@@ -56,6 +56,7 @@ const adminSlice = createSlice({
     error: null,
     success: false,
     product: {},
+    deletingProductId: null,
   },
   reducers: {
     removeError(state) {
@@ -122,6 +123,8 @@ const adminSlice = createSlice({
       state.error = null;
     });
     builders.addCase(adminDeleteProduct.fulfilled, (state, action) => {
+      // console.log(action.meta.arg);
+      state.deletingProductId = action.meta.arg.id;
       state.loading = false;
       state.error = null;
       state.success = action.payload.success;
