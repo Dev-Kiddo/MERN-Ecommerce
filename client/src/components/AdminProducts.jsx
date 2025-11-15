@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 
 import { adminDeleteProduct, removeSuccess } from "../features/admin/adminSlice";
 import { toast } from "react-toastify";
+import Loader from "./Loader";
 
 const AdminProducts = () => {
-  const { products, success } = useSelector((state) => state.admin);
+  const { products, success, loading } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
   // console.log(products);
 
@@ -73,15 +74,15 @@ const AdminProducts = () => {
                 {index + 1}
               </td>
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                <img className="w-15" src="/images/productph.png" />
+                <img className="w-15" src={product.image[0].url} />
               </td>
-              <td className="px-6 py-4">{product.name}</td>
+              <td className="px-6 py-4 capitalize">{product.name}</td>
               <td className="px-6 py-4">{product.price}</td>
               <td className="px-6 py-4">{product.ratings}</td>
               <td className="px-6 py-4">{product.category}</td>
               <td className="px-6 py-4">{product.stock}</td>
               <td className="px-6 py-4">{new Date(product.createdAt).toLocaleString().split(",")[0]}</td>
-              <td className="px-6 py-4 flex gap-4">
+              <td className="px-6 py-4 flex items-center gap-4">
                 <Link
                   className="flex items-center justify-center bg-blue-700 p-3 w-14 h-14 rounded-full cursor-pointer text-lg 
                 text-white"
@@ -89,12 +90,17 @@ const AdminProducts = () => {
                 >
                   &#9998;
                 </Link>
-                <button
-                  onClick={() => handleDeleteProduct(product._id)}
-                  className="flex items-center justify-center bg-red-700 p-3  w-14 h-14 rounded-full cursor-pointer text-3xl text-white"
-                >
-                  &times;
-                </button>
+
+                {loading ? (
+                  <Loader fillColor="fill-red-700" />
+                ) : (
+                  <button
+                    onClick={() => handleDeleteProduct(product._id)}
+                    className="flex items-center justify-center bg-red-700 p-3  w-14 h-14 rounded-full cursor-pointer text-3xl text-white"
+                  >
+                    &times;
+                  </button>
+                )}
               </td>
             </tr>
           ))}
