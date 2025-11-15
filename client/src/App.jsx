@@ -60,7 +60,17 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/myorders" element={<MyOrders />} />
           <Route path="/order/:id" element={<OrderPreview />} />
-          <Route path="/updateproduct/:id" element={<UpdateProduct />} />
+
+          {/* <Route path="/updateproduct/:id" element={<UpdateProduct />} /> */}
+
+          <Route
+            path="/updateproduct/:id"
+            element={
+              <ProtectedRoute user={user} isAuthenticated={isAuthenticated} isAdmin={true}>
+                <UpdateProduct />
+              </ProtectedRoute>
+            }
+          ></Route>
 
           <Route
             path="/admin/dashboard"

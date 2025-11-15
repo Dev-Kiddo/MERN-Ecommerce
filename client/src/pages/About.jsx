@@ -32,8 +32,8 @@ const About = () => {
             <h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white">SHOPIQ ~ Key Features</h2>
             <h2 class="mb-4 text-xl tracking-tight font-bold text-gray-900 dark:text-white">User Features</h2>
             <p class="mb-4 font-light text-justify">
-              User Features User Registration & Login, JWT Authentication, cookies, Product Listing with categories & search, Product Details Page, Add to Cart / Remove from cart,
-              Checkout Flow, Order History & Order Details, Secure Online Payment using Razorpay, Image upload support via Cloudinary (for profile/products if used)
+              User Registration & Login, JWT Authentication, cookies, Product Listing with categories & search, Product Details Page, Add to Cart / Remove from cart, Checkout Flow,
+              Order History & Order Details, Secure Online Payment using Razorpay, Image upload support via Cloudinary (for profile/products if used)
             </p>
             <h2 class="mb-4 text-xl tracking-tight font-bold text-gray-900 dark:text-white">Admin Features</h2>
             <p class="font-light">
