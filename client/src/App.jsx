@@ -28,6 +28,7 @@ import AdminProducts from "./components/AdminProducts";
 import CreateNewProduct from "./components/CreateNewProduct";
 import UpdateProduct from "./components/UpdateProduct";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -60,6 +61,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/myorders" element={<MyOrders />} />
           <Route path="/order/:id" element={<OrderPreview />} />
+          <Route path="/contact" element={<Contact />} />
 
           {/* <Route path="/updateproduct/:id" element={<UpdateProduct />} /> */}
 
