@@ -37,11 +37,13 @@ export const adminUpdateProduct = createAsyncThunk("admin/adminUpdateProduct", a
   }
 });
 
-export const adminDeleteProduct = createAsyncThunk("admin/adminDeleteProduct", async (payload, { rejectWithValue }) => {
+export const adminDeleteProduct = createAsyncThunk("admin/adminDeleteProduct", async ({ id }, { rejectWithValue }) => {
   try {
-    const { data } = await axios.delete(`/api/v1/admin/product/${payload.id}`);
+    // console.log("heloo");
+
+    const { data } = await axios.delete(`/api/v1/admin/product/${id}`);
     console.log("adminDeleteProduct:", data);
-    return { payload, data };
+    return id;
   } catch (error) {
     return rejectWithValue(error.response?.data) || "Error delete product";
   }
@@ -118,21 +120,33 @@ const adminSlice = createSlice({
     });
 
     // Admin Delete Product
-    builders.addCase(adminDeleteProduct.pending, (state) => {
+    builders.addCase(adminDeleteProduct.pending, (state, action) => {
+      console.log(action);
+
+      state.deletingProductId = action.meta.arg.id;
+
       state.loading = true;
       state.error = null;
     });
     builders.addCase(adminDeleteProduct.fulfilled, (state, action) => {
       // console.log(action.meta.arg);
-      state.deletingProductId = action.meta.arg.id;
+      // console.log(action.payload);
       state.loading = false;
       state.error = null;
+      state.deletingProductId = null;
       state.success = action.payload.success;
-      state.products = state.products.filter((product) => product._id !== action.payload.productId);
+
+      const deletedId = action.payload ?? action.meta.arg.id;
+      // console.log("deletedId:", deletedId);
+
+      // console.log("state:", state);
+
+      state.products = state.products.filter((product) => product._id !== deletedId);
+      // console.log("updatedProducts:", state.products);
     });
     builders.addCase(adminDeleteProduct.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.message || "Delete Product Failed";
+      state.error = action.payload.message || "Product Deletion Failed";
     });
   },
 });

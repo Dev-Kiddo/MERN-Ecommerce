@@ -8,16 +8,18 @@ import { toast } from "react-toastify";
 import Loader from "./Loader";
 
 const AdminProducts = () => {
-  const { products, success, loading, deletingProductId } = useSelector((state) => state.admin);
+  const { products, success, deletingProductId } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
   // console.log(products);
+
+  // console.log("deletingProductId:", deletingProductId);
 
   const handleDeleteProduct = function (id) {
     if (window.confirm("Are you sure you want to delete this product?")) {
       dispatch(adminDeleteProduct({ id }))
         .unwrap()
-        .then((payload) => toast.success("Product Deleted Successfully"))
-        .catch((err) => toast.err(err || "Delete Failed"));
+        .then(() => toast.success("Product Deleted Successfully"))
+        .catch((err) => toast.error(err || "Product Deletion Failed"));
       // console.log("Product deleted successfully");
     }
   };
@@ -91,8 +93,7 @@ const AdminProducts = () => {
                   &#9998;
                 </Link>
 
-                {/* This conditions is not working need to check*/}
-                {deletingProductId === product._id && loading ? (
+                {deletingProductId === product._id ? (
                   <Loader fillColor="fill-red-700" />
                 ) : (
                   <button
