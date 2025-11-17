@@ -12,7 +12,8 @@ import dotenv from "dotenv";
 dotenv.config({ path: "./config/config.env" });
 
 const app = express();
-const allowedOrigins = ["http://localhost:5173"];
+const isProduction = process.env.NODE_ENV === "production";
+const allowedOrigins = isProduction ? ["https://yourfrontenddomain.com"] : ["http://localhost:5173"];
 
 // Middlewares
 app.use(express.json());
