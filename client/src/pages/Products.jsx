@@ -94,7 +94,7 @@ const Products = () => {
           <div className="p-4 w-full h-auto">
             <div className="p-3 border-2 border-dashed rounded-lg dark:border-gray-500">
               {products.length > 0 ? (
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-2  md:grid-cols-3  lg:grid-cols-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2  md:grid-cols-3  lg:grid-cols-4">
                   {products?.map((product) => (
                     <Product product={product} key={product._id} />
                   ))}
