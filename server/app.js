@@ -14,7 +14,7 @@ dotenv.config({ path: "./config/config.env" });
 const app = express();
 const isProduction = process.env.NODE_ENV === "production";
 
-const allowedOrigins = isProduction ? ["https://mernecommerce-seven.vercel.app"] : ["http://localhost:5173"];
+const allowedOrigins = isProduction ? ["https://ecommerce-mern-two.vercel.app/"] : ["http://localhost:5173"];
 
 // Middlewares
 app.use(express.json());
