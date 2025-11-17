@@ -11,6 +11,7 @@ import {
   getSingleUser,
   updateUserRole,
   DeleteUser,
+  sendContactMessage,
 } from "../controllers/userController.js";
 import { verifyUserAuth, roleBasedAccess } from "../middlewares/userAuth.js";
 import { getUsersList } from "../controllers/userController.js";
@@ -25,6 +26,7 @@ router.route("/reset/:token").post(resetPassword);
 router.route("/profile").get(verifyUserAuth, getUserDetails);
 router.route("/password/update").post(verifyUserAuth, updateUserPassword);
 router.route("/profile/update").post(verifyUserAuth, updateProfile);
+router.route("/contact").post(sendContactMessage);
 
 // Admin - Get All users
 router.route("/admin/users").get(verifyUserAuth, roleBasedAccess("admin"), getUsersList);

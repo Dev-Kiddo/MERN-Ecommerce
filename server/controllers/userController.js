@@ -5,6 +5,7 @@ import { sendToken } from "../utils/jwtToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import crypto from "crypto";
 import { v2 as cloudinary } from "cloudinary";
+import nodemailer from "nodemailer";
 
 // Register User
 export const registerUser = handleAsyncError(async function (req, res, next) {
@@ -284,5 +285,36 @@ export const DeleteUser = handleAsyncError(async function (req, res, next) {
   res.status(200).json({
     success: true,
     message: "User Deleted Successfully",
+  });
+});
+
+// 11.Send Contact Message
+
+export const sendContactMessage = handleAsyncError(async function (req, res, next) {
+  const { email, subject, message } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: process.env.SMTP_SERVICE,
+    auth: {
+      user: process.env.SMTP_MAIL,
+      pass: process.env.SMTP_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: email,
+    to: process.env.SMTP_MAIL, // YOU receive it here
+    subject,
+    text: `
+Email: ${email}
+Message: ${message}
+      `,
+  };
+
+  await transporter.sendMail(mailOptions);
+
+  res.status(200).json({
+    success: true,
+    message: "Message sent successfully!",
   });
 });
