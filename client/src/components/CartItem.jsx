@@ -11,8 +11,7 @@ const CartItem = ({ cartItem }) => {
 
   const [quantity, setQuantity] = useState(cartItem.quantity);
 
-
-
+  console.log(cartItem);
 
   const handleQuantity = function (e) {
     if (e.target.id === "decrement-button") {
@@ -67,7 +66,7 @@ const CartItem = ({ cartItem }) => {
         <div className="md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
           <div className="flex items-center gap-4">
             <Link to="#" className="shrink-0">
-              <img className="hidden h-20 w-20 rounded-lg dark:block" src="/images/productph.png" alt="imac image" />
+              <img className="hidden h-20 w-20 rounded-lg dark:block" src={cartItem.image} alt="imac image" />
             </Link>
 
             <div className="w-full min-w-0 flex-1 space-y-4  md:hidden">

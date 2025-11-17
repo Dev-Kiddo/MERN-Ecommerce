@@ -9,6 +9,8 @@ const OrderConfirmation = () => {
   const { user } = useSelector((state) => state.user);
 
   const { shippinginfo, cartItems } = useSelector((state) => state.cart);
+  console.log(cartItems);
+  
 
   const subTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -106,7 +108,7 @@ const OrderConfirmation = () => {
                 {cartItems.map((item) => (
                   <tr key={item.productId} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                     <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap dark:text-white capitalize">
-                      <img className="w-15" src="/images/productph.png" alt={item.name} />
+                      <img className="w-15" src={item.image} alt={item.name} />
                     </th>
                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">{item.name}</td>
                     <td className="px-6 py-4">₹{item.price}</td>

@@ -48,7 +48,7 @@ const OrderPreview = () => {
                 {order?.orderItems?.map((item) => (
                   <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                     <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap dark:text-white capitalize">
-                      <img className="w-15" src="/images/productph.png" alt={item.name} />
+                      <img className="w-15" src={item.image} alt={item.name} />
                     </th>
                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">{item.name}</td>
                     <td className="px-6 py-4">{item.quantity}</td>

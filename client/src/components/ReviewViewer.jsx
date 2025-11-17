@@ -1,7 +1,7 @@
 import React from "react";
 
 const ReviewViewer = ({ review }) => {
-  // console.log(review);
+  console.log(review);
 
   return (
     <>

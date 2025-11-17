@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { API } from "../config/api";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ const Contact = () => {
     try {
       setIsLoading(true);
 
-      const { data } = await axios.post("/api/v1/contact", formData, {
+      const { data } = await axios.post(`${API}/contact`, formData, {
         headers: {
           "Content-Type": "application/json",
         },

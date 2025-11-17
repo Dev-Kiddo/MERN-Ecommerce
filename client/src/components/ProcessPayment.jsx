@@ -5,6 +5,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import PageTitle from "./PageTitle";
 import { toast } from "react-toastify";
+import { API } from "../config/api";
 
 const ProcessPayment = () => {
   const navigate = useNavigate();
@@ -23,11 +24,11 @@ const ProcessPayment = () => {
     try {
       // console.log(amount);
 
-      const { data } = await axios("/api/v1/getkey");
+      const { data } = await axios(`${API}/getkey`);
       const { key } = data;
       // console.log(key);
 
-      const { data: orderData } = await axios.post("/api/v1/paymentprocess", { amount: amount });
+      const { data: orderData } = await axios.post(`${API}/paymentprocess`, { amount: amount });
 
       // Open Razorpay Checkout
       const options = {
@@ -42,7 +43,7 @@ const ProcessPayment = () => {
           const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
 
           // Send to backend for verification
-          const { data } = await axios.post("/api/v1/payment/verification", {
+          const { data } = await axios.post(`${API}/payment/verification`, {
             razorpay_payment_id,
             razorpay_order_id,
             razorpay_signature,
