@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API } from "../../config/api";
+axios.defaults.withCredentials = true;
 
 //! Get Product details
-export const getProducts = createAsyncThunk("products/getProducts", async (payload, { rejectWithValue }) => {
+export const getProducts = createAsyncThunk(`products/getProducts`, async (payload, { rejectWithValue }) => {
   try {
     // console.log("payload:", payload);
 
@@ -15,7 +17,7 @@ export const getProducts = createAsyncThunk("products/getProducts", async (paylo
     const page = payload.page || 1;
     const category = payload.category;
 
-    let link = `/api/v1/products?page=` + page;
+    let link = `${API}/products?page=` + page;
 
     // const { data } = await axios.get(`${keyword ? `/api/v1/products?keyword=${keyword}&page=${page}` : `/api/v1/products?page=${page}`}`);
 
@@ -37,9 +39,9 @@ export const getProducts = createAsyncThunk("products/getProducts", async (paylo
 });
 
 //! Get Single Product details
-export const getProductDetails = createAsyncThunk("product/getProductDetails", async (id, { rejectWithValue }) => {
+export const getProductDetails = createAsyncThunk(`product/getProductDetails`, async (id, { rejectWithValue }) => {
   try {
-    const { data } = await axios.get(`/api/v1/product/${id}`);
+    const { data } = await axios.get(`${API}/product/${id}`);
 
     return data;
   } catch (error) {
@@ -50,11 +52,11 @@ export const getProductDetails = createAsyncThunk("product/getProductDetails", a
 });
 
 //! Submit Product review
-export const createReview = createAsyncThunk("product/createReview", async (payload, { rejectWithValue }) => {
+export const createReview = createAsyncThunk(`product/createReview`, async (payload, { rejectWithValue }) => {
   // console.log("ReviewPayload", payload);
 
   try {
-    const { data } = await axios.put(`/api/v1/review`, payload);
+    const { data } = await axios.put(`${API}/review`, payload);
 
     return data;
   } catch (error) {

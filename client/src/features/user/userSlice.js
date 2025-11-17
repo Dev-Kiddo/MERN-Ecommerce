@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API } from "../../config/api";
+
+axios.defaults.withCredentials = true;
 
 // Register User
 export const registerUser = createAsyncThunk("user/registerUser", async (payload, { rejectWithValue }) => {
@@ -9,7 +12,7 @@ export const registerUser = createAsyncThunk("user/registerUser", async (payload
       return rejectWithValue(payload.customError);
     }
 
-    const { data } = await axios.post(`/api/v1/register`, payload.formData);
+    const { data } = await axios.post(`${API}/register`, payload.formData);
 
     // console.log("data:", data);
 
@@ -27,7 +30,7 @@ export const loginUser = createAsyncThunk("user/loginUser", async (payload, { re
       return rejectWithValue(payload.customError);
     }
 
-    const { data } = await axios.post(`/api/v1/login`, payload.formData);
+    const { data } = await axios.post(`${API}/login`, payload.formData);
 
     return data;
   } catch (error) {
@@ -39,7 +42,8 @@ export const loginUser = createAsyncThunk("user/loginUser", async (payload, { re
 // Load User
 export const loaduser = createAsyncThunk("user/loadUser", async (_, { rejectWithValue }) => {
   try {
-    const { data } = await axios(`/api/v1/profile`);
+    const { data } = await axios(`${API}/profile`);
+    console.log("Load User Data:", data);
 
     return data;
   } catch (error) {
@@ -51,7 +55,7 @@ export const loaduser = createAsyncThunk("user/loadUser", async (_, { rejectWith
 // Logout User
 export const logoutUser = createAsyncThunk("user/logoutUser", async (_, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post(`/api/v1/logout`);
+    const { data } = await axios.post(`${API}/logout`);
     console.log("Logout data", data);
 
     return data;
@@ -64,7 +68,7 @@ export const logoutUser = createAsyncThunk("user/logoutUser", async (_, { reject
 // Update User
 export const updateUser = createAsyncThunk("user/updateUser", async (payload, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post(`/api/v1/profile/update`, payload.formData);
+    const { data } = await axios.post(`${API}/profile/update`, payload.formData);
     console.log("Updated User Data", data);
 
     return data;
@@ -77,7 +81,7 @@ export const updateUser = createAsyncThunk("user/updateUser", async (payload, { 
 // Update User Password
 export const updatePassword = createAsyncThunk("user/updatePassword", async (payload, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post(`/api/v1/password/update`, payload.formData);
+    const { data } = await axios.post(`${API}/password/update`, payload.formData);
     console.log("Updated User password", data);
 
     return data;
@@ -90,7 +94,7 @@ export const updatePassword = createAsyncThunk("user/updatePassword", async (pay
 // Forgot User Password
 export const forgotPassword = createAsyncThunk("user/forgotPassword", async (payload, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post(`/api/v1/password/forgot`, payload.payload);
+    const { data } = await axios.post(`${API}/password/forgot`, payload.payload);
     console.log("Forgot User password", data);
 
     return data;
@@ -103,7 +107,7 @@ export const forgotPassword = createAsyncThunk("user/forgotPassword", async (pay
 // Reset User Password
 export const resetPassword = createAsyncThunk("user/resetPassword", async (payload, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post(`/api/v1/reset/${payload.token}`, payload.data);
+    const { data } = await axios.post(`${API}/reset/${payload.token}`, payload.data);
     console.log("Forgot User password", data);
 
     return data;
@@ -121,7 +125,6 @@ const userSlice = createSlice({
     error: null,
     success: false,
     isAuthenticated: localStorage.length > 0 ? true : false,
-    // isAuthenticated: false,
     message: null,
   },
   reducers: {

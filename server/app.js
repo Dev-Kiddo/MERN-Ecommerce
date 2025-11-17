@@ -5,13 +5,14 @@ import userRouter from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
 import orderRouter from "./routes/orderRoutes.js";
 import paymentRouter from "./routes/paymentRoutes.js";
-// import cors from "cors";
+import cors from "cors";
 import fileUpload from "express-fileupload";
 
 import dotenv from "dotenv";
 dotenv.config({ path: "./config/config.env" });
 
 const app = express();
+const allowedOrigins = ["http://localhost:5173"];
 
 // Middlewares
 app.use(express.json());
@@ -23,7 +24,13 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
-// app.use(cors());
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 
 // Routes
 app.use("/api/v1", productRouter);

@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API } from "../../config/api";
+axios.defaults.withCredentials = true;
 
 export const createOrder = createAsyncThunk("order/createOrder", async (payload, { rejectWithValue }) => {
   try {
@@ -9,7 +11,7 @@ export const createOrder = createAsyncThunk("order/createOrder", async (payload,
 
     // console.log("CreateOrderPayload:", payload);
 
-    const { data } = await axios.post("api/v1/new/order", payload.orderData);
+    const { data } = await axios.post(`${API}/new/order`, payload.orderData);
     // console.log("CreaterderData:", data);
 
     return data;
@@ -20,7 +22,7 @@ export const createOrder = createAsyncThunk("order/createOrder", async (payload,
 
 export const getAllUserOrders = createAsyncThunk("order/getAllUserOrders", async (payload, { rejectWithValue }) => {
   try {
-    const { data } = await axios("api/v1/orders/user");
+    const { data } = await axios(`${API}/orders/user`);
     // console.log("data:", data);
 
     return data;
@@ -36,7 +38,7 @@ export const getOrderDetails = createAsyncThunk("order/getOrderDetails", async (
   try {
     // console.log(payload);
 
-    const { data } = await axios.post(`/api/v1/order/${payload.orderId}`);
+    const { data } = await axios.post(`${API}/order/${payload.orderId}`);
     // console.log("getOrderDetails:", data);
 
     return data;

@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API } from "../../config/api";
+axios.defaults.withCredentials = true;
 
 export const getAdminProducts = createAsyncThunk("admin/getAdminProducts", async (payload, { rejectWithValue }) => {
   try {
-    const { data } = await axios("/api/v1/admin/products");
+    const { data } = await axios(`${API}/admin/products`);
     // console.log("adminGetProductsData:", data);
     return data;
   } catch (error) {
@@ -19,7 +21,7 @@ export const adminCreateProduct = createAsyncThunk("admin/adminCreateProduct", a
     withCredentials: true,
   };
   try {
-    const { data } = await axios.post("/api/v1/admin/product/create", payload, config);
+    const { data } = await axios.post(`${API}/admin/product/create`, payload, config);
     console.log("adminCreateProduct:", data);
     return data;
   } catch (error) {
@@ -29,7 +31,7 @@ export const adminCreateProduct = createAsyncThunk("admin/adminCreateProduct", a
 
 export const adminUpdateProduct = createAsyncThunk("admin/adminUpdateProduct", async (payload, { rejectWithValue }) => {
   try {
-    const { data } = await axios.put(`/api/v1/admin/product/${payload.id}`, payload.formData);
+    const { data } = await axios.put(`${API}/admin/product/${payload.id}`, payload.formData);
     console.log("adminUpdateProduct:", data);
     return data;
   } catch (error) {
@@ -41,7 +43,7 @@ export const adminDeleteProduct = createAsyncThunk("admin/adminDeleteProduct", a
   try {
     // console.log("heloo");
 
-    const { data } = await axios.delete(`/api/v1/admin/product/${id}`);
+    const { data } = await axios.delete(`${API}/admin/product/${id}`);
     console.log("adminDeleteProduct:", data);
     return id;
   } catch (error) {

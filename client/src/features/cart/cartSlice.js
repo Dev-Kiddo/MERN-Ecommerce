@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API } from "../../config/api";
+axios.defaults.withCredentials = true;
 
 export const addItemsToCart = createAsyncThunk("cart/addItemsToCart", async (payload, { rejectWithValue }) => {
   try {
@@ -9,7 +11,7 @@ export const addItemsToCart = createAsyncThunk("cart/addItemsToCart", async (pay
 
     // console.log("Add items to cart payload:", payload);
 
-    const { data } = await axios(`/api/v1/product/${payload.productId}`);
+    const { data } = await axios(`${API}/product/${payload.productId}`);
 
     return {
       productId: data.product._id,
