@@ -58,7 +58,7 @@ const Profile = ({ user }) => {
   return (
     <>
       {isOpen ? (
-        <div id="toast-simple" className="p-8 my-8 space-x-4 rounded-lg shadow-sm text-gray-400 bg-gray-700">
+        <div className="p-4 my-8 space-x-4 rounded-lg shadow-sm text-gray-400 bg-gray-700">
           <button onClick={() => setIsOpen((prev) => !prev)} className="mb-4 bg-blue-600 px-3 py-2 rounded-lg text-white hover:bg-blue-800">
             &larr; Back
           </button>
@@ -98,7 +98,7 @@ const Profile = ({ user }) => {
           </div>
         </div>
       ) : (
-        <div id="toast-simple" className="p-8 my-8 space-x-4 rounded-lg shadow-sm text-gray-400 bg-gray-700">
+        <div className="p-4 my-8 space-x-4 rounded-lg shadow-sm text-gray-400 bg-gray-700">
           <div className="flex items-center w-full mb-4">
             <label className="w-full">User Name:</label>
             <input

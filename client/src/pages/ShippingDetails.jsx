@@ -69,7 +69,7 @@ const ShippingDetails = () => {
   return (
     <>
       <PageTitle title="Shipping Details" />
-      <section className="max-w-7xl px-12 mx-auto">
+      <section className="mx-auto">
         <CheckOutPath currentStep={0} />
 
         <form onSubmit={handleSubmit}>

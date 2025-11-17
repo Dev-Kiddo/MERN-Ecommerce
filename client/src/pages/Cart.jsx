@@ -26,7 +26,7 @@ const Cart = () => {
       <PageTitle title="Shopping Cart" />
       {cartItems.length > 0 ? (
         <section className="bg-white py-8 antialiased dark:bg-gray-800 md:py-16">
-          <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+          <div className="mx-auto 2xl:px-0">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Your Cart</h2>
 
             <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
@@ -37,7 +37,7 @@ const Cart = () => {
               </div>
 
               {/* Order Summary */}
-              <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
+              <div className="mx-auto mt-6 flex-1 space-y-6 lg:mt-0 lg:w-full">
                 <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
                   <p className="text-xl font-semibold text-gray-900 dark:text-white">Order summary</p>
 

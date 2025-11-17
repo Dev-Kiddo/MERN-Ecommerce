@@ -9,7 +9,7 @@ const Layout = ({ title }) => {
     <div className="min-h-screen flex flex-col justify-between">
       <PageTitle title={title} />
       <Navbar />
-      <main className="w-full max-w-7xl mx-auto p-4 md:py-8">
+      <main className="w-full max-w-7xl mx-auto p-4 my-12 md:py-8">
         <Outlet />
       </main>
       <Footer />

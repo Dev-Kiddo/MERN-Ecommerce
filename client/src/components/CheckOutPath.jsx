@@ -4,7 +4,7 @@ const CheckOutPath = ({ currentStep }) => {
   const steps = ["Shipping Details", "Order Confirmation", "Make Payment"];
 
   return (
-    <div className="w-full px-12 py-8 bg-gray-800 border border-gray-600 rounded-xl mb-8 mx-auto">
+    <div className="w-full px-4 sm:px-12 py-8 bg-gray-800 border border-gray-600 rounded-xl mb-8 mx-auto">
       <div className="flex justify-between items-center relative">
         <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-400 -translate-y-1/2 rounded"></div>
 

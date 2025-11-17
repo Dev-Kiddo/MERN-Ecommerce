@@ -46,71 +46,28 @@ const AdminDashboard = () => {
 
       <div className="flex flex-col gap-4">
         <div className="flex bg-gray-700 rounded-lg items-start justify-between mb-5">
-          <div className="w-40 max-w-40 rounded-lg bg-gray-700 p-4">
+          <div className="rounded-lg bg-gray-700 p-4">
             <div className="mb-5">
               <h6 className="text-white text-lg font-semibold leading-4 ps-2">Products</h6>
             </div>
 
-            <ul className="flex-col gap-3 flex">
-              <NavLink
-                className={`flex gap-1 cursor-pointer text-gray-200 text-sm font-medium  py-2 ps-2 rounded-lg capitalize underline hover:bg-gray-800 transition-colors focus:bg-gray-800`}
-                to="allproducts"
-              >
-                All Products
-              </NavLink>
+            <div>
+              <ul className="gap-3 flex">
+                <NavLink
+                  className={`flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium underline text-white  focus:outline-none focus:ring-2 dark:hover:bg-blue-800`}
+                  to="allproducts"
+                >
+                  All Products
+                </NavLink>
 
-              <Link
-                className="cursor-pointer text-gray-200 text-sm font-medium  py-2 ps-2 rounded-lg capitalize underline hover:bg-gray-800 transition-colors focus:bg-gray-800"
-                to="createproduct"
-              >
-                Create Product
-              </Link>
-            </ul>
-          </div>
-
-          <div className="w-40 max-w-40 rounded-lg bg-gray-700 p-4">
-            <div className="mb-5">
-              <h6 className="text-white text-lg font-semibold leading-4 ps-2">Users</h6>
+                <NavLink
+                  className="flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium underline text-white  focus:outline-none focus:ring-2 dark:hover:bg-blue-800"
+                  to="createproduct"
+                >
+                  Create Product
+                </NavLink>
+              </ul>
             </div>
-
-            <ul className="flex-col gap-3 flex">
-              <Link
-                className="cursor-pointer text-gray-200 text-sm font-medium  py-2 ps-2 rounded-lg capitalize underline hover:bg-gray-800 transition-colors focus:bg-gray-800"
-                to="allproducts"
-              >
-                All Users
-              </Link>
-            </ul>
-          </div>
-
-          <div className="w-40 max-w-40 rounded-lg bg-gray-700 p-4">
-            <div className="mb-5">
-              <h6 className="text-white text-lg font-semibold leading-4 ps-2">Orders</h6>
-            </div>
-
-            <ul className="flex-col gap-3 flex">
-              <Link
-                className="cursor-pointer text-gray-200 text-sm font-medium  py-2 ps-2 rounded-lg capitalize underline hover:bg-gray-800 transition-colors focus:bg-gray-800"
-                to="allproducts"
-              >
-                All Orders
-              </Link>
-            </ul>
-          </div>
-
-          <div className="w-40 max-w-40 rounded-lg bg-gray-700 p-4">
-            <div className="mb-5">
-              <h6 className="text-white text-lg font-semibold leading-4 ps-2">Reviews</h6>
-            </div>
-
-            <ul className="flex-col gap-3 flex">
-              <Link
-                className="cursor-pointer text-gray-200 text-sm font-medium  py-2 ps-2 rounded-lg capitalize underline hover:bg-gray-800 transition-colors focus:bg-gray-800"
-                to="allproducts"
-              >
-                All Reviews
-              </Link>
-            </ul>
           </div>
         </div>
 

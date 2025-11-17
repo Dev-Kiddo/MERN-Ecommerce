@@ -38,7 +38,7 @@ const OrderConfirmation = () => {
   return (
     <>
       <PageTitle title="Order Confirmation" />
-      <section className="max-w-7xl px-12 mx-auto">
+      <section className="mx-auto">
         <CheckOutPath currentStep={1} />
 
         {/* Shipping Details */}

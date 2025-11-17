@@ -4,17 +4,17 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="w-full max-w-7xl p-4 mx-auto md:py-8">
+      <div className="w-full max-w-7xl px-4 mx-auto md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-            <img src="/e-com-logo.svg" className="h-12" alt="Logo" />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ShopIQ</span>
+            <img src="/e-com-logo.svg" className="h-9 sm:h-12" alt="Logo" />
+            <span className="self-center text-lg sm:text-2xl font-semibold whitespace-nowrap dark:text-white">ShopIQ</span>
           </Link>
 
-          <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+          <ul className="flex flex-wrap items-center justify-between gap-y-2 mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
-              <Link to="/" className="hover:underline me-4">
+              <Link to="/about" className="hover:underline me-4">
                 About
               </Link>
             </li>
@@ -29,8 +29,8 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link to="/" className="hover:underline">
-                Contact Us
+              <Link to="/contact" className="hover:underline">
+                Contact
               </Link>
             </li>
           </ul>

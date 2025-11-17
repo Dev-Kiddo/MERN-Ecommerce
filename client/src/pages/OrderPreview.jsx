@@ -20,7 +20,7 @@ const OrderPreview = () => {
   return (
     <>
       <PageTitle title="Order Preview" />
-      <section className="max-w-7xl px-12 mx-auto">
+      <section className="mx-auto">
         {/* Order Details */}
         <div className="mb-6">
           <h2 className="text-lg mb-4 font-semibold text-gray-900 dark:text-white sm:text-xl">Order Details</h2>

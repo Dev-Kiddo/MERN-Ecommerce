@@ -50,7 +50,8 @@ const Contact = () => {
         <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Contact Us</h2>
         <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl max-w-screen-md mx-auto">
           Have a question? Found a bug?
-          <br /> Or just want to tell that our website looks “kinda nice”? Whatever it is — Iam here, alive, and reading messages with full seriousness (mostly).
+          <br /> Or just want to tell that our website looks “kinda nice” 😉?
+          <br /> Whatever it is — Iam here, alive, and reading messages with full seriousness (mostly).
         </p>
         <form className="space-y-8" onSubmit={handleOnSubmit}>
           <div>

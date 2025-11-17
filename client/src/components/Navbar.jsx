@@ -60,12 +60,12 @@ const Navbar = () => {
   return (
     <nav className="w-full max-w-7xl mx-auto p-4 shadow-md shadow-gray-600/20 rounded-lg">
       <div className="flex justify-between items-center">
-        <Link to="/" className="flex flex-grow-1 items-center sm:mb-0 space-x-3 rtl:space-x-reverse" onClick={() => setIsMenuOpen(false)}>
-          <img src="/e-com-logo.svg" className="h-12" alt="Logo" />
+        <Link to="/" className="flex flex-grow-1 mr-4 items-center sm:mb-0 space-x-3 rtl:space-x-reverse" onClick={() => setIsMenuOpen(false)}>
+          <img src="/e-com-logo.svg" className="h-9 sm:h-12" alt="Logo" />
           <span className="hidden self-center text-2xl font-semibold whitespace-nowrap dark:text-white sm:inline-flex">ShopIQ</span>
         </Link>
 
-        <div className="flex gap-4 flex-grow-2 justify-evenly items-center sm:justify-between">
+        <div className="flex sm:gap-4 flex-grow-2 justify-evenly items-center sm:justify-between">
           {/* Search input */}
 
           <div className="w-1/2">
