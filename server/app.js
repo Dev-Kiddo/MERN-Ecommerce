@@ -13,6 +13,7 @@ dotenv.config({ path: "./config/config.env" });
 
 const app = express();
 const isProduction = process.env.NODE_ENV === "production";
+
 const allowedOrigins = isProduction ? ["https://mernecommerce-beige.vercel.app/"] : ["http://localhost:5173"];
 
 // Middlewares
