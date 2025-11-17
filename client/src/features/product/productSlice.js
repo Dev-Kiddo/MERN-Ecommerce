@@ -110,7 +110,7 @@ const productSlice = createSlice({
       state.isLoading = false;
       console.log(action.payload);
 
-      state.error = action.payload.message || "Something went wrong";
+      state.error = action.payload.message || "No Products Found";
       state.products = [];
     });
 

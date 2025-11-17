@@ -27,7 +27,7 @@ const Home = () => {
   useEffect(
     function () {
       if (error) {
-        toast(error);
+        toast(error, { toastId: "productNotFound" });
         dispatch(removeError());
       }
     },
