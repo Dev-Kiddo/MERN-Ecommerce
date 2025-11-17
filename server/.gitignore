@@ -5,7 +5,10 @@ yarn-debug.log
 yarn-error.log
 
 # Environment variables
-/config/config.env
+config/config.env
+config/*.env
+config.env
+*.env
 
 # Build output
 dist/

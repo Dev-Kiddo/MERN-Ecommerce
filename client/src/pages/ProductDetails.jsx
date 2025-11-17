@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ProductSlider from "../components/productSlider";
+import ProductSlider from "../components/ProductSlider";
 import { Link } from "react-router-dom";
 import WriteReview from "../components/WriteReview";
 import ReviewViewer from "../components/ReviewViewer";
