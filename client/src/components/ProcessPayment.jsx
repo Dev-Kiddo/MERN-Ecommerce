@@ -72,7 +72,7 @@ const ProcessPayment = () => {
       const rzp = new Razorpay(options);
       rzp.open();
     } catch (error) {
-      console.log("handlePaymentErr:", error);
+      // console.log("handlePaymentErr:", error);
       toast.error(error.message);
     }
   };

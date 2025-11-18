@@ -75,7 +75,7 @@ const RegisterUser = () => {
   useEffect(
     function () {
       if (error) {
-        console.log(error);
+        // console.log(error);
 
         toast(error);
         dispatch(removeError());

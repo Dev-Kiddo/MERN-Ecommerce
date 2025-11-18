@@ -23,7 +23,7 @@ const CreateNewProduct = () => {
     const { id, files, value } = e.target;
 
     if (id === "image") {
-      console.log(files);
+      // console.log(files);
 
       // Convert FileList to Array
       const fileArray = Array.from(files);

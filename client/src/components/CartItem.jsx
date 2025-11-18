@@ -11,7 +11,7 @@ const CartItem = ({ cartItem }) => {
 
   const [quantity, setQuantity] = useState(cartItem.quantity);
 
-  console.log(cartItem);
+  // console.log(cartItem);
 
   const handleQuantity = function (e) {
     if (e.target.id === "decrement-button") {

@@ -86,7 +86,7 @@ const PaymentSuccess = () => {
       <CheckOutPath currentStep={3} />
       {/* <hr className="my-10  dark:border-gray-600" /> */}
 
-      <div className="text-center w-1/2 mx-auto">
+      <div className="text-center mx-auto">
         <div className="w-16 h-16 mx-auto flex justify-center items-center bg-green-700 rounded-full mb-2">
           <svg className="w-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <path stroke="#84e1bc" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"></path>

@@ -12,7 +12,7 @@ const ResetPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log("params:", params);
+  // console.log("params:", params);
 
   const { success, error, message } = useSelector((state) => state.user);
 
@@ -44,7 +44,7 @@ const ResetPassword = () => {
       if (success) {
         toast(message);
         dispatch(removeSuccess());
-        console.log("success removed");
+        // console.log("success removed");
       }
     },
     [dispatch, message, success]

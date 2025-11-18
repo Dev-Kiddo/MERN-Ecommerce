@@ -18,7 +18,7 @@ export const registerUser = createAsyncThunk("user/registerUser", async (payload
 
     return data;
   } catch (error) {
-    console.log("RegisterUserErr:", error);
+    // console.log("RegisterUserErr:", error);
     return rejectWithValue(error.response?.data.message || "Registration failed");
   }
 });
@@ -34,7 +34,7 @@ export const loginUser = createAsyncThunk("user/loginUser", async (payload, { re
 
     return data;
   } catch (error) {
-    console.log("Login Err:", error);
+    // console.log("Login Err:", error);
     return rejectWithValue(error.response?.data.message || "Login failed");
   }
 });
@@ -43,11 +43,11 @@ export const loginUser = createAsyncThunk("user/loginUser", async (payload, { re
 export const loaduser = createAsyncThunk("user/loadUser", async (_, { rejectWithValue }) => {
   try {
     const { data } = await axios(`${API}/profile`);
-    console.log("Load User Data:", data);
+    // console.log("Load User Data:", data);
 
     return data;
   } catch (error) {
-    console.log("Login Err:", error);
+    // console.log("Login Err:", error);
     return rejectWithValue(error.response?.data.message || "Load User Failed");
   }
 });
@@ -56,11 +56,11 @@ export const loaduser = createAsyncThunk("user/loadUser", async (_, { rejectWith
 export const logoutUser = createAsyncThunk("user/logoutUser", async (_, { rejectWithValue }) => {
   try {
     const { data } = await axios.post(`${API}/logout`);
-    console.log("Logout data", data);
+    // console.log("Logout data", data);
 
     return data;
   } catch (error) {
-    console.log("Logout Err:", error);
+    // console.log("Logout Err:", error);
     return rejectWithValue(error.response?.data.message || "Load User Failed");
   }
 });
@@ -69,11 +69,11 @@ export const logoutUser = createAsyncThunk("user/logoutUser", async (_, { reject
 export const updateUser = createAsyncThunk("user/updateUser", async (payload, { rejectWithValue }) => {
   try {
     const { data } = await axios.post(`${API}/profile/update`, payload.formData);
-    console.log("Updated User Data", data);
+    // console.log("Updated User Data", data);
 
     return data;
   } catch (error) {
-    console.log("Updated User Err:", error);
+    // console.log("Updated User Err:", error);
     return rejectWithValue(error.response?.data.message || "Updated User Failed");
   }
 });
@@ -82,11 +82,11 @@ export const updateUser = createAsyncThunk("user/updateUser", async (payload, { 
 export const updatePassword = createAsyncThunk("user/updatePassword", async (payload, { rejectWithValue }) => {
   try {
     const { data } = await axios.post(`${API}/password/update`, payload.formData);
-    console.log("Updated User password", data);
+    // console.log("Updated User password", data);
 
     return data;
   } catch (error) {
-    console.log("Update Password Err:", error);
+    // console.log("Update Password Err:", error);
     return rejectWithValue(error.response?.data.message || "Update Password Failed");
   }
 });
@@ -95,11 +95,11 @@ export const updatePassword = createAsyncThunk("user/updatePassword", async (pay
 export const forgotPassword = createAsyncThunk("user/forgotPassword", async (payload, { rejectWithValue }) => {
   try {
     const { data } = await axios.post(`${API}/password/forgot`, payload.payload);
-    console.log("Forgot User password", data);
+    // console.log("Forgot User password", data);
 
     return data;
   } catch (error) {
-    console.log("Forgot Password Err:", error);
+    // console.log("Forgot Password Err:", error);
     return rejectWithValue(error.response?.data.message || "Send Forgot Password Failed");
   }
 });
@@ -108,11 +108,11 @@ export const forgotPassword = createAsyncThunk("user/forgotPassword", async (pay
 export const resetPassword = createAsyncThunk("user/resetPassword", async (payload, { rejectWithValue }) => {
   try {
     const { data } = await axios.post(`${API}/reset/${payload.token}`, payload.data);
-    console.log("Forgot User password", data);
+    // console.log("Forgot User password", data);
 
     return data;
   } catch (error) {
-    console.log("Forgot Password Err:", error);
+    // console.log("Forgot Password Err:", error);
     return rejectWithValue(error.response?.data.message || "Send Forgot Password Failed");
   }
 });
@@ -150,7 +150,7 @@ const userSlice = createSlice({
     });
 
     builders.addCase(registerUser.rejected, (state, action) => {
-      console.log(action);
+      // console.log(action);
 
       state.loading = false;
       state.error = action.payload || "Registration failed";
@@ -235,7 +235,7 @@ const userSlice = createSlice({
     });
 
     builders.addCase(updateUser.fulfilled, (state, action) => {
-      console.log("updateActionPayload:", action.payload);
+      // console.log("updateActionPayload:", action.payload);
 
       state.loading = false;
       state.error = null;
@@ -259,7 +259,7 @@ const userSlice = createSlice({
     });
 
     builders.addCase(updatePassword.fulfilled, (state, action) => {
-      console.log("updateActionPayload:", action.payload);
+      // console.log("updateActionPayload:", action.payload);
 
       state.loading = false;
       state.error = null;
@@ -269,7 +269,7 @@ const userSlice = createSlice({
     });
 
     builders.addCase(updatePassword.rejected, (state, action) => {
-      console.log("updatePasswordPayload:", action.payload);
+      // console.log("updatePasswordPayload:", action.payload);
 
       state.loading = false;
       state.error = action.payload || "Update Password Failed";
@@ -283,7 +283,7 @@ const userSlice = createSlice({
     });
 
     builders.addCase(forgotPassword.fulfilled, (state, action) => {
-      console.log("ForgotActionPayload:", action.payload);
+      // console.log("ForgotActionPayload:", action.payload);
 
       state.loading = false;
       state.error = null;
@@ -293,7 +293,7 @@ const userSlice = createSlice({
     });
 
     builders.addCase(forgotPassword.rejected, (state, action) => {
-      console.log("updatePasswordPayload:", action.payload);
+      // console.log("updatePasswordPayload:", action.payload);
 
       state.loading = false;
       state.error = action.payload || "Update Password Failed";
@@ -307,7 +307,7 @@ const userSlice = createSlice({
     });
 
     builders.addCase(resetPassword.fulfilled, (state, action) => {
-      console.log("ResetActionPayload:", action.payload);
+      // console.log("ResetActionPayload:", action.payload);
 
       state.loading = false;
       state.error = null;
@@ -318,7 +318,7 @@ const userSlice = createSlice({
     });
 
     builders.addCase(resetPassword.rejected, (state, action) => {
-      console.log("ResetActionPayload:", action.payload);
+      // console.log("ResetActionPayload:", action.payload);
 
       state.loading = false;
       state.error = action.payload || "Reset Password Failed";

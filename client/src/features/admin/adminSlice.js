@@ -22,7 +22,7 @@ export const adminCreateProduct = createAsyncThunk("admin/adminCreateProduct", a
   };
   try {
     const { data } = await axios.post(`${API}/admin/product/create`, payload, config);
-    console.log("adminCreateProduct:", data);
+    // console.log("adminCreateProduct:", data);
     return data;
   } catch (error) {
     return rejectWithValue(error.response?.data) || "Error fetching all products";
@@ -32,7 +32,7 @@ export const adminCreateProduct = createAsyncThunk("admin/adminCreateProduct", a
 export const adminUpdateProduct = createAsyncThunk("admin/adminUpdateProduct", async (payload, { rejectWithValue }) => {
   try {
     const { data } = await axios.put(`${API}/admin/product/${payload.id}`, payload.formData);
-    console.log("adminUpdateProduct:", data);
+    // console.log("adminUpdateProduct:", data);
     return data;
   } catch (error) {
     return rejectWithValue(error.response?.data) || "Error Update product";
@@ -44,7 +44,7 @@ export const adminDeleteProduct = createAsyncThunk("admin/adminDeleteProduct", a
     // console.log("heloo");
 
     const { data } = await axios.delete(`${API}/admin/product/${id}`);
-    console.log("adminDeleteProduct:", data);
+    // console.log("adminDeleteProduct:", data);
     return id;
   } catch (error) {
     return rejectWithValue(error.response?.data) || "Error delete product";
@@ -97,7 +97,7 @@ const adminSlice = createSlice({
       state.error = null;
       state.success = action.payload.success;
       state.products.push(action.payload.product);
-      console.log("New Updated Product List", state.products);
+      // console.log("New Updated Product List", state.products);
     });
     builders.addCase(adminCreateProduct.rejected, (state, action) => {
       state.loading = false;
@@ -114,7 +114,7 @@ const adminSlice = createSlice({
       state.error = null;
       state.success = action.payload.success;
       state.product = action.payload.product;
-      console.log("New Updated Product List", state.product);
+      // console.log("New Updated Product List", state.product);
     });
     builders.addCase(adminUpdateProduct.rejected, (state, action) => {
       state.loading = false;
@@ -123,7 +123,7 @@ const adminSlice = createSlice({
 
     // Admin Delete Product
     builders.addCase(adminDeleteProduct.pending, (state, action) => {
-      console.log(action);
+      // console.log(action);
 
       state.deletingProductId = action.meta.arg.id;
 

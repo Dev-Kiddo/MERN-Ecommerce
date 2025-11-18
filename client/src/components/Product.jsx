@@ -8,7 +8,7 @@ const Product = ({ product }) => {
   const [rating, setRating] = useState(0);
   // console.log("rating:", rating);
 
-  console.log(product);
+  // console.log(product);
 
   return (
     <>

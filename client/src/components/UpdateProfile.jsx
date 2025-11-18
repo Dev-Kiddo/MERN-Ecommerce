@@ -14,7 +14,7 @@ const UpdateProfile = ({ user }) => {
 
   const { user: userData, success, loading, error } = useSelector((state) => state.user);
 
-  console.log(userData, loading, error);
+  // console.log(userData, loading, error);
 
   const formFocus = useRef(null);
 

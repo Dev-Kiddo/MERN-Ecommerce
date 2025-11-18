@@ -33,7 +33,7 @@ export const getProducts = createAsyncThunk(`products/getProducts`, async (paylo
 
     return data;
   } catch (error) {
-    console.log("GetProductsErr:", error);
+    // console.log("GetProductsErr:", error);
     return rejectWithValue(error.response?.data.message || "An error occured");
   }
 });
@@ -45,7 +45,7 @@ export const getProductDetails = createAsyncThunk(`product/getProductDetails`, a
 
     return data;
   } catch (error) {
-    console.log("error", error);
+    // console.log("error", error);
 
     return rejectWithValue(error.response?.data.message) || "An error occured";
   }
@@ -60,7 +60,7 @@ export const createReview = createAsyncThunk(`product/createReview`, async (payl
 
     return data;
   } catch (error) {
-    console.log("error", error);
+    // console.log("error", error);
 
     return rejectWithValue(error.response?.data.message) || "Submit Product Review Error";
   }
@@ -110,7 +110,7 @@ const productSlice = createSlice({
 
     builders.addCase(getProducts.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
+      // console.log(action.payload);
 
       state.error = action.payload.message || "No Products Found";
       state.products = [];
@@ -130,7 +130,7 @@ const productSlice = createSlice({
 
     builders.addCase(getProductDetails.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
+      // console.log(action.payload);
       state.error = action.payload.message || "Something went wrong";
     });
 

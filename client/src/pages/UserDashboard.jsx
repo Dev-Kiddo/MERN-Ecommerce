@@ -15,7 +15,7 @@ const UserDashboard = ({ user }) => {
   const navigate = useNavigate();
 
   const handleLogout = function () {
-    console.log("Logout successfully");
+    // console.log("Logout successfully");
     dispatch(logoutUser());
     toast.success("Logout successfully");
     navigate("/");

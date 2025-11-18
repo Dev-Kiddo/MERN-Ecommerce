@@ -1,8 +1,7 @@
 import React from "react";
 
 const ReviewViewer = ({ review }) => {
-  console.log(review);
-
+  // console.log(review);
   return (
     <>
       <section className="border-1 p-4 mb-3 border-gray-600 rounded-lg">

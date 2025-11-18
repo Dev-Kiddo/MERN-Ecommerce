@@ -43,7 +43,7 @@ export const getOrderDetails = createAsyncThunk("order/getOrderDetails", async (
 
     return data;
   } catch (error) {
-    console.log("error:", error);
+    // console.log("error:", error);
 
     return rejectWithValue(error.response?.data.message || "Get order details failed");
   }
