@@ -9,6 +9,7 @@ import nodemailer from "nodemailer";
 
 const isProduction = process.env.NODE_ENV === "production";
 const protocol = isProduction ? "https://mern-ecommerce-ten-bay.vercel.app" : "http://localhost:5173";
+// const protocol = "https://mern-ecommerce-ten-bay.vercel.app";
 
 // Register User
 export const registerUser = handleAsyncError(async function (req, res, next) {
@@ -103,6 +104,7 @@ export const requestPasswordReset = handleAsyncError(async function (req, res, n
   }
 
   const resetPasswordURL = `${protocol}/reset/${resetToken}`;
+  console.log("resetPasswordURL:", resetPasswordURL);
 
   const message = `Use the following link to reset your password: ${resetPasswordURL} \n\n This Link will expire in 30 minutes. \n\n If you didn't request a password reset, Please ignore this message`;
 
