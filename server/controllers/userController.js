@@ -8,7 +8,7 @@ import { v2 as cloudinary } from "cloudinary";
 import nodemailer from "nodemailer";
 
 const isProduction = process.env.NODE_ENV === "production";
-const protocol = isProduction ? "https://mern-ecommerce-ix3l.onrender.com" : "http://localhost:5173";
+const protocol = isProduction ? "https://mern-ecommerce-ten-bay.vercel.app" : "http://localhost:5173";
 
 // Register User
 export const registerUser = handleAsyncError(async function (req, res, next) {
