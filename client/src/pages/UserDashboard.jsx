@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../features/user/userSlice";
 import { toast } from "react-toastify";
 import Profile from "./Profile";
+import PageTitle from "../components/PageTitle";
 
 const UserDashboard = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,62 +31,65 @@ const UserDashboard = ({ user }) => {
   );
 
   return (
-    <section className="relative pt-36 pb-24">
-      <img src="/images/profile-banner.jpg" alt="cover-image" className="w-full absolute top-0 left-0 z-0 h-60 object-cover rounded-xl" />
-      <div className="w-full mx-auto md:px-8">
-        <div className="flex items-center justify-center relative z-10 mb-2.5">
-          <img
-            src={user ? user?.avatar?.url : "/images/user-profile-icon.svg"}
-            alt="user-avatar-image"
-            className="w-50 h-50 border-4 border-solid border-white rounded-full object-cover"
-          />
-        </div>
+    <>
+    <PageTitle title="Dashboard" />
+      <section className="relative pt-36 pb-24">
+        <img src="/images/profile-banner.jpg" alt="cover-image" className="w-full absolute top-0 left-0 z-0 h-60 object-cover rounded-xl" />
+        <div className="w-full mx-auto md:px-8">
+          <div className="flex items-center justify-center relative z-10 mb-2.5">
+            <img
+              src={user ? user?.avatar?.url : "/images/user-profile-icon.svg"}
+              alt="user-avatar-image"
+              className="w-50 h-50 border-4 border-solid border-white rounded-full object-cover"
+            />
+          </div>
 
-        <h3 className="text-center font-manrope font-bold text-3xl leading-10 text-gray-300 mb-3 capitalize">Hello, {user?.name}</h3>
+          <h3 className="text-center font-manrope font-bold text-3xl leading-10 text-gray-300 mb-3 capitalize">Hello, {user?.name}</h3>
 
-        <div className="grid grid-cols-2 sm:flex justify-between items-center mt-10 text-gray-300">
-          {user.role === "admin" && (
+          <div className="grid grid-cols-2 sm:flex justify-between items-center mt-10 text-gray-300">
+            {user.role === "admin" && (
+              <Link
+                className={`${
+                  isOpen ? "text-white border-gray-400" : "text-gray-400 border-gray-500"
+                } py-2.5 px-5 me-2 mb-2 text-sm text-center font-medium rounded-full border hover:bg-gray-100 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:hover:text-white dark:hover:bg-gray-700`}
+                to="/admin/dashboard"
+              >
+                Admin
+              </Link>
+            )}
+
             <Link
               className={`${
                 isOpen ? "text-white border-gray-400" : "text-gray-400 border-gray-500"
               } py-2.5 px-5 me-2 mb-2 text-sm text-center font-medium rounded-full border hover:bg-gray-100 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:hover:text-white dark:hover:bg-gray-700`}
-              to="/admin/dashboard"
+              to="/myorders"
             >
-              Admin
+              Orders
             </Link>
-          )}
 
-          <Link
-            className={`${
-              isOpen ? "text-white border-gray-400" : "text-gray-400 border-gray-500"
-            } py-2.5 px-5 me-2 mb-2 text-sm text-center font-medium rounded-full border hover:bg-gray-100 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:hover:text-white dark:hover:bg-gray-700`}
-            to="/myorders"
-          >
-            Orders
-          </Link>
+            <Link
+              className={`${
+                isOpen ? "text-white border-gray-400" : "text-gray-400 border-gray-500"
+              } py-2.5 px-5 me-2 mb-2 text-sm font-medium text-center rounded-full border hover:bg-gray-100 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:hover:text-white dark:hover:bg-gray-700`}
+              onClick={() => setIsOpen((prev) => !prev)}
+            >
+              Account
+            </Link>
 
-          <Link
-            className={`${
-              isOpen ? "text-white border-gray-400" : "text-gray-400 border-gray-500"
-            } py-2.5 px-5 me-2 mb-2 text-sm font-medium text-center rounded-full border hover:bg-gray-100 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:hover:text-white dark:hover:bg-gray-700`}
-            onClick={() => setIsOpen((prev) => !prev)}
-          >
-            Account
-          </Link>
+            <button
+              className={`${
+                isOpen ? "text-white border-gray-400" : "text-gray-400 border-gray-500"
+              } py-2.5 px-5 me-2 mb-2 text-sm text-center font-medium rounded-full border hover:bg-gray-100 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:hover:text-white dark:hover:bg-gray-700`}
+              onClick={handleLogout}
+            >
+              {loading ? "logging out..." : "Logout"}
+            </button>
+          </div>
 
-          <button
-            className={`${
-              isOpen ? "text-white border-gray-400" : "text-gray-400 border-gray-500"
-            } py-2.5 px-5 me-2 mb-2 text-sm text-center font-medium rounded-full border hover:bg-gray-100 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:hover:text-white dark:hover:bg-gray-700`}
-            onClick={handleLogout}
-          >
-            {loading ? "logging out..." : "Logout"}
-          </button>
+          <div>{isOpen && <Profile user={user} />}</div>
         </div>
-
-        <div>{isOpen && <Profile user={user} />}</div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

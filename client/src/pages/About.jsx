@@ -1,8 +1,10 @@
 import React from "react";
+import PageTitle from "../components/PageTitle";
 
 const About = () => {
   return (
     <>
+      <PageTitle title="About" />
       <div class="items-center mx-auto py-4 px-4">
         <h2 class="mt-10 text-4xl lg:text-center font-extrabold text-gray-900 dark:text-white">About Project 🛍️</h2>
       </div>

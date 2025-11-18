@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="sm:flex sm:items-center sm:justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-            <img src="/e-com-logo.svg" className="h-9 sm:h-12" alt="Logo" />
+            <img src="https://res.cloudinary.com/dnbswhvko/image/upload/v1763435054/e-com-logo_c4ux9k.svg" className="h-9 sm:h-12" alt="Logo" />
             <span className="self-center text-lg sm:text-2xl font-semibold whitespace-nowrap dark:text-white">ShopIQ</span>
           </Link>
 
