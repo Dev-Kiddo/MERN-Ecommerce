@@ -7,6 +7,9 @@ import crypto from "crypto";
 import { v2 as cloudinary } from "cloudinary";
 import nodemailer from "nodemailer";
 
+const isProduction = process.env.NODE_ENV === "production";
+const protocol = isProduction ? "https://mern-ecommerce-ten-bay.vercel.app" : "http://localhost:5173";
+
 // Register User
 export const registerUser = handleAsyncError(async function (req, res, next) {
   console.log(req.body);
@@ -99,7 +102,7 @@ export const requestPasswordReset = handleAsyncError(async function (req, res, n
     return next(new HandleError("Couldn't save reset token, try again later", 500));
   }
 
-  const resetPasswordURL = `${req.protocol}://${req.get("host")}/reset/${resetToken}`;
+  const resetPasswordURL = `${protocol}/reset/${resetToken}`;
 
   const message = `Use the following link to reset your password: ${resetPasswordURL} \n\n This Link will expire in 30 minutes. \n\n If you didn't request a password reset, Please ignore this message`;
 

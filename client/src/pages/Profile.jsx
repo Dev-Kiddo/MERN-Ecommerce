@@ -40,6 +40,7 @@ const Profile = ({ user }) => {
     function () {
       if (success) {
         toast.success("Password Updated Successfully");
+        setFormData({ oldPassword: "", newPassword: "", confirmPassword: "" });
         dispatch(removeSuccess());
       }
     },

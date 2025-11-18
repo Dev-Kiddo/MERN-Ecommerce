@@ -32,7 +32,7 @@ const UserDashboard = ({ user }) => {
 
   return (
     <>
-    <PageTitle title="Dashboard" />
+      <PageTitle title="Dashboard" />
       <section className="relative pt-36 pb-24">
         <img src="/images/profile-banner.jpg" alt="cover-image" className="w-full absolute top-0 left-0 z-0 h-60 object-cover rounded-xl" />
         <div className="w-full mx-auto md:px-8">
@@ -82,7 +82,7 @@ const UserDashboard = ({ user }) => {
               } py-2.5 px-5 me-2 mb-2 text-sm text-center font-medium rounded-full border hover:bg-gray-100 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:hover:text-white dark:hover:bg-gray-700`}
               onClick={handleLogout}
             >
-              {loading ? "logging out..." : "Logout"}
+              Logout
             </button>
           </div>
 

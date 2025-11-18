@@ -25,6 +25,8 @@ const UpdateProfile = ({ user }) => {
 
   const [avatar, setAvatar] = useState(user?.avatar.url);
 
+  // const [newAvatar, setNewAvatar] = useState("");
+
   const handleOnChange = function (e) {
     const { id, files, value } = e.target;
 
@@ -59,6 +61,7 @@ const UpdateProfile = ({ user }) => {
 
     payload.append("name", formData.name);
     payload.append("email", formData.email);
+
     payload.append("avatar", avatar);
 
     // console.log("formData");
