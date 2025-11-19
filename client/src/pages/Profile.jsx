@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { removeError, removeSuccess, updatePassword } from "../features/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -10,6 +10,7 @@ const Profile = ({ user }) => {
   const focusForm = useRef(null);
   const date = new Date(user.createdAt);
   const normalDate = date.toLocaleString().split(",")[0];
+  const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -41,10 +42,11 @@ const Profile = ({ user }) => {
       if (success) {
         toast.success("Password Updated Successfully");
         setFormData({ oldPassword: "", newPassword: "", confirmPassword: "" });
+        setIsOpen((prev) => !prev);
         dispatch(removeSuccess());
       }
     },
-    [success, dispatch]
+    [success, dispatch, navigate]
   );
 
   useEffect(

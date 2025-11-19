@@ -11,11 +11,11 @@ const Cart = () => {
 
   const subTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-  const tax = subTotal * 0.18;
+  const tax = subTotal * 0.14;
 
   const deliveryCharges = subTotal > 1000 ? 0 : 50;
 
-  const total = subTotal + tax + deliveryCharges;
+  const total = Math.round(subTotal + tax + deliveryCharges);
 
   const handleProceedCheckout = function () {
     navigate(`/login?redirect=/shipping`);

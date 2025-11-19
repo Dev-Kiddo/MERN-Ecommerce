@@ -14,7 +14,7 @@ import Loader from "../components/Loader";
 // http://localhost:5173/api/v1/products
 
 const RegisterUser = () => {
-  const { user, success, loading, error } = useSelector((state) => state.user);
+  const { success, loading, error } = useSelector((state) => state.user);
   // console.log("USER:", user);
 
   const dispatch = useDispatch();
@@ -71,13 +71,12 @@ const RegisterUser = () => {
   };
 
   // Check Error
-
   useEffect(
     function () {
-      if (error) {
-        // console.log(error);
-
-        toast(error);
+      if (error === "Authentication missing, Please login to access resource") {
+        dispatch(removeError());
+      } else {
+        toast(error, { toastId: "UserCheckErr" });
         dispatch(removeError());
       }
     },

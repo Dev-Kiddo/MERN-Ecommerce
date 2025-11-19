@@ -10,15 +10,14 @@ const OrderConfirmation = () => {
 
   const { shippinginfo, cartItems } = useSelector((state) => state.cart);
   // console.log(cartItems);
-  
 
   const subTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const deliveryCharges = subTotal > 1000 ? 0 : 50;
 
-  const tax = subTotal * 0.18;
+  const tax = subTotal * 0.14;
 
-  const orderTotal = subTotal + tax + deliveryCharges;
+  const orderTotal = Math.round(subTotal + tax + deliveryCharges);
 
   const handleProceedPayment = function (e) {
     e.preventDefault();

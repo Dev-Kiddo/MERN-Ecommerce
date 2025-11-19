@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import PageTitle from "../components/PageTitle";
 
 import Loader from "../components/Loader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { removeSuccess, updateUser } from "../features/user/userSlice";
@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 const UpdateProfile = ({ user }) => {
   // console.log(user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { user: userData, success, loading, error } = useSelector((state) => state.user);
 
@@ -76,11 +77,12 @@ const UpdateProfile = ({ user }) => {
   useEffect(
     function () {
       if (success) {
+        navigate("/dashboard");
         toast.success("Profile Updated Successfully");
         dispatch(removeSuccess());
       }
     },
-    [success, dispatch]
+    [success, dispatch, navigate]
   );
 
   useEffect(

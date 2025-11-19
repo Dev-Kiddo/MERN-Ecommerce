@@ -9,11 +9,10 @@ import nodemailer from "nodemailer";
 
 const isProduction = process.env.NODE_ENV === "production";
 const protocol = isProduction ? "https://mern-ecommerce-ten-bay.vercel.app" : "http://localhost:5173";
-// const protocol = "https://mern-ecommerce-ten-bay.vercel.app";
 
 // Register User
 export const registerUser = handleAsyncError(async function (req, res, next) {
-  console.log(req.body);
+  console.log("hello");
 
   const { name, email, password, avatar } = req.body;
 
@@ -34,6 +33,8 @@ export const registerUser = handleAsyncError(async function (req, res, next) {
       url: myCloud.secure_url,
     },
   });
+
+  // console.log("user:", user);
 
   //   const token = user.getJWTToken();
 

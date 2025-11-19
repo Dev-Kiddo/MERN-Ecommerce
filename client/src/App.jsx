@@ -9,7 +9,7 @@ import Login from "./pages/Login";
 import UserDashboard from "./pages/UserDashboard";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { loaduser } from "./features/user/userSlice";
+import { loaduser, removeError } from "./features/user/userSlice";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import UpdateProfile from "./components/UpdateProfile";
@@ -29,9 +29,10 @@ import CreateNewProduct from "./components/CreateNewProduct";
 import UpdateProduct from "./components/UpdateProduct";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import { toast } from "react-toastify";
 
 function App() {
-  const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { isAuthenticated, user, error } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -45,6 +46,19 @@ function App() {
     },
     [dispatch, isAuthenticated]
   );
+
+  useEffect(
+    function () {
+      if (error === "Authentication missing, Please login to access resource") {
+        dispatch(removeError());
+      } else {
+        toast(error, { toastId: "authenticationCheckErr" });
+        dispatch(removeError());
+      }
+    },
+    [dispatch, error]
+  );
+
   return (
     <BrowserRouter>
       <Routes>
