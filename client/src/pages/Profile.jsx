@@ -46,13 +46,13 @@ const Profile = ({ user }) => {
         dispatch(removeSuccess());
       }
     },
-    [success, dispatch, navigate]
+    [success, dispatch]
   );
 
   useEffect(
     function () {
       if (error) {
-        toast(error);
+        toast.error(error);
       }
     },
     [error]

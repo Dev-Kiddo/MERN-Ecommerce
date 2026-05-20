@@ -6,6 +6,17 @@ import orderReducer from "../features/order/orderSlice";
 import adminReducer from "../features/admin/adminSlice";
 
 export const store = configureStore({
+  middleware: (getDefault) =>
+    getDefault({
+      thunk: {
+        extraArgument: {},
+      },
+      serializableCheck: false,
+    }),
+  devTools: {
+    trace: true,
+    traceLimit: 25,
+  },
   reducer: {
     product: productReducer,
     user: userReducer,

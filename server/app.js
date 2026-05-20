@@ -14,7 +14,7 @@ dotenv.config({ path: "./config/config.env" });
 const app = express();
 const isProduction = process.env.NODE_ENV === "production";
 
-const allowedOrigins = isProduction ? ["https://mern-ecommerce-ten-bay.vercel.app"] : ["http://localhost:5173"];
+const allowedOrigins = isProduction ? [process.env.CLIENT_PRODUCTION_URL] : [process.env.CLIENT_LOCAL_URL];
 
 // Middlewares
 app.use(express.json());
@@ -24,14 +24,14 @@ app.use(
   fileUpload({
     useTempFiles: true,
     tempFileDir: "/tmp/",
-  })
+  }),
 );
 
 app.use(
   cors({
     origin: allowedOrigins,
     credentials: true,
-  })
+  }),
 );
 
 // Routes

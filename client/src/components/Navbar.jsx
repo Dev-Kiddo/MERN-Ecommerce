@@ -54,7 +54,7 @@ const Navbar = () => {
 
       // dispatch(removeError());
     },
-    [error, dispatch]
+    [error, dispatch],
   );
 
   return (
@@ -130,8 +130,12 @@ const Navbar = () => {
             </div>
 
             {!isAuthenticated && (
-              <Link to="/register" className="">
-                <PersonAddIcon className="" />
+              <Link
+                to="/login"
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-2 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:px-4 md:text-sm"
+              >
+                {/* <PersonAddIcon className="" /> */}
+                Login
               </Link>
             )}
 

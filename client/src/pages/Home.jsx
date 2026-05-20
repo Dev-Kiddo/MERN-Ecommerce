@@ -21,7 +21,7 @@ const Home = () => {
     function () {
       dispatch(getProducts({ keyword: null }));
     },
-    [dispatch]
+    [dispatch],
   );
 
   useEffect(
@@ -31,7 +31,7 @@ const Home = () => {
         dispatch(removeError());
       }
     },
-    [dispatch, error]
+    [dispatch, error],
   );
 
   return (
@@ -44,14 +44,15 @@ const Home = () => {
       <h2 className="text-4xl text-white text-center my-6">Trending Now</h2>
 
       {isLoading && <Loader />}
-      {products.length > 0 ? (
+
+      {!isLoading && products.length <= 0 ? (
+        <NotFound />
+      ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
           {products?.map((product) => (
             <Product product={product} key={product._id} />
           ))}
         </div>
-      ) : (
-        <NotFound />
       )}
     </>
   );

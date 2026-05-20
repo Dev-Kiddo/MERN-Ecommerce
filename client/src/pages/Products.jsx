@@ -63,7 +63,7 @@ const Products = () => {
     function () {
       dispatch(getProducts({ keyword: keyword || null, page: currentPage, category }));
     },
-    [dispatch, keyword, currentPage, category]
+    [dispatch, keyword, currentPage, category],
   );
 
   return (
@@ -92,7 +92,7 @@ const Products = () => {
           </div>
 
           <div className="p-4 w-full h-auto">
-            <div className="p-3 border-2 border-dashed rounded-lg dark:border-gray-500">
+            <div className="p-3 h-full border-2 border-dashed rounded-lg dark:border-gray-500 flex items-center justify-center">
               {products.length > 0 ? (
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2  md:grid-cols-3  lg:grid-cols-4">
                   {products?.map((product) => (

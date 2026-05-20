@@ -237,7 +237,7 @@ export const createProductReview = handleAsyncError(async function (req, res, ne
   if (reviewExists) {
     product.reviews.forEach((review) => {
       if (review.user.toString() === req.user.id) {
-        (review.rating = rating), (review.comment = comment);
+        ((review.rating = rating), (review.comment = comment));
       }
     });
   } else {
@@ -315,7 +315,7 @@ export const deleteProductReview = handleAsyncError(async function (req, res, ne
       ratings,
       numOfReviews,
     },
-    { new: true, runValidators: true }
+    { new: true, runValidators: true },
   );
 
   res.status(200).json({
